@@ -17,10 +17,10 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
-                    <h5>بخش کاربران</h5>
+                    <h5>دسته بندی</h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm" href="">ایجاد دسته بندی </a>
+                    <a class="btn btn-info btn-sm" href="{{route('admin.market.category.create')}}">ایجاد دسته بندی </a>
                     <div class="max-width-16-rem">
                         <input class="form-control form-control-sm" type="text" name="" id=""
                             placeholder="جستجو...">

@@ -11,4 +11,8 @@ class CategoryController extends Controller
     {
         return view('admin.market.category.index');
     }
+
+    public function create()  {
+        return view('admin.market.category.create');
+    }
 }
