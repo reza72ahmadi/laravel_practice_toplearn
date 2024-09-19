@@ -5,4 +5,6 @@
 <link rel="stylesheet" href="{{ asset('admin-assets/css/animate.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin-assets/css/grid.css') }}">
 <link rel="stylesheet" href="{{ asset('admin-assets/css/style.css') }}">
-<title>admin-panel</title>
+{{-- <link rel="stylesheet" href="{{ asset('admin-assets/css/datatable.css') }}"> --}}
+
+

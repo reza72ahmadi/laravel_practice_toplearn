@@ -9,6 +9,7 @@
     justify-content: space-around;
     z-index: 1000;
     align-items: stretch;
+
 }
 
 .logo {
@@ -247,7 +248,7 @@ button {
 }
 
 .sidebar-dropdown a::before,
-button::before {
+.sidebar-dropdownbutton::before {
     content: ">>";
     margin: .8rem;
 }
@@ -260,7 +261,7 @@ button::before {
     width: calc(100% - 13rem);
     padding: 1rem;
     min-width: calc(100vh - 3.5rem);
-    background-color: #f3f3f3;
+    /* background-color: #f3f3f3; */
 }
 
 .pointer {
@@ -338,4 +339,20 @@ button::before {
         width: 100%;
         z-index: 1;
     }
+}
+
+.font-size-12 {
+    font-size: 12px;
+}
+
+.max-width-16-rem {
+    max-width: 16rem;
+}
+
+.width-16-rem {
+    width: 16rem;
+}
+
+.main-body table {
+    font-size: .80rem;
 }
