@@ -9,8 +9,8 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#"> بخش فروش</a></li>
-            <li class="breadcrumb-item"><a href="#"> برند</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ایجاد برند</li>
+            <li class="breadcrumb-item"><a href="#"> روش های ارسال</a></li>
+            <li class="breadcrumb-item active" aria-current="page">نمایش روش ارسال</li>
         </ol>
     </nav>
 
@@ -18,25 +18,27 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
-                    <h5>ایجاد برند
-
+                    <h5>
+                        ایجاد روش ارسال
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.brand.index') }}">بازگشت</a>
+                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.delivery.index') }}">بازگشت</a>
                 </section>
-
                 <section>
                     <form>
                         <section class="row">
                             <div class="col-md-6 col-12">
-                                <label for="">دسته بندی</label>
+                                <label for="">نام روش ارسال</label>
                                 <input type="text" class="form-control form-control-sm" name="category">
                             </div>
-
                             <div class="col-md-6 col-12">
-                                <label for="">دسته والد</label>
-                                <input type="file" class="form-control form-control-sm">
+                                <label for="">زمان ارسال</label>
+                                <input type="text" class="form-control form-control-sm" name="category">
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label for="">هزینه ارسال</label>
+                                <input type="text" class="form-control form-control-sm" name="category">
                             </div>
                         </section>
                         <section>
@@ -44,7 +46,6 @@
                         </section>
                     </form>
                 </section>
-                
             </section>
         </section>
     </section>

@@ -9,8 +9,8 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#"> بخش فروش</a></li>
-            <li class="breadcrumb-item"><a href="#"> برند</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ایجاد برند</li>
+            <li class="breadcrumb-item"><a href="#"> نظرات</a></li>
+            <li class="breadcrumb-item active" aria-current="page">نمایش نظرات</li>
         </ol>
     </nav>
 
@@ -18,25 +18,29 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
-                    <h5>ایجاد برند
-
+                    <h5>
+                        نمایش نظرات
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.brand.index') }}">بازگشت</a>
+                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.comment.index') }}">بازگشت</a>
+                </section>
+
+                <section class="card">
+                    <section class="card-header text-white bg-custom-yellow">
+                        0089004 ali ahmadi </section>
+                    <section class="card-body">
+                        <h5 class="card-title"> مشخصات کالا: fkdjfdkfjlsdk</h5>
+                        <p class="card-text">jflkddakjsdfdsjflk dsdfj sdlfjsdlkjf</p>
+                    </section>
                 </section>
 
                 <section>
                     <form>
                         <section class="row">
-                            <div class="col-md-6 col-12">
-                                <label for="">دسته بندی</label>
-                                <input type="text" class="form-control form-control-sm" name="category">
-                            </div>
-
-                            <div class="col-md-6 col-12">
-                                <label for="">دسته والد</label>
-                                <input type="file" class="form-control form-control-sm">
+                            <div class="col-12">
+                                <label for="">پاسخ ادمین:</label>
+                                <textarea class="form-control form-control-sm" name="" id="" cols="30" rows="4"></textarea>
                             </div>
                         </section>
                         <section>
@@ -44,7 +48,6 @@
                         </section>
                     </form>
                 </section>
-                
             </section>
         </section>
     </section>

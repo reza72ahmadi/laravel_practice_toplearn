@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Market\CommentController;
 use App\Http\Controllers\Admin\Market\CategoryController;
+use App\Http\Controllers\Admin\Market\DeliveryController;
+use App\Http\Controllers\Admin\Market\DiscountController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +36,35 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
             Route::put('/update/{id}', [BrandController::class, 'update'])->name('admin.market.brand.update');
             Route::delete('/delete/{id}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
+        });
+        // comment
+        Route::prefix('comment')->group(function () {
+            Route::get('/', [CommentController::class, 'index'])->name('admin.market.comment.index');
+            Route::get('/show', [CommentController::class, 'show'])->name('admin.market.comment.show');
+            Route::post('/store', [CommentController::class, 'store'])->name('admin.market.comment.store');
+            Route::get('/edit/{id}', [CommentController::class, 'edit'])->name('admin.market.comment.edit');
+            Route::put('/update/{id}', [CommentController::class, 'update'])->name('admin.market.comment.update');
+            Route::delete('/delete/{id}', [CommentController::class, 'destroy'])->name('admin.market.comment.destroy');
+        });
+        // delivery
+        Route::prefix('delivery')->group(function () {
+            Route::get('/', [DeliveryController::class, 'index'])->name('admin.market.delivery.index');
+            Route::get('/create', [DeliveryController::class, 'create'])->name('admin.market.delivery.create');
+            Route::post('/store', [DeliveryController::class, 'store'])->name('admin.market.delivery.store');
+            Route::get('/edit/{id}', [DeliveryController::class, 'edit'])->name('admin.market.delivery.edit');
+            Route::put('/update/{id}', [DeliveryController::class, 'update'])->name('admin.market.delivery.update');
+            Route::delete('/delete/{id}', [DeliveryController::class, 'destroy'])->name('admin.market.delivery.destroy');
+        });
+        // discount
+        Route::prefix('discount')->group(function () {
+            Route::get('/copan', [DiscountController::class, 'copan'])->name('admin.market.discount.copan');
+            Route::get('/copan/create', [DiscountController::class, 'copanCreate'])->name('admin.market.discount.copan.create');
+
+            Route::get('/comment-discount', [DiscountController::class, 'commonDiscount'])->name('admin.market.discount.commonDiscount');
+            Route::get('/comment-discount/create', [DiscountController::class, 'commonDiscountCreate'])->name('admin.market.discount.commonDiscount.create');
+            
+            Route::get('/amazing-sale', [DiscountController::class, 'amazingSale'])->name('admin.market.discount.amazingSale');
+            Route::get('/amazing-sale/create', [DiscountController::class, 'amazingSaleCreate'])->name('admin.market.discount.amazingSale.create');
         });
     });
 });
