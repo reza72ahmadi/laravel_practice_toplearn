@@ -353,6 +353,10 @@ button {
     width: 16rem;
 }
 
+.width-8-rem {
+    width: 8rem;
+}
+
 .main-body table {
     font-size: .80rem;
 }
