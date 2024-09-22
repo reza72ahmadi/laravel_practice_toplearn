@@ -126,4 +126,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::delete('/delete/{id}', [StoreController::class, 'destroy'])->name('admin.market.store.destroy');
         });
     });
+
+    Route::prefix('content')->namespace('Market')->group(function () {
+
+
+    });
 });
