@@ -324,7 +324,7 @@ button {
         width: 120px;
         z-index: 9;
         line-height: calc(100vh - 3.5rem);
-        position: fixed;
+        /* position: fixed; */
         top: 3.5rem;
         right: 0;
     }
