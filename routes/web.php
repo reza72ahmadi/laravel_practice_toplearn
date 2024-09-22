@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Content\FAQController;
+use App\Http\Controllers\Admin\Content\MenuController;
+use App\Http\Controllers\Admin\Content\PageController;
+use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\Market\OrderController;
 use App\Http\Controllers\Admin\Market\StoreController;
@@ -13,6 +17,8 @@ use App\Http\Controllers\Admin\Market\CategoryController;
 use App\Http\Controllers\Admin\Market\DeliveryController;
 use App\Http\Controllers\Admin\Market\DiscountController;
 use App\Http\Controllers\Admin\Market\PropertyController;
+use App\Http\Controllers\Admin\Content\CategoryController as ContentCommentController;
+use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +27,7 @@ Route::get('/', function () {
 Route::prefix('admin')->namespace('Admin')->group(function () {
 
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.home');
+    
     Route::prefix('market')->namespace('Market')->group(function () {
 
         // category
@@ -127,8 +134,61 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         });
     });
 
-    Route::prefix('content')->namespace('Market')->group(function () {
 
-
+    Route::prefix('content')->namespace('Content')->group(function () {
+        // category
+        Route::prefix('category')->group(function () {
+            Route::get('/', [ContentCategoryController::class, 'index'])->name('admin.content.category.index');
+            Route::get('/create', [ContentCategoryController::class, 'create'])->name('admin.content.category.create');
+            Route::post('/store', [ContentCategoryController::class, 'store'])->name('admin.content.category.store');
+            Route::get('/edit/{id}', [ContentCategoryController::class, 'edit'])->name('admin.content.category.edit');
+            Route::put('/update/{id}', [ContentCategoryController::class, 'update'])->name('admin.content.category.update');
+            Route::delete('/delete/{id}', [ContentCategoryController::class, 'destroy'])->name('admin.content.category.destroy');
+        });
+        // comment
+        Route::prefix('comment')->group(function () {
+            Route::get('/', [ContentCommentController::class, 'index'])->name('admin.content.comment.index');
+            Route::get('/show', [ContentCommentController::class, 'show'])->name('admin.content.comment.show');
+            Route::post('/store', [ContentCommentController::class, 'store'])->name('admin.content.comment.store');
+            Route::get('/edit/{id}', [ContentCommentController::class, 'edit'])->name('admin.content.comment.edit');
+            Route::put('/update/{id}', [ContentCommentController::class, 'update'])->name('admin.content.comment.update');
+            Route::delete('/delete/{id}', [ContentCommentController::class, 'destroy'])->name('admin.content.comment.destroy');
+        });
+        // faq
+        Route::prefix('faq')->group(function () {
+            Route::get('/', [FAQController::class, 'index'])->name('admin.content.faq.index');
+            Route::get('/create', [FAQController::class, 'create'])->name('admin.content.faq.create');
+            Route::post('/store', [FAQController::class, 'store'])->name('admin.content.faq.store');
+            Route::get('/edit/{id}', [FAQController::class, 'edit'])->name('admin.content.faq.edit');
+            Route::put('/update/{id}', [FAQController::class, 'update'])->name('admin.content.faq.update');
+            Route::delete('/delete/{id}', [FAQController::class, 'destroy'])->name('admin.content.faq.destroy');
+        });
+        // menu
+        Route::prefix('menu')->group(function () {
+            Route::get('/', [MenuController::class, 'index'])->name('admin.content.menu.index');
+            Route::get('/create', [MenuController::class, 'create'])->name('admin.content.menu.create');
+            Route::post('/store', [MenuController::class, 'store'])->name('admin.content.menu.store');
+            Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('admin.content.menu.edit');
+            Route::put('/update/{id}', [MenuController::class, 'update'])->name('admin.content.menu.update');
+            Route::delete('/delete/{id}', [MenuController::class, 'destroy'])->name('admin.content.menu.destroy');
+        });
+        // page
+        Route::prefix('page')->group(function () {
+            Route::get('/', [PageController::class, 'index'])->name('admin.content.page.index');
+            Route::get('/create', [PageController::class, 'create'])->name('admin.content.page.create');
+            Route::post('/store', [PageController::class, 'store'])->name('admin.content.page.store');
+            Route::get('/edit/{id}', [PageController::class, 'edit'])->name('admin.content.page.edit');
+            Route::put('/update/{id}', [PageController::class, 'update'])->name('admin.content.page.update');
+            Route::delete('/delete/{id}', [PageController::class, 'destroy'])->name('admin.content.page.destroy');
+        });
+        // post
+        Route::prefix('post')->group(function () {
+            Route::get('/', [PostController::class, 'index'])->name('admin.content.post.index');
+            Route::get('/create', [PostController::class, 'create'])->name('admin.content.post.create');
+            Route::post('/store', [PostController::class, 'store'])->name('admin.content.post.store');
+            Route::get('/edit/{id}', [PostController::class, 'edit'])->name('admin.content.post.edit');
+            Route::put('/update/{id}', [PostController::class, 'update'])->name('admin.content.post.update');
+            Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('admin.content.post.destroy');
+        });
     });
 });
