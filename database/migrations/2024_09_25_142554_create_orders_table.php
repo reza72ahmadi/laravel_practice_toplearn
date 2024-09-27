@@ -27,10 +27,10 @@ return new class extends Migration
             $table->timestamp('delivery_date')->nullable();
             $table->decimal('order_final_amount', 20, 3)->nullable();
             $table->decimal('order_discount_amount', 20, 3)->nullable();
-            $table->foreignId('coupon_id')->nullable()->constrained('coupons')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->longText('coupon_object')->nullable();
-            $table->decimal('order_coupon_discount_amount', 20, 3)->nullable();
-            $table->foreignId('common_discount_id')->nullable()->constrained('common_discounts')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('copan_id')->nullable()->constrained('copans')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->longText('copan_object')->nullable();
+            $table->decimal('order_copan_discount_amount', 20, 3)->nullable();
+            $table->foreignId('common_discount_id')->nullable()->constrained('common_discount')->cascadeOnDelete()->cascadeOnUpdate();
             $table->longText('common_discount_object')->nullable();
             $table->decimal('order_common_discount_amount', 20, 3)->nullable();
             $table->decimal('order_total_products_discount_amount', 20, 3)->nullable();
