@@ -33,45 +33,98 @@
                             <tr>
                                 <th>#</th>
                                 <th>نام دسته بندی</th>
-                                <th>دسته والد</th>
+                                <th>توضیحات</th>
+                                <th>اسلاگ</th>
+                                <th>تصویر</th>
+                                <th>وضعیت</th>
+                                <th>تگ ها</th>
                                 <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکتریکی</td>
-                                <td class="max-width-16-rem text-left">
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"> ویرایش</i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
-                                            حذف</i></button>
-                                </td>
-                            </tr>
-                            {{-- <tr>
-                                <th>2</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکتریکی</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"></i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکتریکی</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"></i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr> --}}
+                            @foreach ($postCategories as $No => $postCategory)
+                                <tr id="postCategory{{ $postCategory->id }}">
+                                    <th>{{ $No + 1 }}</th>
+                                    <td>{{ $postCategory->name }}</td>
+                                    <td>{{ $postCategory->description }}</td>
+                                    <td>{{ $postCategory->slug }}</td>
+                                    <td>
+                                        <img src="{{ asset($postCategory->image) }}" alt="">
+                                    </td>
+                                    <td>
+                                        <label for="">
+                                            <input id="{{ $postCategory->id }}"
+                                                onchange="changeStatus({{ $postCategory->id }})"
+                                                data-url='{{ route('admin.content.category.status', $postCategory->id) }}'
+                                                type="checkbox" @if ($postCategory->status === 1) checked @endif>
+                                        </label>
+                                    </td>
+                                    <td>{{ $postCategory->tags }}</td>
+                                    <td class="max-width-16-rem text-left">
+                                        <a
+                                            class="btn btn-primary btn-sm"href="{{ route('admin.content.category.edit', $postCategory->id) }}">
+                                            <iclass="fas fa-edit>ویرایش</i>
+                                    </a>
+                                            <form class="d-inline"
+                                            action="{{ route('admin.content.category.destroy', $postCategory->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="button" class="btn btn-danger btn-sm btnDlt"
+                                                data-id="{{ $postCategory->id }}">
+                                                <i class="fas fa-trash-alt"></i> حذف
+                                            </button>
+                                            </form>
+
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
             </section>
         </section>
     </section>
+@endsection
+
+@section('script')
+    <script>
+        function changeStatus(id) {
+            var element = $('#' + id)
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        if (response.checked)
+                            element.prop('checked', true);
+                        else
+                            element.prop('checked', false);
+                    } else {
+                        element.prop('checked', elementValue);
+                    }
+                }
+            })
+        }
+        //------------------------------------------------------------------
+        $(document).on('click', '.btnDlt', function() {
+            var postId = $(this).data('id');
+            var url = '{{ route('admin.content.category.destroy', '') }}/' + postId;
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}' // Include CSRF token
+                },
+                success: function(response) {
+                    if (response.status) {
+                        $('#postCategory' + postId).remove();
+                    }
+                },
+            });
+        });
+    </script>
 @endsection
