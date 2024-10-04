@@ -35,43 +35,29 @@
                             <tr>
                                 <th>#</th>
                                 <th>عنوان پست</th>
-                                <th>دسته</th>
-                                <th>تصویر</th>
+                                <th>حلاصه</th>
+                                
                                 <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>این یک سوال تکراری است</td>
-                                <td>و این هم خلاصه پاسخ است</td>
-                                <td>تصویر </td>
-                                <td class="max-width-16-rem text-left">
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"> ویرایش</i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
-                                            حذف</i></button>
-                                </td>
-                            </tr>
-                            {{-- <tr>
-                                <th>2</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکتریکی</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"></i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکتریکی</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"></i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr> --}}
+                            @foreach ($posts as $key => $post)
+                                <tr>
+                                    <th>{{ $key += 1 }}</th>
+                                    <th>{{ $post->title }}</th>
+                                    <th>{{ $post->postCategory->name }}</th>
+                                    {{-- <th>{{ $post->summary }}</th>
+                                    <th>{{ $post->body }}</th>
+                                    <th>{{ $post->image }}</th>
+                                    <th>{{ $post->status }}</th> --}}
+                                    <td class="max-width-16-rem text-left">
+                                        <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit">
+                                                ویرایش</i></a>
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
+                                                حذف</i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>

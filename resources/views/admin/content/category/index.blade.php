@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                             @foreach ($postCategories as $No => $postCategory)
-                                <tr id="postCategory{{ $postCategory->id }}">
+                                <tr>
                                     <th>{{ $No + 1 }}</th>
                                     <td>{{ $postCategory->name }}</td>
                                     <td>{{ $postCategory->description }}</td>
@@ -65,7 +65,7 @@
                                             class="btn btn-primary btn-sm"href="{{ route('admin.content.category.edit', $postCategory->id) }}">
                                             <iclass="fas fa-edit>ویرایش</i>
                                     </a>
-                                            <form class="d-inline"
+                                    <form class="d-inline"
                                             action="{{ route('admin.content.category.destroy', $postCategory->id) }}"
                                             method="post">
                                             @csrf
@@ -99,32 +99,39 @@
                 type: "GET",
                 success: function(response) {
                     if (response.status) {
-                        if (response.checked)
+                        if (response.checked) {
                             element.prop('checked', true);
-                        else
+                            successToast('دسته بندی با موفقیت فعال شد')
+                        } else {
                             element.prop('checked', false);
+                            successToast('دسته بندی با موفقیت غیرفعال شد')
+                        }
                     } else {
                         element.prop('checked', elementValue);
+                        errorToast('خطا هنگام ذخیره سازی')
                     }
+                },
+
+                error: function() {
+                    element.prop('checked', elementValue);
+                    errorToast('ارتباط برقرار نشد')
                 }
-            })
-        }
-        //------------------------------------------------------------------
-        $(document).on('click', '.btnDlt', function() {
-            var postId = $(this).data('id');
-            var url = '{{ route('admin.content.category.destroy', '') }}/' + postId;
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                data: {
-                    _token: '{{ csrf_token() }}' // Include CSRF token
-                },
-                success: function(response) {
-                    if (response.status) {
-                        $('#postCategory' + postId).remove();
-                    }
-                },
             });
-        });
+
+            function successToast(message) {
+                var successToastTags =
+                    '<div class="toast" data-autohide="true">\n' +
+                    '   <button type="button" class="mr-2 close fa-pull-left" data-dismiss="toast">&times;</button>\n' +
+                    '   <div class="toast-body bg-success rounded">\n' + message + '</div>\n' +
+                    '</div>\n';
+
+                $('.toast-wrapper').append(successToastTags);
+                $('.toast').last().toast('show').delay(5000).queue(function() {
+                    $(this).remove();
+                });
+            }
+
+        }
     </script>
+    @include('admin.alerts.sweetalert.confirmation', ['className' => 'btnDlt'])
 @endsection
