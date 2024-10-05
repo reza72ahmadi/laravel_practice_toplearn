@@ -156,9 +156,11 @@ return [
         "reference_id"              => "ارجاع",
         "priority_id"               => "اولویت",
         "category_id"               => "دسته بندی",
-        "tags"                       => "برچسپ ها",
-        "status"                       => "وضعیت",
-        "summary"                       => "خلاصه",
+        "tags"                      => "برچسپ ها",
+        "status"                    => "وضعیت",
+        "summary"                   => "خلاصه",
+        "question"                  => "سوال",
+        "answer"                    => "جواب",
 
     ],
 ];

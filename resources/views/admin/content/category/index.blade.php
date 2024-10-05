@@ -126,7 +126,7 @@
                     '</div>\n';
 
                 $('.toast-wrapper').append(successToastTags);
-                $('.toast').last().toast('show').delay(5000).queue(function() {
+                $('.toast').last().toast('show').delay(50000).queue(function() {
                     $(this).remove();
                 });
             }

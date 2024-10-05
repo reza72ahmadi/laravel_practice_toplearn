@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-<h1>FAQ INDEX</h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
@@ -36,45 +35,84 @@
                             <tr>
                                 <th>#</th>
                                 <th>پرسش</th>
-                                <th>خلاصه پاسخ</th>
+                                <th>پاسخ</th>
+                                <th>وضعیت</th>
                                 <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>این یک سوال تکراری است</td>
-                                <td>و این هم خلاصه پاسخ است</td>
-                                <td class="max-width-16-rem text-left">
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"> ویرایش</i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
-                                            حذف</i></button>
-                                </td>
-                            </tr>
-                            {{-- <tr>
-                                <th>2</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکتریکی</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"></i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>نمایشگر</td>
-                                <td>کالای الکتریکی</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"></i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr> --}}
+                            @foreach ($faqs as $key => $faq)
+                                <tr>
+                                    <th>{{ $key + 1 }}</th>
+                                    <td>{{ $faq->question }}</td>
+                                    <td>{{ $faq->answer }}</td>
+                                    <td>
+                                        <label for="">
+                                            <input id="{{ $faq->id }}" onchange="changeStatus({{ $faq->id }})"
+                                                data-url='{{ route('admin.content.faq.status', $faq->id) }}'
+                                                type="checkbox" @if ($faq->status === 1) checked @endif>
+                                        </label>
+                                    </td>
+                                    <td class="max-width-16-rem text-left">
+                                        <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit">
+                                                ویرایش</i></a>
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
+                                                حذف</i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
             </section>
         </section>
     </section>
+@endsection
+@section('script')
+    <script>
+        function changeStatus(id) {
+            var element = $('#' + id)
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        if (response.checked) {
+                            element.prop('checked', true);
+                            successToast('پرسش با موفقیت فعال شد')
+                        } else {
+                            element.prop('checked', false);
+                            successToast(' پرسش با موفقیت غیرفعال شد')
+                        }
+                    } else {
+                        element.prop('checked', elementValue);
+                        errorToast('خطا هنگام ذخیره سازی')
+                    }
+                },
+
+                error: function() {
+                    element.prop('checked', elementValue);
+                    errorToast('ارتباط برقرار نشد')
+                }
+            });
+
+            function successToast(message) {
+                var successToastTags =
+                    '<div class="toast" data-autohide="true">\n' +
+                    '   <button type="button" class="mr-2 close fa-pull-left" data-dismiss="toast">&times;</button>\n' +
+                    '   <div class="toast-body bg-success rounded">\n' + message + '</div>\n' +
+                    '</div>\n';
+
+                $('.toast-wrapper').append(successToastTags);
+                $('.toast').last().toast('show').delay(50000).queue(function() {
+                    $(this).remove();
+                });
+            }
+
+        }
+    </script>
+    @include('admin.alerts.sweetalert.confirmation', ['className' => 'btnDlt'])
 @endsection
