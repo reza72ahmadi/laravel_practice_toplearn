@@ -86,7 +86,7 @@
             </a>
             <a href="{{ route('admin.content.comment.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
-                <span>نظرات</span>
+                <span>نظرات محتوا</span>
             </a>
             <a href="{{ route('admin.content.menu.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>

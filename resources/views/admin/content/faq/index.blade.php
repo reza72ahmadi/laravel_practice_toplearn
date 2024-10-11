@@ -49,15 +49,23 @@
                                     <td>
                                         <label for="">
                                             <input id="{{ $faq->id }}" onchange="changeStatus({{ $faq->id }})"
-                                                data-url='{{ route('admin.content.faq.status', $faq->id) }}'
-                                                type="checkbox" @if ($faq->status === 1) checked @endif>
+                                                data-url='{{ route('admin.content.faq.status', $faq->id) }}' type="checkbox"
+                                                @if ($faq->status === 1) checked @endif>
                                         </label>
                                     </td>
                                     <td class="max-width-16-rem text-left">
-                                        <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit">
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.content.faq.edit', $faq->id) }}"><i class="fas fa-edit">
                                                 ویرایش</i></a>
-                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
-                                                حذف</i></button>
+
+                                        <form class="d-inline" action="{{ route('admin.content.faq.destroy', $faq->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class="fas fa-trash-alt"> حذف</i></button>
+                                        </form>
+
                                     </td>
                                 </tr>
                             @endforeach

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use PHPUnit\Framework\Attributes\Ticket;
 use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\Notify\SMSController;
 use App\Http\Controllers\Admin\Content\FAQController;
@@ -26,7 +25,7 @@ use App\Http\Controllers\Admin\Market\DiscountController;
 use App\Http\Controllers\Admin\Market\PropertyController;
 use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\User\PermissionController;
-use App\Http\Controllers\Admin\Content\CategoryController as ContentCommentController;
+use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 
 Route::get('/', function () {
@@ -156,11 +155,13 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         // comment
         Route::prefix('comment')->group(function () {
             Route::get('/', [ContentCommentController::class, 'index'])->name('admin.content.comment.index');
-            Route::get('/show', [ContentCommentController::class, 'show'])->name('admin.content.comment.show');
-            Route::post('/store', [ContentCommentController::class, 'store'])->name('admin.content.comment.store');
-            Route::get('/edit/{id}', [ContentCommentController::class, 'edit'])->name('admin.content.comment.edit');
-            Route::put('/update/{id}', [ContentCommentController::class, 'update'])->name('admin.content.comment.update');
-            Route::delete('/delete/{id}', [ContentCommentController::class, 'destroy'])->name('admin.content.comment.destroy');
+            Route::get('/show/{comment}', [ContentCommentController::class, 'show'])->name('admin.content.comment.show');
+            Route::post('/answer/{comment}', [ContentCommentController::class, 'answer'])->name('admin.content.comment.answer');
+            // Route::get('/edit/{comment}', [ContentCommentController::class, 'edit'])->name('admin.content.comment.edit');
+            // Route::put('/update/{comment}', [ContentCommentController::class, 'update'])->name('admin.content.comment.update');
+            Route::delete('/delete/{comment}', [ContentCommentController::class, 'destroy'])->name('admin.content.comment.destroy');
+            Route::get('/approved/{comment}', [ContentCommentController::class, 'approved'])->name('admin.content.comment.approved');
+            Route::get('/status/{comment}', [ContentCommentController::class, 'status'])->name('admin.content.comment.status');
         });
         // faq
         Route::prefix('faq')->group(function () {
@@ -177,18 +178,20 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [MenuController::class, 'index'])->name('admin.content.menu.index');
             Route::get('/create', [MenuController::class, 'create'])->name('admin.content.menu.create');
             Route::post('/store', [MenuController::class, 'store'])->name('admin.content.menu.store');
-            Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('admin.content.menu.edit');
-            Route::put('/update/{id}', [MenuController::class, 'update'])->name('admin.content.menu.update');
-            Route::delete('/delete/{id}', [MenuController::class, 'destroy'])->name('admin.content.menu.destroy');
+            Route::get('/edit/{menu}', [MenuController::class, 'edit'])->name('admin.content.menu.edit');
+            Route::put('/update/{menu}', [MenuController::class, 'update'])->name('admin.content.menu.update');
+            Route::delete('/delete/{menu}', [MenuController::class, 'destroy'])->name('admin.content.menu.destroy');
+            Route::get('/status/{menu}', [MenuController::class, 'status'])->name('admin.content.menu.status');
         });
         // page
         Route::prefix('page')->group(function () {
             Route::get('/', [PageController::class, 'index'])->name('admin.content.page.index');
             Route::get('/create', [PageController::class, 'create'])->name('admin.content.page.create');
             Route::post('/store', [PageController::class, 'store'])->name('admin.content.page.store');
-            Route::get('/edit/{id}', [PageController::class, 'edit'])->name('admin.content.page.edit');
-            Route::put('/update/{id}', [PageController::class, 'update'])->name('admin.content.page.update');
-            Route::delete('/delete/{id}', [PageController::class, 'destroy'])->name('admin.content.page.destroy');
+            Route::get('/edit/{page}', [PageController::class, 'edit'])->name('admin.content.page.edit');
+            Route::put('/update/{page}', [PageController::class, 'update'])->name('admin.content.page.update');
+            Route::delete('/delete/{page}', [PageController::class, 'destroy'])->name('admin.content.page.destroy');
+            Route::get('/status/{page}', [PageController::class, 'status'])->name('admin.content.page.status');
         });
         // post
         Route::prefix('post')->group(function () {
@@ -255,9 +258,10 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [SMSController::class, 'index'])->name('admin.notify.sms.index');
             Route::get('/create', [SMSController::class, 'create'])->name('admin.notify.sms.create');
             Route::post('/store', [SMSController::class, 'store'])->name('admin.notify.sms.store');
-            Route::get('/edit/{id}', [SMSController::class, 'edit'])->name('admin.notify.sms.edit');
-            Route::put('/update/{id}', [SMSController::class, 'update'])->name('admin.notify.sms.update');
-            Route::delete('/delete/{id}', [SMSController::class, 'destroy'])->name('admin.notify.sms.destroy');
+            Route::get('/edit/{sms}', [SMSController::class, 'edit'])->name('admin.notify.sms.edit');
+            Route::put('/update/{sms}', [SMSController::class, 'update'])->name('admin.notify.sms.update');
+            Route::delete('/delete/{sms}', [SMSController::class, 'destroy'])->name('admin.notify.sms.destroy');
+            Route::get('status/{sms}', [SMSController::class, 'status'])->name('admin.notify.sms.status');
         });
     });
     Route::prefix('ticket')->namespace('Ticket')->group(function () {

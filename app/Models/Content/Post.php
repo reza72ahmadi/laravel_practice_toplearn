@@ -11,6 +11,9 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes, Sluggable;
 
+    /**
+     * Define the sluggable configuration for the model.
+     */
     public function sluggable(): array
     {
         return [
@@ -19,6 +22,12 @@ class Post extends Model
             ]
         ];
     }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'title',
         'summary',
@@ -33,8 +42,19 @@ class Post extends Model
         'commentable'
     ];
 
+    /**
+     * Get the category that the post belongs to.
+     */
     public function postCategory()
     {
         return $this->belongsTo(PostCategory::class, 'category_id');
+    }
+
+    /**
+     * Get all of the post's comments.
+     */
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

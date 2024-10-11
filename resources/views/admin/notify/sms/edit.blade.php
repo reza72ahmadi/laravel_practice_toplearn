@@ -11,7 +11,7 @@
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#">اطلاع رسانی</a></li>
             <li class="breadcrumb-item"><a href="#">اطلاعیه پیامکی</a></li>
-            <li class="breadcrumb-item active" aria-current="page">اایجاد اطلاعیه پیامکی</li>
+            <li class="breadcrumb-item active" aria-current="page">ویرایش اطلاعیه پیامکی</li>
         </ol>
     </nav>
 
@@ -20,7 +20,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد اطلاعیه پیامکی
+                        ویرایش اطلاعیه پیامکی
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
@@ -29,13 +29,14 @@
 
                 <section>
 
-                    <form action="{{ route('admin.notify.sms.store') }}" method="POST">
+                    <form action="{{ route('admin.notify.sms.update', $sms->id) }}" method="POST">
+                        @method('put')
                         @csrf
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="">عنوان پیامک</label>
                                 <input type="text" class="form-control form-control-sm" name="title"
-                                    value="{{ old('title') }}">
+                                    value="{{ old('title', $sms->title) }}">
                                 @error('title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -64,7 +65,7 @@
                             </div>
                             <div class=" col-12">
                                 <label for="">متن پیامک</label>
-                                <textarea class="form-control form-control-sm" name="body" id="body" cols="30" rows="5">{{ old('body') }}</textarea>
+                                <textarea class="form-control form-control-sm" name="body" id="body" cols="30" rows="5">{{ old('body', $sms->body) }}</textarea>
                                 @error('body')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -87,15 +88,8 @@
         $(document).ready(function() {
             $("#pulished_at_view").pDatepicker({
                 format: 'YYYY/MM/DD',
-                altField: "#pulished_at",
-                timePicker: {
-                    enabled: true,
-                    meridiem: {
-                        enabled: true,
-                    }
-                }
+                altField: "#pulished_at"
             });
         });
     </script>
 @endsection
-

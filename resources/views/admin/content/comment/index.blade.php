@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-<h1>COMMENT INDEX</h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
@@ -35,49 +34,105 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>کد کاربر</th>
+                                <th>نظر</th>
+                                <th>پاسخ به</th>
                                 <th>نویسنده نظر</th>
-                                <th>کدکالا</th>
-                                <th>کالا</th>
+                                <th>کد پست</th>
+                                <th>پست</th>
                                 <th>وضعیت</th>
+                                <th>وضعیت کامنت</th>
                                 <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>9988</td>
-                                <td>کاظم خان</td>
-                                <td>888</td>
-                                <td>تلفن</td>
-                                <td>در انتظار تایید</td>
-                                <td class="max-width-16-rem text-left">
+                            @foreach ($comments as $key => $comment)
+                                <tr>
+                                    <th>{{ $key + 1 }}</th>
+                                    <td>{{ $comment->body }}</td>
+                                    <td>{{ $comment->parent_id ? Str::limit($comment->parent->body, 10) : '' }}</td>
+                                    <td>{{ $comment->user->full_name }}</td>
+                                    <td>{{ $comment->commentable_id }}</td>
+                                    <td>{{ $comment->commentable->title }}</td>
+                                    <td>{{ $comment->approved == 1 ? 'تایید شده' : 'تایید ناشده' }}</td>
+                                    <td>
+                                        <label>
+                                            <input id="{{ $comment->id }}" onchange="changeStatus({{ $comment->id }})"
+                                                data-url='{{ route('admin.content.comment.status', $comment->id) }}'
+                                                type="checkbox" @if ($comment->status === 1) checked @endif>
+                                        </label>
+                                    </td>
+                                    <td class="max-width-16-rem text-left">
+                                        <a class="btn btn-info btn-sm"
+                                            href="{{ route('admin.content.comment.show', $comment->id) }}">
+                                            <i class="fas fa-eye"></i> نمایش
+                                        </a>
+                                        @if ($comment->approved == 1)
+                                            <a href="{{ route('admin.content.comment.approved', $comment->id) }}"
+                                                class="btn btn-warning btn-sm">
+                                                <i class="fas fa-clock"></i> عدم تائید
+                                            </a>
+                                        @else
+                                            <a href="{{ route('admin.content.comment.approved', $comment->id) }}"
+                                                class="btn btn-success btn-sm">
+                                                <i class="fas fa-check"></i> تائید
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
 
-                                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.comment.show') }}"><i
-                                            class="fas fa-eye"> نمایش</i></a>
-                                    <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check">
-                                            تائید</i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>1</th>
-                                <td>9988</td>
-                                <td>کاظم خان</td>
-                                <td>888</td>
-                                <td>تلفن</td>
-                                <td>در انتظار تایید</td>
-                                <td class="max-width-16-rem text-left">
-
-                                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.comment.show') }}"><i
-                                            class="fas fa-eye"> نمایش</i></a>
-                                    <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-clock"> در انتظار
-                                            تائید</i></button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </section>
             </section>
         </section>
     </section>
+@endsection
+@section('script')
+    <script>
+        function changeStatus(id) {
+            var element = $('#' + id)
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        if (response.checked) {
+                            element.prop('checked', true);
+                            successToast('نظر بندی با موفقیت فعال شد')
+                        } else {
+                            element.prop('checked', false);
+                            successToast('نظر بندی با موفقیت غیرفعال شد')
+                        }
+                    } else {
+                        element.prop('checked', elementValue);
+                        errorToast('خطا هنگام ذخیره سازی')
+                    }
+                },
+
+                error: function() {
+                    element.prop('checked', elementValue);
+                    errorToast('ارتباط برقرار نشد')
+                }
+            });
+
+            function successToast(message) {
+                var successToastTags =
+                    '<div class="toast" data-autohide="true">\n' +
+                    '   <button type="button" class="mr-2 close fa-pull-left" data-dismiss="toast">&times;</button>\n' +
+                    '   <div class="toast-body bg-success rounded">\n' + message + '</div>\n' +
+                    '</div>\n';
+
+                $('.toast-wrapper').append(successToastTags);
+                $('.toast').last().toast('show').delay(50000).queue(function() {
+                    $(this).remove();
+                });
+            }
+
+        }
+    </script>
+    @include('admin.alerts.sweetalert.confirmation', ['className' => 'btnDlt'])
 @endsection

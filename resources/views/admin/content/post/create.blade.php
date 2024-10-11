@@ -27,8 +27,8 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.content.post.store') }}" method="POST"
-                        enctype="multipart/form-data" id="form">
+                    <form action="{{ route('admin.content.post.store') }}" method="POST" enctype="multipart/form-data"
+                        id="form">
                         @csrf
                         <section class="row">
                             <div class=" col-12 col-md-6">
@@ -60,8 +60,8 @@
                                 <label for="">تصویر</label>
                                 <input type="file" class="form-control form-control-sm" name="image">
                                 @error('image')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="col-md-6 col-12">
