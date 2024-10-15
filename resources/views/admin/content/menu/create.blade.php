@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-<H1>MENU CREATE</H1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
@@ -14,7 +13,6 @@
             <li class="breadcrumb-item active" aria-current="page">ایجاد منو</li>
         </ol>
     </nav>
-
     <section class="row">
         <section class="col-12">
             <section class="main-body-container">
@@ -29,34 +27,57 @@
 
                 <section>
 
-                    <form>
+                    <form action="{{ route('admin.content.menu.store') }}" method="POST">
+                        @csrf
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="">عنوان منو</label>
-                                <input type="text" class="form-control form-control-sm" name="category">
+                                <input type="text" class="form-control form-control-sm" name="name"
+                                    value="{{ old('name') }}">
+                                @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="col-md-6 col-12">
                                 <label for="">منوی والد</label>
-                                <Select class="form-control form-control-sm">
-                                    <option value="">------</option>
-                                    <option value="">......</option>
+                                <Select name="parent_id" class="form-control form-control-sm">
+                                    <option value="">مینوی اصلی</option>
+                                    @foreach ($menus as $menu)
+                                        <option value="{{ $menu->id }}"
+                                            @if (old('parent_id') === $menu->id) selected @endif>
+                                            {{ $menu->name }}</option>
+                                    @endforeach
                                 </Select>
+                                @error('parent_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-md-6 col-12">
-                                <label for="">آدرس url</label>
-                                <input type="text" class="form-control form-control-sm" name="category">
+                                <label for=""> url</label>
+                                <input type="text" class="form-control form-control-sm" name="url"
+                                    value="{{ old('url') }}">
+                                @error('url')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
+
                             <div class="col-md-6 col-12">
-                                <label for="">تصویر</label>
-                                <input type="file" class="form-control form-control-sm" name="category">
+                                <label for="status">وضعیت</label>
+                                <Select class="form-control form-control-sm" name="status" id="status">
+                                    <option value="0" @if (old('status') === 0) selected @endif>غیر فعال
+                                        </ption>
+                                    <option value="1" @if (old('status') === 1) selected @endif>فعال</option>
+                                    @error('status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </Select>
                             </div>
                         </section>
                         <section>
                             <button class="btn btn-primary btn-sm mt-3">ثبت</button>
                         </section>
                     </form>
-
                 </section>
             </section>
         </section>

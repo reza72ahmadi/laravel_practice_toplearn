@@ -2,6 +2,7 @@
 
 @section('head-tag')
     <title>اطلاعیه پیامکی</title>
+    <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
 @section('content')
@@ -28,17 +29,47 @@
 
                 <section>
 
-                    <form>
+                    <form action="{{ route('admin.notify.sms.store') }}" method="POST">
+                        @csrf
                         <section class="row">
                             <div class="col-md-6 col-12">
-                                <label for="">متن پیامک</label>
-                                <input type="text" class="form-control form-control-sm" name="category">
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <label for="">تاریخ انتشار</label>
-                                <input type="text" class="form-control form-control-sm" name="category">
+                                <label for="">عنوان پیامک</label>
+                                <input type="text" class="form-control form-control-sm" name="title"
+                                    value="{{ old('title') }}">
+                                @error('title')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
+                            <div class=" col-12 col-md-6">
+                                <label for="">تاریخ انتشار</label>
+                                <input type="text" id="pulished_at" class="form-control form-control-sm d-none"
+                                    name="published_at">
+                                <input type="text" id="pulished_at_view" class="form-control form-control-sm">
+
+                                @error('published_at')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class=" col-12">
+                                <label for="status">وضعیت</label>
+                                <Select class="form-control form-control-sm" name="status" id="status">
+                                    <option value="0" @if (old('status') === 0) selected @endif>غیر فعال
+                                        </ption>
+                                    <option value="1" @if (old('status') === 1) selected @endif>فعال</option>
+                                    @error('status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </Select>
+                            </div>
+                            <div class=" col-12">
+                                <label for="">متن پیامک</label>
+                                <textarea class="form-control form-control-sm" name="body" id="body" cols="30" rows="5">{{ old('body') }}</textarea>
+                                @error('body')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </section>
                         <section>
                             <button class="btn btn-primary btn-sm mt-3">ثبت</button>
@@ -49,4 +80,22 @@
             </section>
         </section>
     </section>
+@endsection
+@section('script')
+    <script src="{{ asset('admin-assets/jalalidatepicker/persian-date.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#pulished_at_view").pDatepicker({
+                format: 'YYYY/MM/DD',
+                altField: "#pulished_at",
+                timePicker: {
+                    enabled: true,
+                    meridiem: {
+                        enabled: true,
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

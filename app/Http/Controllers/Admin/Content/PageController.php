@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Content;
 
+use App\Models\Content\Page;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\Content\PageRequest;
 
 class PageController extends Controller
 {
@@ -12,7 +13,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('admin.content.page.index');
+        $pages = Page::all();
+        return view('admin.content.page.index', compact('pages'));
     }
 
     /**
@@ -26,9 +28,11 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PageRequest $request)
     {
-        //
+        Page::create($request->all());
+        return redirect()->route('admin.content.page.index')
+            ->with('swal-success', 'صفحه شما با موفقیت ذخیره شد');
     }
 
     /**
@@ -42,24 +46,45 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Page $page)
     {
-        //
+        return view('admin.content.page.edit', compact('page'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PageRequest $request, Page $page)
     {
-        //
+        $page->update($request->all());
+        return redirect()->route('admin.content.page.index')
+            ->with('swal-success', 'صفحه شما با موفقیت ذخیره شد');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Page $page)
     {
-        //
+        $page->delete();
+        return redirect()->route('admin.content.page.index')
+            ->with('swal-success', 'صفحه شما با موفقیت ذخیره شد');
+    }
+    // status
+    public function status(Page $page)
+    {
+
+        $page->status = $page->status == 0 ? 1 : 0;
+        $result =  $page->save();
+
+        if ($result) {
+            if ($page->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            } else {
+                return response()->json(['status' => true, 'checked' => true]);
+            }
+        } else {
+            return response()->json(['status' => false]);
+        }
     }
 }

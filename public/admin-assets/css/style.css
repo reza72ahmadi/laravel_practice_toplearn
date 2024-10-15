@@ -1,14 +1,14 @@
-@font-face {
+/* @font-face {
   font-family: IRANSans;
   src: url('../fonts/IRANSans/IRANSansWeb_Light.woff'),
   url('../fonts/IRANSans/IRANSansWeb_Light.woff') format('truetype');
   font-weight: normal;
-}
+} */
 
 * {
 	direction: rtl;
 	text-align: right;
-	font-family:IRANSans;
+	/* font-family:IRANSans; */
 }
 
 
@@ -29,7 +29,7 @@
  **************************************box styles**********************************
 */
 	.info-box-body h5{
-		font-size: .9rem;
+		font-size: 1.5rem;
 		line-height: 1rem;
 	}
 
@@ -116,12 +116,12 @@
 
 
 .main-body-container-header p{
-	font-size: .8rem;
+	font-size: .9rem;
 	color: #777;
 }
 
 .main-body {
-	font-size: 0.8rem;
+	font-size: 0.9rem;
 }
 
 .main-body table {
