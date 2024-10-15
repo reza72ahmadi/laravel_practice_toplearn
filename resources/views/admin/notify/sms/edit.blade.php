@@ -45,8 +45,9 @@
                             <div class=" col-12 col-md-6">
                                 <label for="">تاریخ انتشار</label>
                                 <input type="text" id="pulished_at" class="form-control form-control-sm d-none"
-                                    name="published_at">
-                                <input type="text" id="pulished_at_view" class="form-control form-control-sm">
+                                    name="published_at" value="{{ $sms->published_at }}">
+                                <input type="text" id="pulished_at_view" class="form-control form-control-sm"
+                                    value="{{ $sms->published_at }}">
                                 @error('published_at')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
