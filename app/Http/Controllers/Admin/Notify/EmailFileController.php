@@ -6,6 +6,7 @@ use App\Models\Notify\Email;
 use Illuminate\Http\Request;
 use App\Models\Notify\EmailFile;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\Notify\EmailFileRequest;
 
 class EmailFileController extends Controller
@@ -67,18 +68,49 @@ class EmailFileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(EmailFile $file)
     {
-        //
+        return view('admin.notify.email-file.edit', compact('file'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmailFileRequest $request, Email $email, EmailFile $file)
     {
-        //
+        $inputs = $request->all();
+
+        if ($request->hasFile('file')) {
+            $uploadedFile = $request->file('file');
+            $fileName = time() . '_' . $uploadedFile->getClientOriginalName();
+            $fileSize = $uploadedFile->getSize();
+            $fileType = $uploadedFile->getClientOriginalExtension();
+
+            if ($file->file_path && Storage::disk('public')->exists($file->file_path)) {
+                Storage::disk('public')->delete($file->file_path);
+            }
+
+            $stored = $uploadedFile->storeAs('uploads', $fileName, 'public');
+
+            if (!$stored) {
+                return redirect()->route('admin.notify.email-file.index', $email->id)
+                    ->with('swal-error', 'آپلود فایل شما با خطا مواجه شد');
+            }
+
+            $inputs['file_path'] = 'uploads/' . $fileName;
+            $inputs['file_size'] = $fileSize;
+            $inputs['file_type'] = $fileType;
+
+            $file->update($inputs);
+
+            return redirect()->route('admin.notify.email-file.index', $file->email->id)
+                ->with('swal-success', 'فایل شما با موفقیت ویرایش شد');
+        }
+
+        return redirect()->route('admin.notify.email-file.index', $file->email->id)
+            ->with('swal-error', 'هیچ فایلی برای آپلود انتخاب نشده است');
     }
+
 
     /**
      * Remove the specified resource from storage.

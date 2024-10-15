@@ -19,11 +19,25 @@ class EmailFileRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+    // public function rules(): array
+    // {
+    //     return [
+    //         'status' => 'required|numeric|in:0,1',
+    //         'file' => 'required|mimes:png,jpg,jpeg,gif,zip,pdf,doc,docx',
+    //     ];
+    // }
     public function rules(): array
     {
-        return [
-            'file' => "required|mimes:png,jpg,jpeg,gif,zip,pdf,doc,docx",
+        $validate = [
             'status' => 'required|numeric|in:0,1',
         ];
+
+        if ($this->isMethod('post')) {
+            $validate['file'] = 'required|mimes:png,jpg,jpeg,gif,zip,pdf,doc,docx';
+        } else {
+            $validate['file'] = 'nullable|mimes:png,jpg,jpeg,gif,zip,pdf,doc,docx';
+        }
+
+        return $validate;
     }
 }

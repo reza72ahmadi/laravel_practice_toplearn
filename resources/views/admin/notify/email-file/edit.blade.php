@@ -25,50 +25,40 @@
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm" href="{{ route('admin.notify.email.index') }}">بازگشت</a>
+                    <a class="btn btn-info btn-sm"
+                        href="{{ route('admin.notify.email-file.index', $file->email->id) }}">بازگشت</a>
                 </section>
 
                 <section>
 
-                    <form action="{{ route('admin.notify.email.update', $email->id) }}" method="POST">
+                    <form action="{{ route('admin.notify.email-file.update', $file->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <section class="row">
-                            <div class="col-md-6 col-12">
-                                <label for="">عنوان ایمیل</label>
-                                <input type="text" class="form-control form-control-sm" name="subject"
-                                    value="{{ old('subject', $email->subject) }}">
-                            </div>
-                            <div class=" col-12 col-md-6">
-                                <label for="">تاریخ انتشار</label>
-                                <input type="text" id="pulished_at" class="form-control form-control-sm d-none"
-                                    name="published_at" value="{{ $email->published_at }}">
-                                <input type="text" id="pulished_at_view" class="form-control form-control-sm"
-                                    value="{{ $email->published_at }}">
 
-                                @error('published_at')
+                            <div class=" col-12 col-md-6">
+                                <label for=""> فایل</label>
+                                <input type="file" name="file" class="form-control form-control-sm"
+                                    value="{{ old('file', 'http://127.0.0.1:8000/' . $file->file_path) }}">
+                                @error('file')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+                            </div>
+
+                            <div class="col-md-6 col-12">
+                                <label for="status">وضعیت</label>
+                                <Select class="form-control form-control-sm" name="status" id="status">
+                                    <option value="0" @if (old('status', $file->status) === 0) selected @endif>غیر فعال
+                                        </ption>
+                                    <option value="1" @if (old('status', $file->status) === 1) selected @endif>فعال</option>
+                                    @error('status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </Select>
                             </div>
                         </section>
-                        <div class=" col-12">
-                            <label for="status">وضعیت</label>
-                            <Select class="form-control form-control-sm" name="status" id="status">
-                                <option value="0" @if (old('status', $email->status) === 0) selected @endif>غیر فعال
-                                    </ption>
-                                <option value="1" @if (old('status', $email->status) === 1) selected @endif>فعال</option>
-                                @error('status')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </Select>
-                        </div>
-                        <div class=" col-12">
-                            <label for="">متن ایمیل</label>
-                            <textarea class="form-control form-control-sm" name="body" id="body" cols="30" rows="5">{{ old('body', $email->body) }}</textarea>
-                            @error('body')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+
                         <section>
                             <button class="btn btn-primary btn-sm mt-3">ثبت</button>
                         </section>
@@ -78,7 +68,7 @@
         </section>
     </section>
 @endsection
-@section('script')
+{{-- @section('script')
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-date.min.js') }}"></script>
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.js') }}"></script>
     <script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
@@ -103,4 +93,4 @@
             });
         });
     </script>
-@endsection
+@endsection --}}
