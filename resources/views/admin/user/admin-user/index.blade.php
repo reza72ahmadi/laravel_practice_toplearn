@@ -17,15 +17,12 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
-                    <h5>
-                        ایجادادمین جدید
-                    </h5>
+                    <h5>ایجاد ادمین جدید</h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
                     <a class="btn btn-info btn-sm" href="{{ route('admin.user.admin-user.create') }}">ایجاد ادمین جدید</a>
                     <div class="max-width-16-rem">
-                        <input class="form-control form-control-sm" type="text" name="" id=""
-                            placeholder="جستجو...">
+                        <input class="form-control form-control-sm" type="text" placeholder="جستجو...">
                     </div>
                 </section>
 
@@ -38,29 +35,150 @@
                                 <th>شماره مبایل</th>
                                 <th>نام</th>
                                 <th>نام خانوادگی</th>
-                                <th>نقش</th>
+                                <th>فعال سازی</th>
+                                <th>وضعیت</th>
+                                <th>عکس</th>
                                 <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>reza72@yahoo.com</td>
-                                <td>0773711026</td>
-                                <td>reza</td>
-                                <td>ahmadi</td>
-                                <td>admin</td>
-                                <td class="max-width-16-rem text-left">
-                                    <a class="btn btn-warning btn-sm" href=""><i class="fas fa-edit"> نقش</i></a>
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"> ویرایش</i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
-                                            حذف</i></button>
-                                </td>
-                            </tr>
+                            @foreach ($users as $key => $user)
+                                <tr>
+                                    <th>{{ $key + 1 }}</th>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->mobile }}</td>
+                                    <td>{{ $user->first_name }}</td>
+                                    <td>{{ $user->last_name }}</td>
+                                    <td>
+                                        <label>
+                                            <input id="{{ $user->id }}-active"
+                                                onchange="changeActivation({{ $user->id }})"
+                                                data-url='{{ route('admin.user.admin-user.activation', $user->id) }}'
+                                                type="checkbox" @if ($user->activation === 1) checked @endif>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <label>
+                                            <input id="{{ $user->id }}-status"
+                                                onchange="changeStatus({{ $user->id }})"
+                                                data-url='{{ route('admin.user.admin-user.status', $user->id) }}'
+                                                type="checkbox" @if ($user->status === 1) checked @endif>
+                                        </label>
+                                    </td>
+                                    <td><img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="Profile Image"
+                                            style="width: 60px; height: auto; border-radius: 50%;">
+                                    </td>
+                                    <td class="max-width-16-rem text-left">
+                                        <a class="btn btn-warning btn-sm" href="#"><i class="fas fa-edit"> نقش</i></a>
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.user.admin-user.edit', $user->id) }}">
+                                            <i class="fas fa-edit"> ویرایش</i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm btnDlt"
+                                            data-id="{{ $user->id }}">
+                                            <i class="fas fa-trash-alt"> حذف</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
             </section>
         </section>
     </section>
+@endsection
+
+@section('script')
+    <script>
+        function changeActivation(id) {
+            var element = $('#' + id + '-active')
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        if (response.checked) {
+                            element.prop('checked', true);
+                            successToast('ایمیل با موفقیت فعال شد')
+                        } else {
+                            element.prop('checked', false);
+                            successToast(' ایمیل با موفقیت غیرفعال شد')
+                        }
+                    } else {
+                        element.prop('checked', elementValue);
+                        errorToast('خطا هنگام ذخیره سازی')
+                    }
+                },
+
+                error: function() {
+                    element.prop('checked', elementValue);
+                    errorToast('ارتباط برقرار نشد')
+                }
+            });
+
+            function successToast(message) {
+                var successToastTags =
+                    '<div class="toast" data-autohide="true">\n' +
+                    '   <button type="button" class="mr-2 close fa-pull-left" data-dismiss="toast">&times;</button>\n' +
+                    '   <div class="toast-body bg-success rounded">\n' + message + '</div>\n' +
+                    '</div>\n';
+
+                $('.toast-wrapper').append(successToastTags);
+                $('.toast').last().toast('show').delay(50000).queue(function() {
+                    $(this).remove();
+                });
+            }
+
+        }
+    </script>
+    <script>
+        function changeStatus(id) {
+            var element = $('#' + id + '-status')
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        if (response.checked) {
+                            element.prop('checked', true);
+                            successToast('ایمیل با موفقیت فعال شد')
+                        } else {
+                            element.prop('checked', false);
+                            successToast(' ایمیل با موفقیت غیرفعال شد')
+                        }
+                    } else {
+                        element.prop('checked', elementValue);
+                        errorToast('خطا هنگام ذخیره سازی')
+                    }
+                },
+
+                error: function() {
+                    element.prop('checked', elementValue);
+                    errorToast('ارتباط برقرار نشد')
+                }
+            });
+
+            function successToast(message) {
+                var successToastTags =
+                    '<div class="toast" data-autohide="true">\n' +
+                    '   <button type="button" class="mr-2 close fa-pull-left" data-dismiss="toast">&times;</button>\n' +
+                    '   <div class="toast-body bg-success rounded">\n' + message + '</div>\n' +
+                    '</div>\n';
+
+                $('.toast-wrapper').append(successToastTags);
+                $('.toast').last().toast('show').delay(50000).queue(function() {
+                    $(this).remove();
+                });
+            }
+
+        }
+    </script>
+    @include('admin.alerts.sweetalert.confirmation', ['className' => 'btnDlt'])
 @endsection
