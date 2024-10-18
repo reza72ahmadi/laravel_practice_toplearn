@@ -34,8 +34,10 @@ class SettingController extends Controller
     public function update(Setting $setting, SettingRequest $request)
     {
         if ($request->hasFile('logo')) {
+            
             $fileLogo = time() . '_' . $request->file('logo')->getClientOriginalName();
             $request->file('logo')->storeAs('uploads', $fileLogo, 'public');
+
             if ($setting->logo) {
                 Storage::disk('public')->delete($setting->logo);
             }

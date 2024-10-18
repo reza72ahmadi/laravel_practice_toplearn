@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Notify;
 
 use App\Models\Notify\Email;
-use Illuminate\Http\Request;
 use App\Models\Notify\EmailFile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -81,15 +80,14 @@ class EmailFileController extends Controller
         $inputs = $request->all();
 
         if ($request->hasFile('file')) {
+
             $uploadedFile = $request->file('file');
             $fileName = time() . '_' . $uploadedFile->getClientOriginalName();
             $fileSize = $uploadedFile->getSize();
             $fileType = $uploadedFile->getClientOriginalExtension();
-
             if ($file->file_path && Storage::disk('public')->exists($file->file_path)) {
                 Storage::disk('public')->delete($file->file_path);
             }
-
             $stored = $uploadedFile->storeAs('uploads', $fileName, 'public');
 
             if (!$stored) {
@@ -100,13 +98,10 @@ class EmailFileController extends Controller
             $inputs['file_path'] = 'uploads/' . $fileName;
             $inputs['file_size'] = $fileSize;
             $inputs['file_type'] = $fileType;
-
             $file->update($inputs);
-
             return redirect()->route('admin.notify.email-file.index', $file->email->id)
                 ->with('swal-success', 'فایل شما با موفقیت ویرایش شد');
         }
-
         return redirect()->route('admin.notify.email-file.index', $file->email->id)
             ->with('swal-error', 'هیچ فایلی برای آپلود انتخاب نشده است');
     }
@@ -122,8 +117,6 @@ class EmailFileController extends Controller
         return redirect()->route('admin.notify.email-file.index', $email_id)
             ->with('swal-success', 'ایمیل شما با موفقیت حذف شد');
     }
-
-
 
     // status
     public function status(EmailFile $file)
