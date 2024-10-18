@@ -65,7 +65,8 @@
                                                 type="checkbox" @if ($user->status === 1) checked @endif>
                                         </label>
                                     </td>
-                                    <td><img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="Profile Image"
+                                    <td>
+                                        <img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="Profile Image"
                                             style="width: 60px; height: auto; border-radius: 50%;">
                                     </td>
                                     <td class="max-width-16-rem text-left">
@@ -74,10 +75,17 @@
                                             href="{{ route('admin.user.admin-user.edit', $user->id) }}">
                                             <i class="fas fa-edit"> ویرایش</i>
                                         </a>
-                                        <button type="button" class="btn btn-danger btn-sm btnDlt"
-                                            data-id="{{ $user->id }}">
-                                            <i class="fas fa-trash-alt"> حذف</i>
-                                        </button>
+                                        <form class="d-inline"
+                                            action="{{ route('admin.user.admin-user.destroy', $user->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="button" class="btn btn-danger btn-sm btnDlt"
+                                                data-id="{{ $user->id }}">
+                                                <i class="fas fa-trash-alt"> حذف</i>
+                                            </button>
+                                        </form>
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -103,10 +111,10 @@
                     if (response.status) {
                         if (response.checked) {
                             element.prop('checked', true);
-                            successToast('ایمیل با موفقیت فعال شد')
+                            successToast('کاربر با موفقیت فعال شد')
                         } else {
                             element.prop('checked', false);
-                            successToast(' ایمیل با موفقیت غیرفعال شد')
+                            successToast(' کاربر با موفقیت غیرفعال شد')
                         }
                     } else {
                         element.prop('checked', elementValue);
@@ -128,7 +136,7 @@
                     '</div>\n';
 
                 $('.toast-wrapper').append(successToastTags);
-                $('.toast').last().toast('show').delay(50000).queue(function() {
+                $('.toast').last().toast('show').delay(5000).queue(function() {
                     $(this).remove();
                 });
             }
@@ -148,10 +156,10 @@
                     if (response.status) {
                         if (response.checked) {
                             element.prop('checked', true);
-                            successToast('ایمیل با موفقیت فعال شد')
+                            successToast('وضعیت با موفقیت فعال شد')
                         } else {
                             element.prop('checked', false);
-                            successToast(' ایمیل با موفقیت غیرفعال شد')
+                            successToast(' وضعیت با موفقیت غیرفعال شد')
                         }
                     } else {
                         element.prop('checked', elementValue);
@@ -173,7 +181,7 @@
                     '</div>\n';
 
                 $('.toast-wrapper').append(successToastTags);
-                $('.toast').last().toast('show').delay(50000).queue(function() {
+                $('.toast').last().toast('show').delay(5000).queue(function() {
                     $(this).remove();
                 });
             }

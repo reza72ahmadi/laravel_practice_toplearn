@@ -16,8 +16,7 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        // $admins = User::where('user_type', 1)->get();
+        $users = User::where('user_type', 1)->get();
         return view('admin.user.admin-user.index', compact('users'));
     }
 
@@ -47,6 +46,7 @@ class AdminUserController extends Controller
             // Update the inputs array to include the file path
             $inputs['profile_photo_path'] = 'uploads/' . $profile_photo;
             $inputs['password'] = Hash::make($request->input('password'));
+            $inputs['user_type'] = 1;
         }
 
         // Create the user with the modified inputs array
@@ -69,31 +69,11 @@ class AdminUserController extends Controller
      */
     public function edit(User $user)
     {
+
         return view('admin.user.admin-user.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(AdminUserRequest $request, User $admin)
-    // {
-    //     $inputs = $request->all();
-
-    //     if ($request->hasFile('profile_photo_path')) {
-    //         $profile_photo = time() . '_' . $request->file('profile_photo_path')->getClientOriginalName();
-    //         $request->file('profile_photo_path')->storeAs('uploads', $profile_photo, 'public');
-    //         $inputs['profile_photo_path'] = 'uploads/' . $profile_photo;
-    //         $inputs['password'] = Hash::make($request->input('password'));
-    //     }
-    //     if ($admin->profile_photo_path) {
-    //         Storage::disk('public')->delete($admin->profile_photo_path);
-    //     }
-    //     $admin->profile_photo_path = 'uploads/' . $profile_photo;
-    //     $admin->update($inputs);
-
-    //     return redirect()->route('admin.user.admin-user.index')
-    //         ->with('swal-success', 'کاربر شما با موفقیت ویرایش شد');
-    // }
+    // update
 
     public function update(AdminUserRequest $request, User $user)
     {
@@ -127,18 +107,20 @@ class AdminUserController extends Controller
         $user->update($inputs);
 
         return redirect()->route('admin.user.admin-user.index')
-            ->with('swal-success', 'کاربر شما با موفقیت ویرایش شد');
+            ->with('swal-success', 'ادمین سایت شما با موفقیت ویرایش شد');
     }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->forceDelete();
+        return redirect()->route('admin.user.admin-user.index')
+            ->with('swal-success', 'کاربر شما با موفقیت حذف شد');
     }
-    // status
+    // activation
     public function activation(User $user)
     {
         $user->activation = $user->activation == 0 ? 1 : 0;
@@ -154,9 +136,10 @@ class AdminUserController extends Controller
             return response()->json(['status' => false]);
         }
     }
+
+    // status
     public function status(User $user)
     {
-
         $user->status = $user->status == 0 ? 1 : 0;
         $result =  $user->save();
 
@@ -170,8 +153,4 @@ class AdminUserController extends Controller
             return response()->json(['status' => false]);
         }
     }
-
-
-    
-  
 }

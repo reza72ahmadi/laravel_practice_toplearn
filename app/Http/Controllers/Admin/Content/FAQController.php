@@ -33,7 +33,7 @@ class FAQController extends Controller
     public function store(FaqRequest $request)
     {
 
-        $inputs = $request->all();
+        $inputs = $request->validated();
         Faq::create($inputs);
         return redirect()->route('admin.content.faq.index')
             ->with('swal-success', 'سوال شما با موفقیت ذخیره شد');
@@ -57,7 +57,7 @@ class FAQController extends Controller
      */
     public function update(FaqRequest $request, Faq $faq)
     {
-        $inputs = $request->all();
+        $inputs = $request->validated();
         $faq->update($inputs);
         return redirect()->route('admin.content.faq.index')
             ->with('swal-success', 'سوال شما با موفقیت ویرایش شد');

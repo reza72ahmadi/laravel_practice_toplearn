@@ -1,15 +1,15 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>ویرایش کاربران ادمین</title>
+    <title>ویرایش مشتریان</title>
 @endsection
 
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
-            <li class="breadcrumb-item"><a href="#">کاربران ادمین </a></li>
-            <li class="breadcrumb-item active" aria-current="page">ویرایش کاربران ادمین</li>
+            <li class="breadcrumb-item"><a href="#">بخش کاربران</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ویرایش مشتری</li>
         </ol>
     </nav>
 
@@ -18,16 +18,16 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ویرایش کاربران ادمین
+                        ویرایش مشتری
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm" href="{{ route('admin.user.admin-user.index') }}">بازگشت</a>
+                    <a class="btn btn-info btn-sm" href="{{ route('admin.user.customer.index') }}">بازگشت</a>
                 </section>
 
                 <section>
 
-                    <form action="{{ route('admin.user.admin-user.update', $user->id) }}" method="POST"
+                    <form action="{{ route('admin.user.customer.update', $user->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('put')
@@ -51,7 +51,7 @@
                             {{-- <div class="col-md-6 col-12">
                                 <label for="">ایمیل</label>
                                 <input type="email" class="form-control form-control-sm" name="email"
-                                    value="{{ old('email', $user->email) }}">
+                                    value="{{ old('email') }}">
                                 @error('email')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -59,12 +59,26 @@
                             <div class="col-md-6 col-12">
                                 <label for="">شماره موبایل</label>
                                 <input type="text" class="form-control form-control-sm" name="mobile"
-                                    value="{{ old('mobile', $user->mobile) }}">
+                                    value="{{ old('mobile') }}">
                                 @error('mobile')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label for="">کلمه عبور</label>
+                                <input type="password" class="form-control form-control-sm" name="password">
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label for="">تکرار کلمه عبور</label>
+                                <input type="password" class="form-control form-control-sm" name="password_confirmation">
+                                @error('password_confirmation')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div> --}}
-                            <div class=" col-12">
+                            <div class="col-12">
                                 <label for="">تصویر</label>
                                 <input type="file" class="form-control form-control-sm" name="profile_photo_path"
                                     value="{{ old('profile_photo_path', $user->profile_photo_path) }}">
@@ -72,18 +86,18 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                                 @if ($user->profile_photo_path)
-                                    <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="Profile Image"
-                                            style="width: 100px; height: auto; border-radius: 50%;">
-                                    </div>
-                                @endif
+                                <div class="mt-2">
+                                    <img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="Profile Image"
+                                        style="width: 100px; height: auto; border-radius: 50%;">
+                                </div>
+                            @endif
                             </div>
                             {{-- <div class="col-md-6 col-12">
                                 <label for="activation">وضعیت فعال سازی</label>
                                 <select class="form-control form-control-sm" name="activation" id="activation">
-                                    <option value="0" @if (old('activation', $user->activation) == 0) selected @endif>غیر فعال
+                                    <option value="0" @if (old('activation', $user->) == 0) selected @endif>غیر فعال
                                     </option>
-                                    <option value="1" @if (old('activation', $user->activation) == 1) selected @endif>فعال</option>
+                                    <option value="1" @if (old('activation', $user->) == 1) selected @endif>فعال</option>
                                 </select>
                                 @error('activation')
                                     <span class="text-danger">{{ $message }}</span>
@@ -91,9 +105,10 @@
                             </div> --}}
                         </section>
                         <section>
-                            <button class="btn btn-primary btn-sm mt-3">ثبت</button>
+                            <button type="submit" class="btn btn-primary btn-sm mt-3">ثبت</button>
                         </section>
                     </form>
+
                 </section>
             </section>
         </section>
