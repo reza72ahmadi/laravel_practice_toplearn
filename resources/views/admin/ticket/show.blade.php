@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<h1>COMMENT SHOW</h1>
+    <h1>COMMENT SHOW</h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
@@ -29,26 +29,32 @@
 
                 <section class="card">
                     <section class="card-header text-white bg-custom-yellow">
-                        0089004 ali ahmadi </section>
+                        {{ $ticket->admin->user->first_name . ' ' . $ticket->admin->user->last_name }} - {{ $ticket->id }}
+                    </section>
                     <section class="card-body">
-                        <h5 class="card-title">تکت ها</h5>
-                        <p class="card-text">نمایش مربوط تکت ها</p>
+                        <h5 class="card-title">موضوع : {{ $ticket->subject }}</h5>
+                        <p class="card-text">{{ $ticket->description }}</p>
                     </section>
                 </section>
 
                 <section>
-                    <form>
+                    <form action="{{ route('admin.ticket.answer', $ticket->id) }}" method="POST">
+                        @csrf
                         <section class="row">
                             <div class="col-12">
                                 <label for="">پاسخ تیکت:</label>
-                                <textarea class="form-control form-control-sm" name="" id="" cols="30" rows="4"></textarea>
+                                <textarea class="form-control form-control-sm" name="description" cols="30" rows="4">{{ old('description') }}</textarea>
+                                @error('description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             </div>
                         </section>
                         <section>
-                            <button class="btn btn-primary btn-sm mt-3">ثبت</button>
+                            <button type="submit" class="btn btn-primary btn-sm mt-3">ثبت</button>
                         </section>
                     </form>
                 </section>
+
             </section>
         </section>
     </section>

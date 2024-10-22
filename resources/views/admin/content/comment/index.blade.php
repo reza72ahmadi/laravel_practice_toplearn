@@ -100,6 +100,7 @@
                 type: "GET",
                 success: function(response) {
                     if (response.status) {
+                        // ------------
                         if (response.checked) {
                             element.prop('checked', true);
                             successToast('نظر بندی با موفقیت فعال شد')
@@ -107,7 +108,10 @@
                             element.prop('checked', false);
                             successToast('نظر بندی با موفقیت غیرفعال شد')
                         }
-                    } else {
+                        // ---------
+                    } 
+
+                    else {
                         element.prop('checked', elementValue);
                         errorToast('خطا هنگام ذخیره سازی')
                     }
@@ -119,6 +123,7 @@
                 }
             });
 
+            
             function successToast(message) {
                 var successToastTags =
                     '<div class="toast" data-autohide="true">\n' +

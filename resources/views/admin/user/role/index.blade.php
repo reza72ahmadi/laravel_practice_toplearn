@@ -35,26 +35,56 @@
                             <tr>
                                 <th>#</th>
                                 <th>نام نقش</th>
-                                <th>دسترسی ها</th>
+                                <th>توضیحات</th>
+                                <th>دسترسی</th>
+                                {{-- <th>وضعیت</th> --}}
                                 <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>reza</td>
-                                <td>
-                                     1. مشاهده سفارشات
-                                    <br> 2. مشاهده پرداخت ها
-                                    <br> 3. مشاهده تخفیف ها
-                                </td>
-                                <td class="max-width-16-rem text-left">
-                                    <a class="btn btn-success btn-sm" href=""><i class="fas fa-user-graduate"> دسترسی ها</i></a>
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"> ویرایش</i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
-                                            حذف</i></button>
-                                </td>
-                            </tr>
+                            @foreach ($roles as $key => $role)
+                                <tr>
+                                    <th>{{ $key + 1 }}</th>
+                                    <td>{{ $role->name }}</td>
+                                    <td>{{ $role->description }}</td>
+                                    <td>
+                                        @if (empty($role->permissions()->get()->toArray()))
+                                            <span>not found</span>
+                                        @else
+                                            @foreach ($role->permissions as $permission)
+                                                {{ $permission->name }}<br>
+                                            @endforeach
+                                        @endif
+
+                                    </td>
+                                    {{-- <td>
+                                        <label>
+                                            <input id="{{ $role->id }}" onchange="changeStatus({{ $role->id }})"
+                                                data-url='{{ route('admin.user.role.status', $role->id) }}'
+                                                type="checkbox"@if ($role->status === 1) checked @endif>
+                                        </label>
+                                    </td> --}}
+                                    <td class="max-width-16-rem text-left">
+                                        <a class="btn btn-success btn-sm"
+                                            href="{{ route('admin.user.role.permission-form', $role->id) }}"><i
+                                                class="fas fa-user-graduate">
+                                                دسترسی ها</i></a>
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.user.role.edit', $role->id) }}"><i class="fas fa-edit">
+                                                ویرایش</i></a>
+
+                                        <form class="d-inline" action="{{ route('admin.user.role.destroy', $role->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm btnDlt"
+                                                data-id="{{ $role->id }}">
+                                                <i class="fas fa-trash-alt"> حذف</i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -62,3 +92,51 @@
         </section>
     </section>
 @endsection
+{{-- @section('script')
+    <script>
+        function changeStatus(id) {
+            var element = $('#' + id)
+            var url = element.attr('data-url');
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(response) {
+                    if (response.status) {
+                        if (response.checked) {
+                            element.prop('checked', true);
+                            successToast('مشتری با موفقیت فعال شد')
+                        } else {
+                            element.prop('checked', false);
+                            successToast(' مشتری با موفقیت غیرفعال شد')
+                        }
+                    } else {
+                        element.prop('checked', elementValue);
+                        errorToast('خطا هنگام ذخیره سازی')
+                    }
+                },
+
+                error: function() {
+                    element.prop('checked', elementValue);
+                    errorToast('ارتباط برقرار نشد')
+                }
+            });
+
+            function successToast(message) {
+                var successToastTags =
+                    '<div class="toast" data-autohide="true">\n' +
+                    '   <button type="button" class="mr-2 close fa-pull-left" data-dismiss="toast">&times;</button>\n' +
+                    '   <div class="toast-body bg-success rounded">\n' + message + '</div>\n' +
+                    '</div>\n';
+
+                $('.toast-wrapper').append(successToastTags);
+                $('.toast').last().toast('show').delay(5000).queue(function() {
+                    $(this).remove();
+                });
+            }
+
+        }
+    </script>
+    @include('admin.alerts.sweetalert.confirmation', ['className' => 'btnDlt'])
+@endsection --}}
