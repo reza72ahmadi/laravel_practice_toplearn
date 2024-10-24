@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
+use App\Models\Market\ProductCategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,7 +13,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.market.product.index');
+        $productCategories = ProductCategory::all();
+        return view('admin.market.product.index',compact('productCategories'));
     }
 
     /**
