@@ -48,9 +48,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('admin.market.category.index');
             Route::get('/create', [CategoryController::class, 'create'])->name('admin.market.category.create');
             Route::post('/store', [CategoryController::class, 'store'])->name('admin.market.category.store');
-            Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('admin.market.category.edit');
-            Route::put('/update/{id}', [CategoryController::class, 'update'])->name('admin.market.category.update');
-            Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
+            Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('admin.market.category.edit');
+            Route::put('/update/{category}', [CategoryController::class, 'update'])->name('admin.market.category.update');
+            Route::delete('/delete/{category}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
         });
 
         // brand
@@ -58,9 +58,9 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [BrandController::class, 'index'])->name('admin.market.brand.index');
             Route::get('/create', [BrandController::class, 'create'])->name('admin.market.brand.create');
             Route::post('/store', [BrandController::class, 'store'])->name('admin.market.brand.store');
-            Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
-            Route::put('/update/{id}', [BrandController::class, 'update'])->name('admin.market.brand.update');
-            Route::delete('/delete/{id}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
+            Route::get('/edit/{brand}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
+            Route::put('/update/{brand}', [BrandController::class, 'update'])->name('admin.market.brand.update');
+            Route::delete('/delete/{brand}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
         });
         // comment
         Route::prefix('comment')->group(function () {
@@ -76,9 +76,10 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [DeliveryController::class, 'index'])->name('admin.market.delivery.index');
             Route::get('/create', [DeliveryController::class, 'create'])->name('admin.market.delivery.create');
             Route::post('/store', [DeliveryController::class, 'store'])->name('admin.market.delivery.store');
-            Route::get('/edit/{id}', [DeliveryController::class, 'edit'])->name('admin.market.delivery.edit');
-            Route::put('/update/{id}', [DeliveryController::class, 'update'])->name('admin.market.delivery.update');
-            Route::delete('/delete/{id}', [DeliveryController::class, 'destroy'])->name('admin.market.delivery.destroy');
+            Route::get('/edit/{delivery}', [DeliveryController::class, 'edit'])->name('admin.market.delivery.edit');
+            Route::put('/update/{delivery}', [DeliveryController::class, 'update'])->name('admin.market.delivery.update');
+            Route::delete('/delete/{delivery}', [DeliveryController::class, 'destroy'])->name('admin.market.delivery.destroy');
+            Route::get('/status/{delivery}', [DeliveryController::class, 'status'])->name('admin.market.delivery.status');
         });
         // discount
         Route::prefix('discount')->group(function () {
@@ -119,13 +120,15 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('admin.market.product.index');
             Route::get('/create', [ProductController::class, 'create'])->name('admin.market.product.create');
             Route::post('/store', [ProductController::class, 'store'])->name('admin.market.product.store');
-            Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
-            Route::put('/update/{id}', [ProductController::class, 'update'])->name('admin.market.product.update');
-            Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
-            // gallary
+            Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
+            Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
+            Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
+        
+            // Gallery routes
             Route::get('/gallery', [GalleryController::class, 'index'])->name('admin.market.gallery.index');
-            Route::post('/gallery/store', [GalleryController::class, 'strore'])->name('admin.market.gallery.store');
+            Route::post('/gallery/store', [GalleryController::class, 'store'])->name('admin.market.gallery.store');
             Route::delete('/gallery/destroy/{id}', [GalleryController::class, 'destroy'])->name('admin.market.gallery.destroy');
+        
         });
         // property
         Route::prefix('property')->group(function () {
@@ -238,9 +241,12 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [RoleController::class, 'index'])->name('admin.user.role.index');
             Route::get('/create', [RoleController::class, 'create'])->name('admin.user.role.create');
             Route::post('/store', [RoleController::class, 'store'])->name('admin.user.role.store');
-            Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('admin.user.role.edit');
-            Route::put('/update/{id}', [RoleController::class, 'update'])->name('admin.user.role.update');
-            Route::delete('/delete/{id}', [RoleController::class, 'destroy'])->name('admin.user.role.destroy');
+            Route::get('/edit/{role}', [RoleController::class, 'edit'])->name('admin.user.role.edit');
+            Route::put('/update/{role}', [RoleController::class, 'update'])->name('admin.user.role.update');
+            Route::delete('/delete/{role}', [RoleController::class, 'destroy'])->name('admin.user.role.destroy');
+            Route::get('/permission-form/{role}', [RoleController::class, 'permissionForm'])->name('admin.user.role.permission-form');
+            Route::put('/permission-update/{role}', [RoleController::class, 'permissionUpdate'])->name('admin.user.role.permission-update');
+            // Route::get('/status/{role}', [RoleController::class, 'status'])->name('admin.user.role.status');
         });
         // permission
         Route::prefix('permission')->group(function () {
@@ -287,16 +293,13 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::prefix('ticket')->namespace('Ticket')->group(function () {
         // ticket
         Route::prefix('ticket')->group(function () {
+            Route::get('/', [TicketController::class, 'index'])->name('admin.ticket.index');
             Route::get('/new-tickets', [TicketController::class, 'newTickets'])->name('admin.ticket.newTickets');
             Route::get('/open-tickets', [TicketController::class, 'openTickets'])->name('admin.ticket.openTickets');
             Route::get('/close-tickets', [TicketController::class, 'closeTickets'])->name('admin.ticket.closeTickets');
-            Route::get('/', [TicketController::class, 'index'])->name('admin.ticket.index');
-            Route::get('/show', [TicketController::class, 'show'])->name('admin.ticket.show');
-            Route::get('/create', [TicketController::class, 'create'])->name('admin.ticket.create');
-            Route::post('/store', [TicketController::class, 'store'])->name('admin.ticket.store');
-            Route::get('/edit/{id}', [TicketController::class, 'edit'])->name('admin.ticket.edit');
-            Route::put('/update/{id}', [TicketController::class, 'update'])->name('admin.ticket.update');
-            Route::delete('/delete/{id}', [TicketController::class, 'destroy'])->name('admin.ticket.destroy');
+            Route::get('/show/{ticket}', [TicketController::class, 'show'])->name('admin.ticket.show');
+            Route::post('/answer/{ticket}', [TicketController::class, 'answer'])->name('admin.ticket.answer');
+            Route::get('/change/{ticket}', [TicketController::class, 'change'])->name('admin.ticket.change');
         });
         // ticket-category
         Route::prefix('category')->group(function () {
@@ -321,7 +324,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         });
         Route::prefix('admin')->group(function () {
             Route::get('/', [TicketAdminController::class, 'index'])->name('admin.ticket.admin.index');
-           // Route::get('/set/{ticketadmin}', [TicketAdminController::class, 'set'])->name('admin.ticket.admin.set');
+            // Route::get('/set/{ticketadmin}', [TicketAdminController::class, 'set'])->name('admin.ticket.admin.set');
             Route::get('admin/ticket/admin/set/{admin}', [TicketAdminController::class, 'set'])->name('admin.ticket.admin.set');
         });
     });

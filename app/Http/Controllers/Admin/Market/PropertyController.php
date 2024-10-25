@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Market\Product;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Market\ProductRequest;
 
 class PropertyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
-    {
-        return view('admin.market.property.index');
-    }
+{
+
+    return view('admin.market.property.index', compact('products'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -26,7 +28,7 @@ class PropertyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         //
     }

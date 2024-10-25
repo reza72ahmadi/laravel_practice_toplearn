@@ -10,7 +10,7 @@
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#"> بخش فروش</a></li>
             <li class="breadcrumb-item"><a href="#"> برند</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ایجاد برند</li>
+            <li class="breadcrumb-item active" aria-current="page">ویرایش برند</li>
         </ol>
     </nav>
 
@@ -18,7 +18,7 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
-                    <h5>ایجاد برند
+                    <h5>ویرایش برند
 
                     </h5>
                 </section>
@@ -27,14 +27,15 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.brand.store') }}" method="POST" id="form"
+                    <form action="{{ route('admin.market.brand.update', $brand->id) }}" method="POST" id="form"
                         enctype="multipart/form-data">
                         @csrf
+                        @method('put')
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="">نام فارسی برند</label>
                                 <input type="text" class="form-control form-control-sm" name="persian_name"
-                                    value="{{ old('persian_name') }}">
+                                    value="{{ old('persian_name', $brand->persian_name) }}">
                                 @error('persian_name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -43,7 +44,7 @@
                             <div class="col-md-6 col-12">
                                 <label for="">نام اصلی برند</label>
                                 <input type="text" class="form-control form-control-sm" name="original_name"
-                                    value="{{ old('original_name') }}">
+                                    value="{{ old('original_name', $brand->original_name) }}">
                                 @error('original_name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -52,7 +53,7 @@
                             <div class="col-md-6 col-12">
                                 <label for="">تگ ها</label>
                                 <input type="hidden" class="form-control form-control-sm" name="tags" id="tags"
-                                    value="{{ old('tags') }}" multiple>
+                                    value="{{ old('tags', $brand->tags) }}" multiple>
                                 <select class="select2 form-control form-control-sm" id="select_tags" multiple></select>
                                 @error('tags')
                                     <span class="text-danger">{{ $message }}</span>
@@ -62,8 +63,8 @@
                             <div class="col-md-6 col-12">
                                 <label for="">وضعیت</label>
                                 <select name="status" id="status" class="form-control form-control-sm">
-                                    <option value="0" {{ old('status') }}>فعال</option>
-                                    <option value="1" {{ old('status') }}>غیر فعال</option>
+                                    <option value="0" {{ old('status', $brand->status) }}>فعال</option>
+                                    <option value="1" {{ old('status', $brand->status) }}>غیر فعال</option>
                                 </select>
                                 @error('status')
                                     <span class="text-danger">{{ $message }}</span>
@@ -72,7 +73,7 @@
                             <div class="col-md-6 col-12">
                                 <label for="">لوگو</label>
                                 <input type="file" class="form-control form-control-sm" name="logo"
-                                    value={{ old('logo') }}>
+                                    value={{ old('logo', $brand->logo) }}>
                                 @error('logo')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

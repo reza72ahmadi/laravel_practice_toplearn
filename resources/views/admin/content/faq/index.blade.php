@@ -50,7 +50,7 @@
                                         <label for="">
                                             <input id="{{ $faq->id }}" onchange="changeStatus({{ $faq->id }})"
                                                 data-url='{{ route('admin.content.faq.status', $faq->id) }}' type="checkbox"
-                                                @if ($faq->status === 1) checked @endif>
+                                                @if ($faq->status === 1) @checked(true) @endif>
                                         </label>
                                     </td>
                                     <td class="max-width-16-rem text-left">
@@ -86,8 +86,10 @@
             $.ajax({
                 url: url,
                 type: "GET",
+                
                 success: function(response) {
-                    if (response.status) {
+                    if (response.reza) {
+                        // ---
                         if (response.checked) {
                             element.prop('checked', true);
                             successToast('پرسش با موفقیت فعال شد')
@@ -95,6 +97,7 @@
                             element.prop('checked', false);
                             successToast(' پرسش با موفقیت غیرفعال شد')
                         }
+                        // -----
                     } else {
                         element.prop('checked', elementValue);
                         errorToast('خطا هنگام ذخیره سازی')
@@ -108,13 +111,14 @@
             });
 
             function successToast(message) {
-                var successToastTags =
+                var ghghg =
                     '<div class="toast" data-autohide="true">\n' +
                     '   <button type="button" class="mr-2 close fa-pull-left" data-dismiss="toast">&times;</button>\n' +
                     '   <div class="toast-body bg-success rounded">\n' + message + '</div>\n' +
                     '</div>\n';
 
-                $('.toast-wrapper').append(successToastTags);
+                $('.toast-wrapper').append(ghghg);
+                
                 $('.toast').last().toast('show').delay(50000).queue(function() {
                     $(this).remove();
                 });

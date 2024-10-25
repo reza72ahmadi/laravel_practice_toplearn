@@ -37,14 +37,10 @@ class AdminUserController extends Controller
         $inputs = $request->all();
 
         if ($request->hasFile('profile_photo_path')) {
-            // Get the uploaded file and generate a unique file name
             $profile_photo = time() . '_' . $request->file('profile_photo_path')->getClientOriginalName();
-
-            // Store the file in the 'uploads' directory under the 'public' disk
             $request->file('profile_photo_path')->storeAs('uploads', $profile_photo, 'public');
-
-            // Update the inputs array to include the file path
             $inputs['profile_photo_path'] = 'uploads/' . $profile_photo;
+            
             $inputs['password'] = Hash::make($request->input('password'));
             $inputs['user_type'] = 1;
         }

@@ -147,6 +147,10 @@
                 <i class="fas fa-bars"></i>
                 <span>تیکت های بسته</span>
             </a>
+            <a href="{{ route('admin.ticket.index') }}" class="sidebar-link">
+                <i class="fas fa-bars"></i>
+                <span>همه تکت ها</span>
+            </a>
 
 
 
