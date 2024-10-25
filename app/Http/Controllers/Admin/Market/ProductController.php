@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use App\Http\Controllers\Controller;
-use App\Models\Market\ProductCategory;
 use Illuminate\Http\Request;
+use App\Models\Market\Product;
+use App\Http\Controllers\Controller;
+use App\Models\Market\Brand;
+use App\Models\Market\ProductCategory;
 
 class ProductController extends Controller
 {
@@ -13,16 +15,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $productCategories = ProductCategory::all();
-        return view('admin.market.product.index',compact('productCategories'));
+        $products = Product::all();
+        return view('admin.market.product.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // create
     public function create()
     {
-        return view('admin.market.product.create');
+        $categories = ProductCategory::all();
+        $brands = Brand::all();
+        return view('admin.market.product.create', compact('categories', 'brands'));
     }
 
     /**

@@ -43,7 +43,7 @@ class BrandController extends Controller
     // 
 
     public function update(BrandRequest $request, Brand $brand)
-    {     
+    {
         $inputs = $request->validated();
 
         if ($request->hasFile('logo')) {
@@ -54,49 +54,11 @@ class BrandController extends Controller
             if ($brand->logo) {
                 Storage::disk('public')->delete($brand->logo);
             }
-
-            $brand->update($inputs);
         }
+        $brand->update($inputs);
         return redirect()->route('admin.market.brand.index')
-        ->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');
+            ->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');
     }
-    //------------------------------
-//     public function update(BrandRequest $request, Brand $brand)
-// {
-//     $inputs = $request->validated();
-
-//     // Check if a new logo is uploaded
-//     if ($request->hasFile('logo')) {
-//         $logoName = time() . '-' . $request->file('logo')->getClientOriginalName();
-//         // Store the new logo in the 'brand' folder within the 'public' disk
-//         $request->file('logo')->storeAs('brand/', $logoName, 'public');
-//         $inputs['logo'] = 'brand/' . $logoName;
-
-//         // Delete the old logo if it exists
-//         if ($brand->logo) {
-//             Storage::disk('public')->delete($brand->logo);
-//         }
-//     }
-//     $brand->update($inputs);
-//     return redirect()->route('admin.market.brand.index')
-//         ->with('swal-success', 'برند با موفقیت ویرایش شد');
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public function destroy(Brand $brand)

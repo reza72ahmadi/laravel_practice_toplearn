@@ -38,92 +38,52 @@
                                 <th>نام کالا</th>
                                 <th>تصویرکالا</th>
                                 <th>قیمت</th>
-                                <th>وزن</th>
                                 <th>دسته</th>
-                                <th>فرم</th>
                                 <th class="width-8-rem text-center"><i class="fas fa-cogs"></i> عملیات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>قلم</td>
-                                <th>عکس</th>
-                                <td>1000</td>
-                                <th>10کیلو</th>
-                                <td>کالای جدید</td>
-                                <th>1</th>
-                                <td class="max-width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a id="dropdownMenuLink" data-toggle="dropdown"
-                                            class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
-                                            href="" aria-expanded="false"><i class="fas fa-tools"></i>عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-images"></i>مشاهده فاکتور</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-list-ul"></i>تغیروضعیت ارسال</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-edit"></i>تغیروضعیت سفارش</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-window-close"></i>باطل کردن سفارش</a>
+                            @foreach ($products as $product)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->image }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>{{ $product->category->name }}</td>
+                                    <td class="max-width-8-rem text-left">
+                                        <div class="dropdown">
+                                            <a id="dropdownMenuLink{{ $product->id }}" data-toggle="dropdown"
+                                                class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
+                                                href="#" aria-expanded="false">
+                                                <i class="fas fa-tools"></i> Operations
+                                            </a>
+                                            <div class="dropdown-menu"
+                                                aria-labelledby="dropdownMenuLink{{ $product->id }}">
+                                                <a class="dropdown-item text-right"
+                                                    href="{{ route('admin.market.product.index') }}">
+                                                    <i class="fas fa-images"></i> View Invoice
+                                                </a>
+                                                <a class="dropdown-item text-right"
+                                                    href="{{ route('admin.market.product.edit', $product->id) }}">
+                                                    <i class="fas fa-list-ul"></i> Update Shipping Status
+                                                </a>
+                                                <a class="dropdown-item text-right"
+                                                    href="{{ route('admin.market.product.update', $product->id) }}">
+                                                    <i class="fas fa-edit"></i> Update Order Status
+                                                </a>
+                                                <form action="{{ route('admin.market.product.destroy', $product->id) }}"
+                                                    method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item text-right">
+                                                        <i class="fas fa-window-close"></i> Cancel Order
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>1</th>
-                                <td>قلم</td>
-                                <th>عکس</th>
-                                <td>1000</td>
-                                <th>10کیلو</th>
-                                <td>کالای جدید</td>
-                                <th>1</th>
-                                <td class="max-width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a id="dropdownMenuLink" data-toggle="dropdown"
-                                            class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
-                                            href="" aria-expanded="false"><i class="fas fa-tools"></i>عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-images"></i>مشاهده فاکتور</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-list-ul"></i>تغیروضعیت ارسال</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-edit"></i>تغیروضعیت سفارش</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-window-close"></i>باطل کردن سفارش</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>1</th>
-                                <td>قلم</td>
-                                <th>عکس</th>
-                                <td>1000</td>
-                                <th>10کیلو</th>
-                                <td>کالای جدید</td>
-                                <th>1</th>
-                                <td class="max-width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a id="dropdownMenuLink" data-toggle="dropdown"
-                                            class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
-                                            href="" aria-expanded="false"><i class="fas fa-tools"></i>عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-images"></i>مشاهده فاکتور</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-list-ul"></i>تغیروضعیت ارسال</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-edit"></i>تغیروضعیت سفارش</a>
-                                            <a class="dropdown-item text-right" href=""><i
-                                                    class="fas fa-window-close"></i>باطل کردن سفارش</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>

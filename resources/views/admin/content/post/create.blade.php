@@ -90,8 +90,7 @@
 
                             <div class=" col-12 col-md-6">
                                 <label for="">تاریخ انتشار</label>
-                                <input type="text" id="pulished_at" class="form-control form-control-sm d-none"
-                                    name="published_at">
+                                <input type="text" id="pulished_at" class="form-control form-control-sm d-none"name="published_at">
                                 <input type="text" id="pulished_at_view" class="form-control form-control-sm">
                                 @error('published_at')
                                     <span class="text-danger">{{ $message }}</span>

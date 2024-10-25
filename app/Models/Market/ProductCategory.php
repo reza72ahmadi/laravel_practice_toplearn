@@ -20,7 +20,7 @@ class ProductCategory extends Model
         ];
     }
     protected $fillable = ['name', 'description', 'slug', 'image', 'status', 'tags', 'show_in_menu', 'parent_id'];
-    
+
     public function parent()
     {
         return $this->belongsTo($this, 'parent_id')->with('parent');
@@ -29,5 +29,10 @@ class ProductCategory extends Model
     public function children()
     {
         return $this->hasMany($this, 'parent_id')->with('parent');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

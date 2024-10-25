@@ -20,7 +20,7 @@ class BrandRequest extends FormRequest
         if ($this->isMethod('post')) {
             return [
                 'persian_name' => "required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u",
-                'original_name' => "required|max:500|min:5|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u",
+                'original_name' => "required|max:500|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u",
                 'logo' => 'required|image|mimes:png,jpg,jpeg,gif',
                 'status' => 'required|numeric|in:0,1',
                 'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
@@ -29,7 +29,7 @@ class BrandRequest extends FormRequest
         } else {
             return [
                 'persian_name' => "required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u",
-                'original_name' => "required|max:500|min:5|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u",
+                'original_name' => "required|max:500|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u",
                 'logo' => 'image|mimes:png,jpg,jpeg,gif',
                 'status' => 'required|numeric|in:0,1',
                 'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
