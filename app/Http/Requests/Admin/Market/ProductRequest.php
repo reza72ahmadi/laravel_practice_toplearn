@@ -14,44 +14,32 @@ class ProductRequest extends FormRequest
         return true;
     }
 
-
+    /**
+     * Get the validation rules for the request.
+     */
     public function rules(): array
     {
-        if ($this->isMethod('post')) {
-            return [
-                'name' => "required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u",
-                'introduction' => "required|max:500|min:5|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u",
-                'image' => 'required|image|mimes:png,jpg,jpeg,gif',
-                'status' => 'required|numeric|in:0,1',
-                'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-                'weight' => 'nullable|min:1|max:1000|integer',
-                'length' => 'required|min:1|max:1000|integer',
-                'width' => 'required|min:1|max:1000|integer',
-                'height' => 'required|min:1|max:1000|integer',
-                'price' => 'required|numeric',
-                'marketable'   => 'required|numeric|in:0,1',
-                'brand_id' => 'required|min:1|max:100000000000|regex:/^[0-9 ]+$/u|exists:brands,id',
-                'category_id' => 'required|min:1|max:100000000000|regex:/^[0-9 ]+$/u|exists:product_categories,id',
-                'published_at' => 'required|numeric',
+        $rules = [
+            'name' => 'required|string|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+            'introduction' => 'required|string|max:500|min:5|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u',
+            'image' => 'image|mimes:png,jpg,jpeg,gif',
+            'status' => 'required|numeric|in:0,1',
+            'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+            'weight' => 'nullable|numeric|min:1|max:1000',
+            'length' => 'required|numeric|min:1|max:1000',
+            'width' => 'required|numeric|min:1|max:1000',
+            'height' => 'required|numeric|min:1|max:1000',
+            'price' => 'required|numeric',
+            'marketable' => 'required|numeric|in:0,1',
+            'brand_id' => 'required|exists:brands,id',
+            'category_id' => 'required|exists:product_categories,id',
+            'published_at' => 'required|numeric',
+        ];
 
-            ];
-        } else {
-            return [
-                'name' => "required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u",
-                'introduction' => "required|max:500|min:5|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي.,><\/;\n\r& ]+$/u",
-                'image' => 'image|mimes:png,jpg,jpeg,gif',
-                'status' => 'required|numeric|in:0,1',
-                'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-                'weight' => 'nullable|min:1|max:1000|integer',
-                'length' => 'required|min:1|max:1000|integer',
-                'width' => 'required|min:1|max:1000|integer',
-                'height' => 'required|min:1|max:1000|integer',
-                'price' => 'required|numeric',
-                'marketable'   => 'required|numeric|in:0,1',
-                'brand_id' => 'required|min:1|max:100000000000|regex:/^[0-9 ]+$/u|exists:brands,id',
-                'category_id' => 'required|min:1|max:100000000000|regex:/^[0-9 ]+$/u|exists:product_categories,id',
-                'published_at' => 'required|numeric',
-            ];
+        if ($this->isMethod('post')) {
+            $rules['image'] = 'required|' . $rules['image'];
         }
+
+        return $rules;
     }
 }
