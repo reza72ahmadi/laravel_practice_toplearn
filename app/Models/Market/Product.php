@@ -2,6 +2,7 @@
 
 namespace App\Models\Market;
 
+use App\Models\Content\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -71,5 +72,9 @@ class Product extends Model
     {
         return $this->hasMany(CategoryValue::class);
     }
-  
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }

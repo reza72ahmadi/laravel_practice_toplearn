@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Models\Market\Brand;
-use Illuminate\Http\Request;
-use GuzzleHttp\Handler\Proxy;
 use App\Models\Market\Product;
 use App\Models\Market\ProductMeta;
 use Illuminate\Support\Facades\DB;
@@ -125,23 +123,6 @@ class ProductController extends Controller
         return redirect()->route('admin.market.product.index')
             ->with('swal-success', 'برند شما با موفقیت ویرایش شد');
     }
-
-    // public function destroy(Product $product)
-    // {
-    //     if ($product) {
-    //         $imagePath = storage_path('uploads/' . $product->imagePath);
-    //         if (file_exists($imagePath) && is_file($imagePath)) {
-    //             try {
-    //                 unlink($imagePath);
-    //             } catch (\Exception $e) {
-    //                 Log::error('Failed to delete image: ' . $e->getMessage());
-    //             }
-    //         }
-    //         $product->delete();
-    //     }
-    //     return redirect()->route('admin.market.product.index')
-    //     ->with('swal-success', 'برند شما با موفقیت حذف شد');
-    // }
 
     public function destroy(Product $product)
     {
