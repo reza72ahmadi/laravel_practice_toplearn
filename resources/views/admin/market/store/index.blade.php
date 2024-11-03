@@ -43,22 +43,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>مبایل</td>
-                                <td>عکس</td>
-                                <td>19</td>
-                                <td>20</td>
-                                <td>1</td>
-                                <td class="max-width-16-rem text-left">
+                            @foreach ($products as $product)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $product->name }}</td>
+                                    <td><img src="{{ asset('storage/' . $product->image) }}" alt=""
+                                            style="width: 60px; height: auto; border-radius: 50%;"></td>
+                                    <td>{{ $product->sold_number }}</td>
+                                    <td>{{ $product->frozen_number }}</td>
+                                    <td>{{ $product->marketable_number }}</td>
+                                    <td class="max-width-16-rem text-left">
 
-                                    <a class="btn btn-success btn-sm"
-                                        href="{{ route('admin.market.store.add-to-store') }}"><i class="fas fa-edit">افزایش
-                                            موجودی</i></a>
-                                    <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-edit">
-                                            اصلاح موجودی</i></button>
-                                </td>
-                            </tr>
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.market.store.add-to-store') }}"><i
+                                                class="fas fa-edit">افزایش
+                                                موجودی</i></a>
+                                        <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-edit">
+                                                اصلاح موجودی</i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
