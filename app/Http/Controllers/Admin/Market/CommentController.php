@@ -29,12 +29,9 @@ class CommentController extends Controller
         return view('admin.market.comment.show', compact('comment'));
     }
 
-  
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function answer (CommentRequest $request, Comment $comment)
+
+    public function answer(CommentRequest $request, Comment $comment)
     {
         if ($comment->parent == !null) {
 
