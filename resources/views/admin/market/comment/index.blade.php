@@ -43,36 +43,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>9988</td>
-                                <td>کاظم خان</td>
-                                <td>888</td>
-                                <td>تلفن</td>
-                                <td>در انتظار تایید</td>
-                                <td class="max-width-16-rem text-left">
+                            @foreach ($comments as $comment)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{$comment->body}}</td>
+                                    <td class="max-width-16-rem text-left">
 
-                                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.comment.show') }}"><i
-                                            class="fas fa-eye"> نمایش</i></a>
-                                    <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check">
-                                            تائید</i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>1</th>
-                                <td>9988</td>
-                                <td>کاظم خان</td>
-                                <td>888</td>
-                                <td>تلفن</td>
-                                <td>در انتظار تایید</td>
-                                <td class="max-width-16-rem text-left">
-
-                                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.comment.show') }}"><i
-                                            class="fas fa-eye"> نمایش</i></a>
-                                    <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-clock"> در انتظار
-                                            تائید</i></button>
-                                </td>
-                            </tr>
+                                        <a class="btn btn-info btn-sm" href="{{ route('admin.market.comment.show') }}"><i
+                                                class="fas fa-eye"> نمایش</i></a>
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check">
+                                                تائید</i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>

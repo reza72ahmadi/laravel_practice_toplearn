@@ -61,16 +61,16 @@
                                             <div class="dropdown-menu"
                                                 aria-labelledby="dropdownMenuLink{{ $product->id }}">
                                                 <a class="dropdown-item text-right"
-                                                    href="{{ route('admin.market.product.index') }}">
-                                                    <i class="fas fa-images"></i> View Invoice
+                                                    href="{{ route('admin.market.gallery.index', $product->id) }}">
+                                                    <i class="fas fa-images"></i> گالری
                                                 </a>
                                                 <a class="dropdown-item text-right"
                                                     href="{{ route('admin.market.product.edit', $product->id) }}">
-                                                    <i class="fas fa-list-ul"></i> ویرایش
+                                                    <i class="fas fa-edit"></i> ویرایش
                                                 </a>
                                                 <a class="dropdown-item text-right"
-                                                    href="{{ route('admin.market.product.update', $product->id) }}">
-                                                    <i class="fas fa-edit"></i> Update Order Status
+                                                    href="{{ route('admin.market.color.index', $product->id) }}">
+                                                    <i class="fas fa-list-ul"></i> رنگ کالا
                                                 </a>
                                                 <form action="{{ route('admin.market.product.destroy', $product->id) }}"
                                                     method="POST" style="display: inline;">
@@ -87,7 +87,10 @@
                             @endforeach
                         </tbody>
                     </table>
-                </section>
+                </section>      
+                <div class="pagination-links">
+                    {{ $products->links() }}
+                </div>
             </section>
         </section>
     </section>

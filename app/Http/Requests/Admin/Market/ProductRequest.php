@@ -34,6 +34,8 @@ class ProductRequest extends FormRequest
             'brand_id' => 'required|exists:brands,id',
             'category_id' => 'required|exists:product_categories,id',
             'published_at' => 'required|numeric',
+            'meta_key.*' => 'required',
+            'meta_value.*' => 'required',
         ];
 
         if ($this->isMethod('post')) {

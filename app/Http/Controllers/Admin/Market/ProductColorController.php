@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use Illuminate\Http\Request;
-use App\Models\Market\Gallary;
-use App\Models\Market\Product;
 use App\Http\Controllers\Controller;
-use tidy;
+use App\Http\Requests\Admin\Market\ProductRequest;
+use App\Models\Market\Product;
+use App\Models\Market\ProductColor;
+use Illuminate\Http\Request;
 
-class GalleryController extends Controller
+class ProductColorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Product $product)
     {
-        return view('admin.market.product.gallary.index', compact('product'));
+
+        return view('admin.market.product.color.index', compact('product'));
     }
 
     /**
@@ -23,7 +24,7 @@ class GalleryController extends Controller
      */
     public function create(Product $product)
     {
-        return view('admin.market.product.gallery.create', compact('product'));
+        return view('admin.market.product.color.create', compact('product'));
     }
 
     /**
@@ -31,21 +32,20 @@ class GalleryController extends Controller
      */
     public function store(Request $request, Product $product)
     {
-        $request->validate([
-            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif',
+        $validated = $request->validate([
+            'color_name' => "required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u",
+            'price_increase' => 'required|numeric',
         ]);
         $inputs = $request->all();
         $inputs['product_id'] = $product->id;
-        if ($request->hasFile('image')) {
-            $picture = time() . ' ' . $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->storeAs('uploads', $picture, 'public');
-            $inputs['image'] = $path;
 
-            Gallary::create($inputs);
-            return redirect()->route('admin.market.gallery.index', $product->id)
-                ->with('swal-success', 'گالری شما با موفقیت ایجاد شد');
-        }
+        ProductColor::create($inputs);
+
+        return redirect()->route('admin.market.color.index', $product->id)
+            ->with('swal-success', 'رنگ شما با موفقیت ایجاد شد');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -74,10 +74,10 @@ class GalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product, Gallary $gallary)
+    public function destroy(Product $product, ProductColor $productColor)
     {
-        $gallary->delete();
+        $productColor->delete();
         return redirect()->route('admin.market.color.index', $product->id)
-            ->with('swal-success', 'گالری شما با موفقیت حذف شد');
+            ->with('swal-success', 'رنگ شما با موفقیت حذف شد');
     }
 }

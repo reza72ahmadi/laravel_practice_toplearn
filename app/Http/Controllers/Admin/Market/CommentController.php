@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Content\Comment;
+use App\Http\Controllers\Controller;
 
 class CommentController extends Controller
 {
@@ -12,7 +13,13 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return view('admin.market.comment.index');
+        $unSeenComments = Comment::where('commentable_type', 'App\Models\Market\Product')->where('seen', 0)->get();
+        foreach ($unSeenComments as $unSeenComment) {
+            $unSeenComment->seen = 1;
+            $unSeenComment->save();
+        }
+        $comments = Comment::where('commentable_type', 'App\Models\Market\Product')->orderBy('created_at', 'desc')->get();
+        return view('admin.market.comment.index', compact('comments'));
     }
 
    

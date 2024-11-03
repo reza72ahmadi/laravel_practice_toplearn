@@ -32,8 +32,8 @@
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="name">نام کالا</label>
-                                <input type="text" class="form-control form-control-sm" name="name"
-                                    id="name" value="{{ old('name') }}">
+                                <input type="text" class="form-control form-control-sm" name="name" id="name"
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -182,11 +182,17 @@
                                     <section class="col-md-3 col-6">
                                         <input name="meta_key[]" type="text" class="form-control form-control-sm"
                                             placeholder="ویژگی ...">
+                                        @error('meta_key.*')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </section>
 
                                     <section class="col-md-3 col-6">
                                         <input name="meta_value[]" type="text" class="form-control form-control-sm"
                                             placeholder="مقدار ...">
+                                        @error('meta_value.*')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </section>
 
                                 </div>
@@ -254,6 +260,3 @@
         })
     </script>
 @endsection
-
-
-
