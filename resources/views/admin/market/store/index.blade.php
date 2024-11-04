@@ -49,17 +49,20 @@
                                     <td>{{ $product->name }}</td>
                                     <td><img src="{{ asset('storage/' . $product->image) }}" alt=""
                                             style="width: 60px; height: auto; border-radius: 50%;"></td>
+                                    <td>{{ $product->marketable_number }}</td>
                                     <td>{{ $product->sold_number }}</td>
                                     <td>{{ $product->frozen_number }}</td>
-                                    <td>{{ $product->marketable_number }}</td>
-                                    <td class="max-width-16-rem text-left">
+                                    <td class="max-width-16-rem text-left ">
 
                                         <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.market.store.add-to-store') }}"><i
+                                            href="{{ route('admin.market.store.add-to-store', $product->id) }}"><i
                                                 class="fas fa-edit">افزایش
                                                 موجودی</i></a>
-                                        <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-edit">
-                                                اصلاح موجودی</i></button>
+                                        <a class="btn btn-warning btn-sm d-inline"
+                                            href="{{ route('admin.market.store.edit', $product->id) }}"><i
+                                                class="fas fa-edit">
+                                            </i> اصلاح </a>
+
                                     </td>
                                 </tr>
                             @endforeach
