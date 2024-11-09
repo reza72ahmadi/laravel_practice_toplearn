@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>انبار</title>
+    <title>گالری</title>
 @endsection
 
 @section('content')
@@ -9,20 +9,25 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#"> بخش فروش</a></li>
-            <li class="breadcrumb-item active" aria-current="page">انبار</li>
+            <li class="breadcrumb-item active" aria-current="page">گالری</li>
         </ol>
     </nav>
+
+    {{-- {{dd($product->colors)}} --}}
 
     <section class="row">
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        انبار
+                        گالری
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm disabled" href="">ایجاد انبار جدید</a>
+                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.gallery.create', $product->id) }}">ایجاد
+                        گالری
+                        جدید
+                    </a>
                     <div class="max-width-16-rem">
                         <input class="form-control form-control-sm" type="text" name="" id=""
                             placeholder="جستجو...">
@@ -30,38 +35,34 @@
                 </section>
 
                 <section class="table-responsive">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" style="height: 160px">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>نام کالا</th>
                                 <th>تصویر کالا</th>
-                                <th>موجودی کالا</th>
-                                <th>ورودی انبر</th>
-                                <th>خروجی انبار</th>
-                                <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
+                                <th class="width-8-rem text-center"><i class="fas fa-cogs"></i> عملیات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+
+                            @foreach ($product->gallaries as $gallary)
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $product->name }}</td>
-                                    <td><img src="{{ asset('storage/' . $product->image) }}" alt=""
+                                    <td><img src="{{ asset('storage/' . $gallary->image) }}" alt=""
                                             style="width: 60px; height: auto; border-radius: 50%;"></td>
-                                    <td>{{ $product->marketable_number }}</td>
-                                    <td>{{ $product->sold_number }}</td>
-                                    <td>{{ $product->frozen_number }}</td>
-                                    <td class="max-width-16-rem text-left ">
 
-                                        <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.market.store.add-to-store', $product->id) }}"><i
-                                                class="fas fa-edit">افزایش
-                                                موجودی</i></a>
-                                        <a class="btn btn-warning btn-sm d-inline"
-                                            href="{{ route('admin.market.store.edit', $product->id) }}"><i
-                                                class="fas fa-edit">
-                                            </i> اصلاح </a>
+                                    <td>
+                                        <form
+                                            action="{{ route('admin.market.gallery.destroy', ['product' => $product->id, 'gallary' => $gallary->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash-alt"></i> حذف
+                                            </button>
+                                        </form>
 
                                     </td>
                                 </tr>

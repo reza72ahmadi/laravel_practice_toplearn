@@ -47,7 +47,8 @@
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->image }}</td>
+                                    <td><img src="{{ asset('storage/' . $product->image) }}" alt=""
+                                            style="width: 60px; height: auto; border-radius: 50%;"></td>
                                     <td>{{ $product->price }}</td>
                                     <td>{{ $product->category->name }}</td>
                                     <td class="max-width-8-rem text-left">
@@ -55,28 +56,28 @@
                                             <a id="dropdownMenuLink{{ $product->id }}" data-toggle="dropdown"
                                                 class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
                                                 href="#" aria-expanded="false">
-                                                <i class="fas fa-tools"></i> Operations
+                                                <i class="fas fa-tools"></i> عملیات
                                             </a>
                                             <div class="dropdown-menu"
                                                 aria-labelledby="dropdownMenuLink{{ $product->id }}">
                                                 <a class="dropdown-item text-right"
-                                                    href="{{ route('admin.market.product.index') }}">
-                                                    <i class="fas fa-images"></i> View Invoice
+                                                    href="{{ route('admin.market.gallery.index', $product->id) }}">
+                                                    <i class="fas fa-images"></i> گالری
                                                 </a>
                                                 <a class="dropdown-item text-right"
                                                     href="{{ route('admin.market.product.edit', $product->id) }}">
-                                                    <i class="fas fa-list-ul"></i> Update Shipping Status
+                                                    <i class="fas fa-edit"></i> ویرایش
                                                 </a>
                                                 <a class="dropdown-item text-right"
-                                                    href="{{ route('admin.market.product.update', $product->id) }}">
-                                                    <i class="fas fa-edit"></i> Update Order Status
+                                                    href="{{ route('admin.market.color.index', $product->id) }}">
+                                                    <i class="fas fa-list-ul"></i> رنگ کالا
                                                 </a>
                                                 <form action="{{ route('admin.market.product.destroy', $product->id) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="dropdown-item text-right">
-                                                        <i class="fas fa-window-close"></i> Cancel Order
+                                                        <i class="fas fa-window-close"></i>حذف
                                                     </button>
                                                 </form>
                                             </div>
@@ -86,7 +87,10 @@
                             @endforeach
                         </tbody>
                     </table>
-                </section>
+                </section>      
+                <div class="pagination-links">
+                    {{ $products->links() }}
+                </div>
             </section>
         </section>
     </section>

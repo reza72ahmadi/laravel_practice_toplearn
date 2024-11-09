@@ -80,7 +80,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </section>
@@ -88,6 +87,7 @@
         </section>
     </section>
 @endsection
+
 @section('script')
     <script>
         function changeStatus(id) {
@@ -110,20 +110,16 @@
                         }
                         // ---------
                     } 
-
                     else {
                         element.prop('checked', elementValue);
                         errorToast('خطا هنگام ذخیره سازی')
                     }
                 },
-
                 error: function() {
                     element.prop('checked', elementValue);
                     errorToast('ارتباط برقرار نشد')
                 }
-            });
-
-            
+            });   
             function successToast(message) {
                 var successToastTags =
                     '<div class="toast" data-autohide="true">\n' +

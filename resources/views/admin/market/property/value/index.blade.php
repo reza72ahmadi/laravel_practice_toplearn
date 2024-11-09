@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>فارم کالا</title>
+    <title>مقدار فرم کالا </title>
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#"> بخش فروش</a></li>
-            <li class="breadcrumb-item active" aria-current="page">فرم کالا</li>
+            <li class="breadcrumb-item active" aria-current="page">مقدار فرم کالا</li>
         </ol>
     </nav>
 
@@ -18,11 +18,15 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        فرم کالا
+                        مقدار فرم کالا
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.property.create') }}">ایجادفرم جدید</a>
+                    <div>
+                        <a class="btn btn-info btn-sm"
+                            href="{{ route('admin.market.value.create', $categoryAttribute->id) }}">ایجاد مقدار فرم کالا</a>
+                        <a class="btn btn-info btn-sm" href="{{ route('admin.market.property.index') }}">بازگشت</a>
+                    </div>
                     <div class="max-width-16-rem">
                         <input class="form-control form-control-sm" type="text" name="" id=""
                             placeholder="جستجو...">
@@ -34,29 +38,31 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>نام</th>
-                                <th>واحد اندازه گیری</th>
-                                <th>دسته والد</th>
+                                <th>نام فرم</th>
+                                <th>نام محصول</th>
+                                <th>مقدار</th>
+                                <th>افزایش قیمت</th>
+                                <th>نوع</th>
                                 <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($category_attribute as $categoryAttribute)
+                            @foreach ($categoryAttribute->values as $value)
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $categoryAttribute->name }}</td>
-                                    <td>{{ $categoryAttribute->unit }}</td>
-                                    <td>{{ $categoryAttribute->category->name }}</td>
+                                    <td>{{ $value->product->name }}</td>
+                                    <td>{{ json_decode($value->value)->value }}</td>
+                                    <td>{{ json_decode($value->value)->price_increase }}</td>
+                                    <td>{{ $value->type == 0 ? 'ساده' : 'انتخابی' }}</td>
                                     <td class="max-width-16-rem text-left">
-                                        <a class="btn btn-warning btn-sm"
-                                            href="{{ route('admin.market.value.index', $categoryAttribute->id) }}"><i
-                                                class="fas fa-edit">ویژگی</i></a>
                                         <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.market.property.edit', $categoryAttribute->id) }}"><i
+                                            href="{{ route('admin.market.value.edit', ['categoryAttribute' => $categoryAttribute->id, 'value' => $value->id]) }}"><i
                                                 class="fas fa-edit">
                                                 ویرایش</i></a>
+
                                         <form class="d-inline"
-                                            action="{{ route('admin.market.property.destroy', $categoryAttribute->id) }}"
+                                            action="{{ route('admin.market.value.destroy', ['categoryAttribute' => $categoryAttribute->id, 'value' => $value->id]) }}"
                                             method="post">
                                             @csrf
                                             @method('delete')
