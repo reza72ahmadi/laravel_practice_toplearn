@@ -46,6 +46,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $payment->paymentable->transaction_id ?? '-' }}</td>
                                     <td>{{ $payment->paymentable->gateway ?? '-' }}</td>
+                                    
 
                                     <td>{{ $payment->user->fullname }}</td>
                                     <td>
@@ -54,9 +55,9 @@
                                         @elseif ($payment->status == 1)
                                             پرداخت شده
                                         @elseif ($payment->status == 2)
-                                            لغو
+                                            باطل شده
                                         @else
-                                            برگشت
+                                            برگشت داده شده
                                         @endif
                                     </td>
                                     <td>
@@ -70,9 +71,15 @@
                                     </td>
 
                                     <td class="max-width-22-rem text-left">
-                                        {{-- <a class="btn btn-sm btn-info" href="{{ route('admin.market.payment.show', $payment->id) }}"><i class="fas fa-eye"></i> مشاهده</a>
-                                        <a class="btn btn-sm btn-warning" href="{{ route('admin.market.payment.cancel', $payment->id) }}"><i class="fas fa-window-close"></i> باطل کردن</a>
-                                        <a class="btn btn-sm btn-danger" href="{{ route('admin.market.payment.refund', $payment->id) }}"><i class="fas fa-reply"></i> برگرداندن</a> --}}
+                                        <a class="btn btn-sm btn-info"
+                                            href=""><i
+                                                class="fas fa-eye"></i> مشاهده</a>
+                                        <a class="btn btn-sm btn-warning"
+                                            href="{{ route('admin.market.payment.canceled', $payment->id) }}"><i
+                                                class="fas fa-window-close"></i> باطل کردن</a>
+                                        <a class="btn btn-sm btn-danger"
+                                            href="{{ route('admin.market.payment.returned', $payment->id) }}"><i
+                                                class="fas fa-reply"></i> برگرداندن</a>
                                     </td>
                                 </tr>
                             @endforeach
