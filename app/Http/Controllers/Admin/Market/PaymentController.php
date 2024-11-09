@@ -45,6 +45,6 @@ class PaymentController extends Controller
     }
     public function show(Payment $payment)
     {
-        
+        return view('admin.market.payment.show', compact('payment'));
     }
 }

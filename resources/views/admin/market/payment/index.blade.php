@@ -72,7 +72,7 @@
 
                                     <td class="max-width-22-rem text-left">
                                         <a class="btn btn-sm btn-info"
-                                            href=""><i
+                                            href="{{ route('admin.market.payment.show', $payment->id) }}"><i
                                                 class="fas fa-eye"></i> مشاهده</a>
                                         <a class="btn btn-sm btn-warning"
                                             href="{{ route('admin.market.payment.canceled', $payment->id) }}"><i

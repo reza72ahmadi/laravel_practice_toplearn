@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Ticket;
 
+use App\Models\Ticket\Ticket;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Ticket\TicketRequest;
-use App\Models\Ticket\Ticket;
-use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
@@ -36,6 +35,7 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = Ticket::all();
+        dd($tickets->user);
         return view('admin.ticket.index', compact('tickets'));
     }
 
