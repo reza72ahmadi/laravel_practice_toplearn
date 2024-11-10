@@ -27,7 +27,8 @@
                     <a class="btn btn-info btn-sm" href="{{ route('admin.market.discount.amazingSale') }}">بازگشت</a>
                 </section>
                 <section>
-                    <form action="{{ route('admin.market.discount.amazingSale.store') }}" method="POST">
+                    <form action="{{ route('admin.market.discount.amazingSale.update', $amazingSale->id) }}" method="POST">
+                        @method('put')
                         @csrf
                         <section class="row">
                             <div class="col-md-6 col-12">
@@ -36,7 +37,7 @@
                                     <option value="">---انتخاب کنید---</option>
                                     @foreach ($products as $product)
                                         <option value="{{ $product->id }}"
-                                            @if (old('product_id') == $product->id) selected @endif>{{ $product->name }}</option>
+                                            @if (old('product_id', $amazingSale->product_id) == $product->id) selected @endif>{{ $product->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('product_id')
@@ -46,7 +47,7 @@
                             <div class="col-md-6 col-12">
                                 <label for="percentage">درصد تخفیف</label>
                                 <input type="text" class="form-control form-control-sm" name="percentage" id="percentage"
-                                    value="{{ old('percentage') }}">
+                                    value="{{ old('percentage', $amazingSale->percentage) }}">
                                 @error('percentage')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

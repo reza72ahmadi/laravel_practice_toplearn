@@ -35,7 +35,6 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = Ticket::all();
-        dd($tickets->user);
         return view('admin.ticket.index', compact('tickets'));
     }
 
