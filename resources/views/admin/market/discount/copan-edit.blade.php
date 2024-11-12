@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>ایجاد کوپن تخفیف</title>
+    <title>ویرایش کوپن تخفیف</title>
     <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
@@ -11,7 +11,7 @@
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#"> بخش فروش</a></li>
             <li class="breadcrumb-item"><a href="#"> کوپن</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ایجاد کوپن</li>
+            <li class="breadcrumb-item active" aria-current="page">ویرایش کوپن</li>
         </ol>
     </nav>
 
@@ -19,7 +19,7 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
-                    <h5>ایجاد کوپن
+                    <h5>ویرایش کوپن
 
                     </h5>
                 </section>
@@ -28,13 +28,14 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.discount.copan.store') }}" method="POST">
+                    <form action="{{ route('admin.market.discount.copan.update', $copan->id) }}" method="POST">
                         @csrf
+                        @method('put')
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="">کد کوپن</label>
                                 <input type="text" class="form-control form-control-sm" name="code"
-                                    value="{{ old('code') }}">
+                                    value="{{ old('code', $copan->code) }}">
                                 @error('code')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -43,8 +44,8 @@
                             <div class="col-md-6 col-12">
                                 <label for="">نوع کوپن</label>
                                 <Select name="type" id="type" class="form-control form-control-sm">
-                                    <option value="0" value="{{ old('type') }}">عمومی</option>
-                                    <option value="1" value="{{ old('type') }}">خصوصی</option>
+                                    <option value="0" value="{{ old('type', $copan->type) }}">عمومی</option>
+                                    <option value="1" value="{{ old('type', $copan->type) }}">خصوصی</option>
                                 </Select>
                                 @error('type')
                                     <span class="text-danger">{{ $message }}</span>
@@ -57,7 +58,7 @@
                                     <option value="">--- انتخاب کنید ---</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}"
-                                            @if (old('user_id') == $user->id) selected @endif>
+                                            @if (old('user_id', $copan->user_id) == $user->id) selected @endif>
                                             {{ $user->full_name }}</option>
                                     @endforeach
                                 </Select>
@@ -70,19 +71,21 @@
                             <div class="col-md-6 col-12">
                                 <label for="">نوع تخفیف</label>
                                 <Select name="amount_type" id="type" class="form-control form-control-sm">
-                                    <option value="0" value="{{ old('amount_type') }}">درصدی</option>
-                                    <option value="1" value="{{ old('amount_type') }}">عددی</option>
+                                    <option value="0" value="{{ old('amount_type', $copan->amount_type) }}">درصدی
+                                    </option>
+                                    <option value="1" value="{{ old('amount_type', $copan->amount_type) }}">عددی
+                                    </option>
                                     @error('amount_type')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </Select>
                             </div>
                             {{-- amount --}}
-                            
+
                             <div class="col-md-6 col-12">
                                 <label for="">میزان تخفیف</label>
                                 <input name="amount" type="text" class="form-control form-control-sm"
-                                    value="{{ old('amount') }}">
+                                    value="{{ old('amount', $copan->amount) }}">
                                 @error('amount')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -92,7 +95,7 @@
                             <div class="col-md-6 col-12">
                                 <label for="">حداکثر تخفیف</label>
                                 <input name="discount_ceiling" type="text" class="form-control form-control-sm"
-                                    value="{{ old('discount_ceiling') }}">
+                                    value="{{ old('discount_ceiling', $copan->discount_ceiling) }}">
                                 @error('discount_ceiling')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -101,33 +104,32 @@
                             <div class="col-md-6 col-12">
                                 <label for="">وضعیت</label>
                                 <select name="status" id="" class="form-control form-control-sm">
-                                    <option value="1" value="{{ old('status') }}">فعال</option>
-                                    <option value="0" value="{{ old('status') }}">غیرفعال</option>
+                                    <option value="1" value="{{ old('status', $copan->status) }}">فعال</option>
+                                    <option value="0" value="{{ old('status', $copan->status) }}">غیرفعال</option>
                                 </select>
                             </div>
                             {{-- start_date --}}
-                            
+
                             <div class="col-md-6 col-12">
                                 <label for="">تاریخ شروع</label>
                                 <input id="start_at" name="start_date" type="hidden">
                                 <input id="start_at_view" name="start_date_view" type="text"
-                                    class="form-control form-control-sm" value="{{ old('start_date') }}">
+                                    class="form-control form-control-sm"
+                                    value="{{ old('start_date', $copan->start_date) }}">
                                 @error('start_date')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+                            {{-- end_date --}}
                             <div class="col-md-6 col-12">
                                 <label for="">تاریخ پایان</label>
                                 <input id="end_at" name="end_date" type="hidden">
                                 <input id="end_at_view" name="end_date_view" type="text"
-                                    class="form-control form-control-sm" value="{{ old('end_date') }}">
+                                    class="form-control form-control-sm" value="{{ old('end_date', $copan->end_date) }}">
                                 @error('end_date')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            {{-- end_date --}}
-                        
                         </section>
                         <section>
                             <button class="btn btn-primary btn-sm mt-3">ثبت</button>
