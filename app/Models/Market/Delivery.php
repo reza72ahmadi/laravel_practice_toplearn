@@ -18,4 +18,8 @@ class Delivery extends Model
         'delivery_time_unit',
         'status'
     ];
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

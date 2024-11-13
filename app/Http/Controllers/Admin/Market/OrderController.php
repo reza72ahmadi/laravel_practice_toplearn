@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Market\Order;
 
-use function Ramsey\Uuid\v1;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
     public function all()
     {
-        return view('admin.market.order.index');
+        $orders = Order::all();
+        // dd($orders->delivery->name);
+        return view('admin.market.order.index', compact('orders'));
     }
     public function newOrders()
     {

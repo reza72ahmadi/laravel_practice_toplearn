@@ -44,8 +44,8 @@
                             <div class="col-md-6 col-12">
                                 <label for="">نوع کوپن</label>
                                 <Select name="type" id="type" class="form-control form-control-sm">
-                                    <option value="0" value="{{ old('type', $copan->type) }}">عمومی</option>
-                                    <option value="1" value="{{ old('type', $copan->type) }}">خصوصی</option>
+                                    <option value="0" @if (old('type', $copan->type) == 0) selected @endif>عمومی</option>
+                                    <option value="1" @if (old('type', $copan->type) == 1) selected @endif>خصوصی</option>
                                 </Select>
                                 @error('type')
                                     <span class="text-danger">{{ $message }}</span>
@@ -54,7 +54,9 @@
                             {{-- users --}}
                             <div class="col-md-6 col-12">
                                 <label for="">مشتریان</label>
-                                <Select name="user_id" id="users" class="form-control form-control-sm" disabled>
+                                <Select name="user_id" id="users" class="form-control form-control-sm"
+                                    {{ $copan->type == 0 ? 'disabled' : '' }}>
+
                                     <option value="">--- انتخاب کنید ---</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}"
@@ -71,9 +73,9 @@
                             <div class="col-md-6 col-12">
                                 <label for="">نوع تخفیف</label>
                                 <Select name="amount_type" id="type" class="form-control form-control-sm">
-                                    <option value="0" value="{{ old('amount_type', $copan->amount_type) }}">درصدی
+                                    <option value="0" @if (old('amount_type', $copan->amount_type) == 0) selected @endif>درصدی
                                     </option>
-                                    <option value="1" value="{{ old('amount_type', $copan->amount_type) }}">عددی
+                                    <option value="1" @if (old('amount_type', $copan->amount_type) == 1) selected @endif>عددی
                                     </option>
                                     @error('amount_type')
                                         <span class="text-danger">{{ $message }}</span>
@@ -104,8 +106,9 @@
                             <div class="col-md-6 col-12">
                                 <label for="">وضعیت</label>
                                 <select name="status" id="" class="form-control form-control-sm">
-                                    <option value="1" value="{{ old('status', $copan->status) }}">فعال</option>
-                                    <option value="0" value="{{ old('status', $copan->status) }}">غیرفعال</option>
+                                    <option value="1" @if (old('status', $copan->status) == 1) selected @endif>فعال</option>
+                                    <option value="0" @if (old('status', $copan->status) == 0) selected @endif>غیرفعال
+                                    </option>
                                 </select>
                             </div>
                             {{-- start_date --}}

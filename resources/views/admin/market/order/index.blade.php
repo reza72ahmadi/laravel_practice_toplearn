@@ -34,97 +34,89 @@
                             <tr>
                                 <th>#</th>
                                 <th>کدسفارش</th>
-                                <th>مبلغ سفارش</th>
-                                <th>مبلغ تخیف</th>
+                                <th>مجموع مبلغ سفارش بدون تخفیف</th>
+                                <th>مجموع تمامی مبالغ تخفیفات</th>
+                                <th>مبلغ تخفیف همه محصولات</th>
                                 <th>مبلغ نهایی</th>
                                 <th>وضعیت پرداخت</th>
-                                <th>شیوهر پرداخت</th>
+                                <th>شیوه پرداخت</th>
                                 <th>بانک</th>
-                                <th>وضعیت ارسالی</th>
+                                <th>وضعیت ارسال</th>
                                 <th>شیوه ارسال</th>
                                 <th>وضعیت سفارش</th>
                                 <th class="width-8-rem text-center"><i class="fas fa-cogs"></i>عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <td>نمایشگر</td>
-                                <td class="max-width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a id="dropdownMenuLink" data-toggle="dropdown"
-                                            class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
-                                            href="" aria-expanded="false"><i class="fas fa-tools"></i>عملیات</a>
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->order_final_amount }}</td>
+                                    <td>{{ $order->order_discount_amount }}</td>
+                                    <td>{{ $order->order_total_products_discount_amount }}</td>
+                                    <td>{{ $order->order_final_amount - $order->order_discount_amount }}</td>
+                                    <td>
+                                        @if ($order->payment_status == 0)
+                                            در انتظارتایید
+                                        @elseif ($order->payment_status == 1)
+                                            تایید نشده
+                                        @elseif($order->payment_status == 2)
+                                            تایید شده
+                                        @else
+                                            برگشت داده شده
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($order->payment_type == 0)
+                                            آنلاین
+                                        @elseif ($order->payment_type == 1)
+                                            آفلاین
+                                        @else
+                                            در محل
+                                        @endif
+                                    </td>
+                                    <td>{{ $order->payment->paymentable->gateway ?? '-' }}</td>
+                                    <td>
+                                        @if ($order->delivery_status == 0)
+                                            ارسال نشده
+                                        @elseif ($order->delivery_status == 1)
+                                            درحال ارسال
+                                        @elseif($order->delivery_status == 2)
+                                            ارسال شده
+                                        @else
+                                            تحویل شده
+                                        @endif
+                                    </td>
+                                    <td>{{ $order->delivery->name}}</td>
+                                    <td>
+                                        @if ($order->status == 0)
+                                            در انتظارتایید
+                                        @elseif ($order->status == 1)
+                                            تایید نشده
+                                        @else
+                                            تایید شده
+                                        @endif
+                                    </td>
+                                    <td class="max-width-8-rem text-left">
+                                        <div class="dropdown">
+                                            <a id="dropdownMenuLink" data-toggle="dropdown"
+                                                class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
+                                                href="" aria-expanded="false"><i class="fas fa-tools"></i>عملیات</a>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-images"></i>مشاهده فاکتور</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-list-ul"></i>تغیروضعیت ارسال</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-edit"></i>تغیروضعیت سفارش</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-window-close"></i>باطل کردن سفارش</a>
+                                                <a class="dropdown-item text-right" href=""><i
+                                                        class="fas fa-images"></i>مشاهده فاکتور</a>
+                                                <a class="dropdown-item text-right" href=""><i
+                                                        class="fas fa-list-ul"></i>تغیروضعیت ارسال</a>
+                                                <a class="dropdown-item text-right" href=""><i
+                                                        class="fas fa-edit"></i>تغیروضعیت سفارش</a>
+                                                <a class="dropdown-item text-right" href=""><i
+                                                        class="fas fa-window-close"></i>باطل کردن سفارش</a>
                                             </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <td>نمایشگر</td>
-                                <td class="max-width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a id="dropdownMenuLink" data-toggle="dropdown"
-                                            class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
-                                            href="" aria-expanded="false"><i class="fas fa-tools"></i>عملیات</a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-images"></i>مشاهده فاکتور</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-list-ul"></i>تغیروضعیت ارسال</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-edit"></i>تغیروضعیت سفارش</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-window-close"></i>باطل کردن سفارش</a>
-                                            </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <th>1</th>
-                                <td>نمایشگر</td>
-                                <td>نمایشگر</td>
-                                <td class="max-width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a id="dropdownMenuLink" data-toggle="dropdown"
-                                            class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
-                                            href="" aria-expanded="false"><i class="fas fa-tools"></i>عملیات</a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-images"></i>مشاهده فاکتور</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-list-ul"></i>تغیروضعیت ارسال</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-edit"></i>تغیروضعیت سفارش</a>
-                                                <a class="dropdown-item text-right" href=""><i class="fas fa-window-close"></i>باطل کردن سفارش</a>
-                                            </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
