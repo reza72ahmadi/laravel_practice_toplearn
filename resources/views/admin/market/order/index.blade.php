@@ -58,11 +58,11 @@
                                     <td>{{ $order->order_final_amount - $order->order_discount_amount }}</td>
                                     <td>
                                         @if ($order->payment_status == 0)
-                                            در انتظارتایید
+                                            پرداخت نشده
                                         @elseif ($order->payment_status == 1)
-                                            تایید نشده
+                                            پرداخت شده
                                         @elseif($order->payment_status == 2)
-                                            تایید شده
+                                            باطل
                                         @else
                                             برگشت داده شده
                                         @endif
@@ -88,14 +88,20 @@
                                             تحویل شده
                                         @endif
                                     </td>
-                                    <td>{{ $order->delivery->name}}</td>
+                                    <td>{{ $order->delivery->name }}</td>
                                     <td>
-                                        @if ($order->status == 0)
+                                        @if ($order->order_status == 1)
                                             در انتظارتایید
-                                        @elseif ($order->status == 1)
+                                        @elseif ($order->order_status == 2)
                                             تایید نشده
-                                        @else
+                                        @elseif ($order->order_status == 3)
                                             تایید شده
+                                        @elseif ($order->order_status == 4)
+                                            باطل شده
+                                        @elseif ($order->order_status == 5)
+                                            برگشتی
+                                        @else
+                                            بررسی نشده
                                         @endif
                                     </td>
                                     <td class="max-width-8-rem text-left">

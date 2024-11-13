@@ -11,43 +11,55 @@ class OrderController extends Controller
     public function all()
     {
         $orders = Order::all();
-        // dd($orders->delivery->name);
         return view('admin.market.order.index', compact('orders'));
     }
     public function newOrders()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('order_status', 0)->get();
+        foreach ($orders as $order) {
+            $order->order_status = 1;
+            $order->save();
+        }
+        return view('admin.market.order.index', compact('orders'));
     }
     public function sending()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('delivery_status', 0)->get();
+        return view('admin.market.order.index', compact('orders'));
     }
     public function unpaid()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('payment_status', 0)->get();
+        return view('admin.market.order.index', compact('orders'));
     }
     public function canceled()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('order_status', 4)->get();
+        return view('admin.market.order.index', compact('orders'));
     }
     public function returned()
     {
-        return view('admin.market.order.index');
+        $orders = Order::where('order_status', 5)->get();
+        return view('admin.market.order.index', compact('orders'));
     }
     public function show()
     {
-        return view('admin.market.order.index');
+        $orders = Order::all();
+        return view('admin.market.order.index', compact('orders'));
     }
     public function changeOrderStatus()
     {
-        return view('admin.market.order.index');
+        $orders = Order::all();
+        return view('admin.market.order.index', compact('orders'));
     }
     public function changeSendStatus()
     {
-        return view('admin.market.order.index');
+        $orders = Order::all();
+        return view('admin.market.order.index', compact('orders'));
     }
     public function cancelOrder()
     {
-        return view('admin.market.order.index');
+        $orders = Order::all();
+        return view('admin.market.order.index', compact('orders'));
     }
 }
