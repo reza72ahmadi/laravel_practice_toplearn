@@ -112,11 +112,14 @@
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                 <a class="dropdown-item text-right" href=""><i
                                                         class="fas fa-images"></i>مشاهده فاکتور</a>
-                                                <a class="dropdown-item text-right" href=""><i
+                                                <a class="dropdown-item text-right"
+                                                    href="{{ route('admin.market.send.changeSendStatus', $order->id) }}"><i
                                                         class="fas fa-list-ul"></i>تغیروضعیت ارسال</a>
-                                                <a class="dropdown-item text-right" href=""><i
+                                                <a class="dropdown-item text-right"
+                                                    href="{{ route('admin.market.order.changeOrderStatus', $order->id) }}"><i
                                                         class="fas fa-edit"></i>تغیروضعیت سفارش</a>
-                                                <a class="dropdown-item text-right" href=""><i
+                                                <a class="dropdown-item text-right"
+                                                    href="{{ route('admin.market.order.cancelOrder', $order->id) }}"><i
                                                         class="fas fa-window-close"></i>باطل کردن سفارش</a>
                                             </div>
                                         </div>

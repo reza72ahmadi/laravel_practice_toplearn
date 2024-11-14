@@ -47,19 +47,58 @@ class OrderController extends Controller
         $orders = Order::all();
         return view('admin.market.order.index', compact('orders'));
     }
-    public function changeOrderStatus()
+    public function changeOrderStatus(Order $order)
     {
-        $orders = Order::all();
-        return view('admin.market.order.index', compact('orders'));
+        switch ($order->order_status) {
+            case 1:
+                $order->order_status = 2;
+                break;
+            case 2:
+                $order->order_status = 3;
+                break;
+            case 3:
+                $order->order_status = 4;
+                break;
+            case 4:
+                $order->order_status = 5;
+                break;
+            case 5:
+                $order->order_status = 6;
+                break;
+            default:
+                $order->order_status = 1;
+                break;
+        }
+        $order->save();
+        return back();
     }
-    public function changeSendStatus()
+
+    // changeSendStatus
+    public function changeSendStatus(Order $order)
     {
-        $orders = Order::all();
-        return view('admin.market.order.index', compact('orders'));
+        switch ($order->delivery_status) {
+            case 0:
+                $order->delivery_status = 1;
+                break;
+            case 1:
+                $order->delivery_status = 2;
+                break;
+            case 2:
+                $order->delivery_status = 3;
+                break;
+            default:
+                $order->delivery_status = 0;
+                break;
+        }
+        $order->save();
+        return back();
     }
-    public function cancelOrder()
+
+    // cancelOrder
+    public function cancelOrder(Order $order)
     {
-        $orders = Order::all();
-        return view('admin.market.order.index', compact('orders'));
+        $order->order_status = 4;
+        $order->save();
+        return back();
     }
 }
