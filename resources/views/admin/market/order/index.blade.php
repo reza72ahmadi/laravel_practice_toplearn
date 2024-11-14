@@ -110,7 +110,8 @@
                                                 class="btn btn-success btn-sm btn-block dropdown-toggle" role="button"
                                                 href="" aria-expanded="false"><i class="fas fa-tools"></i>عملیات</a>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item text-right" href=""><i
+                                                <a class="dropdown-item text-right"
+                                                    href="{{ route('admin.market.order.show', $order->id) }}"><i
                                                         class="fas fa-images"></i>مشاهده فاکتور</a>
                                                 <a class="dropdown-item text-right"
                                                     href="{{ route('admin.market.send.changeSendStatus', $order->id) }}"><i
