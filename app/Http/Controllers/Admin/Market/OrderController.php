@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\Market;
 
 use App\Models\Market\Order;
-
+use App\Models\Market\Product;
 use App\Http\Controllers\Controller;
+use App\Models\Market\OrderItem;
+use App\Models\Market\AmazingSale;
 
 class OrderController extends Controller
 {
@@ -46,6 +48,14 @@ class OrderController extends Controller
     {
         return view('admin.market.order.show', compact('order'));
     }
+
+    // detailes
+    public function detailes(Order $order)
+    {
+        return view('admin.market.order.detailes', compact('order'));
+    }
+
+    // changeOrderStatus
     public function changeOrderStatus(Order $order)
     {
         switch ($order->order_status) {

@@ -33,11 +33,12 @@
                         <td class="width-16-rem text-left">
                             <a id="print" class="btn btn-sm btn-dark text-white"><i class="fa fa-print"></i> چاپ
                             </a>
-                            <a class="btn btn-sm btn-success text-white"><i class="fa fa-book"></i>جزیات</a>
+                            <a href="{{ route('admin.market.order.detailes', $order->id) }}"
+                                class="btn btn-sm btn-success text-white"><i class="fa fa-book"></i>جزیات</a>
                         </td>
                     </tr>
                 </table>
-                
+
                 <section class="table-responsive">
                     <table class="table table-striped table-hover" style="height: 160px" id="printable">
                         {{-- <thead>

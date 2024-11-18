@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AmazingSale extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $table = 'amazing_sales';
 
     protected $fillable = [
         'product_id',
@@ -22,4 +23,6 @@ class AmazingSale extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    
 }

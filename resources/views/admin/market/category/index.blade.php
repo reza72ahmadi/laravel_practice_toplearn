@@ -45,7 +45,7 @@
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $productsCategory->name }}</td>
-                                    <td>{{ $productsCategory->description }}</td>
+                                    <td>{!! $productsCategory->description !!}</td>
                                     <td> {{ $productsCategory->parent_id ? $productsCategory->parent->name : 'دسته اصلی' }}
                                     </td>
                                     <td>{{ $productsCategory->status }}</td>
