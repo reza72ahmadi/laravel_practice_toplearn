@@ -61,7 +61,12 @@
                 <!-- comment -->
                 <span class="ml-2 ml-md-4 position-relative">
                     <span id="comment-notification-toggle" class="pointer">
-                        <i class="far fa-comment-alt"></i> <sup class="badge badge-danger">3</sup>
+                        <i class="far fa-comment-alt"></i>
+                        @if ($unseenComments->count() !== 0)
+                            <sup class="badge badge-danger">
+                                {{ $unseenComments->count() }}
+                            </sup>
+                        @endif
                     </span>
 
                     <section id="header-comment" class="header-comment">
@@ -71,19 +76,24 @@
 
                         <section class="header-comment-wrapper">
                             <ul class="list-group rounded px-0">
-                                <li class="list-group-item list-group-item-action">
-                                    <section class="media">
-                                        <img class="notification-img" src="{{ asset('admin-assets/images/avatar-3.jpg') }}"
-                                            alt="avatar">
-                                        <section class="media-body pr-1">
-                                            <section class="d-flex justify-content-between">
-                                                <h5 class="comment-user">محمدهاشمی</h5>
-                                                <span><i
-                                                        class="fas fa-circle text-success comment-user-status"></i></span>
+                                @foreach ($unseenComments as $unseenComment)
+                                    <li class="list-group-item list-group-item-action">
+                                        <section class="media">
+                                            <img class="notification-img"
+                                                src="{{ asset('admin-assets/images/avatar-3.jpg') }}" alt="avatar">
+                                            <section class="media-body pr-1">
+                                                <section class="d-flex justify-content-between">
+                                                    <h5 class="comment-user">{{$unseenComment->user->full_name}}</h5>
+                                                    <span>
+                                                        {{$unseenComment->body}}
+                                                        <i
+                                                            class="fas fa-circle text-success comment-user-status"></i>
+                                                        </span>
+                                                </section>
                                             </section>
                                         </section>
-                                    </section>
-                                </li>
+                                    </li>
+                                @endforeach
                             </ul>
                         </section>
                     </section>
@@ -93,8 +103,10 @@
                 <!-- profile -->
                 <span class="ml-3 ml-md-5 position-relative">
                     <span id="header-profile-toggle" class="pointer">
-                        <img class="header-avatar" src="{{ asset('admin-assets/images/avatar-3.jpg') }}
-                        " alt="">
+                        <img class="header-avatar"
+                            src="{{ asset('admin-assets/images/avatar-3.jpg') }}
+                        "
+                            alt="">
                         <span class="header-username">کامران محمدی</span>
                         <i class="fas fa-angle-down"></i>
                     </span>
