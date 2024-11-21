@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>ایجاد تخفیف عمومی</title>
+    <title>ویرایش تخفیف عمومی</title>
     <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 @section('content')
@@ -10,7 +10,7 @@
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#"> بخش فروش</a></li>
             <li class="breadcrumb-item"><a href="#"> کوپن</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ایجاد تخفیف عمومی</li>
+            <li class="breadcrumb-item active" aria-current="page">ویرایش تخفیف عمومی</li>
         </ol>
     </nav>
 
@@ -18,7 +18,7 @@
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
-                    <h5>ایجاد تخفیف عمومی
+                    <h5>ویرایش تخفیف عمومی
 
                     </h5>
                 </section>
@@ -27,13 +27,15 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.discount.commonDiscount.store') }}" method="POST">
+                    <form action="{{ route('admin.market.discount.commonDiscount.update', $commonDiscount->id) }}"
+                        method="POST">
+                        @method('put')
                         @csrf
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="">درصد تخفیف</label>
                                 <input name="percentage" type="text" class="form-control form-control-sm"
-                                    value="{{ old('percentage') }}">
+                                    value="{{ old('percentage', $commonDiscount->percentage) }}">
                                 @error('percentage')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -41,7 +43,7 @@
                             <div class="col-md-6 col-12">
                                 <label for="">حداکثر تخفیف</label>
                                 <input name="discount_ceiling" type="text" class="form-control form-control-sm"
-                                    value="{{ old('discount_ceiling') }}">
+                                    value="{{ old('discount_ceiling', $commonDiscount->discount_ceiling) }}">
                                 @error('discount_ceiling')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -49,7 +51,7 @@
                             <div class="col-md-6 col-12">
                                 <label for="">حداقل مبلغ خرید</label>
                                 <input name="minimal_order_amount" type="text" class="form-control form-control-sm"
-                                value="{{ old('minimal_order_amount') }}">
+                                    value="{{ old('minimal_order_amount', $commonDiscount->minimal_order_amount) }}">
                                 @error('minimal_order_amount')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -57,7 +59,7 @@
                             <div class="col-md-6 col-12">
                                 <label for=""> عنوان مناسبت</label>
                                 <input name="title" type="text" class="form-control form-control-sm"
-                                value="{{ old('title') }}">
+                                    value="{{ old('title', $commonDiscount->title) }}">
                                 @error('title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -83,9 +85,9 @@
                             <div class="col-md-6 col-12">
                                 <label for="status">وضعیت</label>
                                 <Select class="form-control form-control-sm" name="status" id="status">
-                                    <option value="0" @if (old('status') === 0) selected @endif>غیر فعال
+                                    <option value="0" @if (old('status', $commonDiscount->status) === 0) selected @endif>غیر فعال
                                         </ption>
-                                    <option value="1" @if (old('status') === 1) selected @endif>فعال</option>
+                                    <option value="1" @if (old('status', $commonDiscount->status) === 1) selected @endif>فعال</option>
                                     @error('status')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

@@ -20,7 +20,8 @@
                     <h5>فروش شگفت انگیز</h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm" href="{{route('admin.market.discount.amazingSale.create')}}">افزودن کالا به لیست شگفت انگیز
+                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.discount.amazingSale.create') }}">افزودن
+                        کالا به لیست شگفت انگیز
                     </a>
                     <div class="max-width-16-rem">
                         <input class="form-control form-control-sm" type="text" name="" id=""
@@ -41,18 +42,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>ساعت</td>
-                                <td>100</td>
-                                <td>سنبله 1403</td>
-                                <td>حوت 1403</td>
-                                <td class="max-width-16-rem text-left">
-                                    <a class="btn btn-primary btn-sm" href=""><i class="fas fa-edit"> ویرایش</i></a>
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt">
-                                            حذف</i></button>
-                                </td>
-                            </tr>
+                            @foreach ($amazingSales as $amazingSale)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $amazingSale->product->name }}</td>
+                                    <td>{{ $amazingSale->percentage }}%</td>
+                                    <td>{{ JalaliDate($amazingSale->start_date, 'Y/m/d') }}</td>
+                                    <td>{{ JalaliDate($amazingSale->end_date, 'Y/m/d') }}</td>
+                                    <td class="max-width-16-rem text-left">
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.market.discount.amazingSale.edit', $amazingSale->id) }}"><i
+                                                class="fas fa-edit">
+                                                ویرایش</i></a>
+                                        <form class="d-inline"
+                                            action="{{ route('admin.market.discount.amazingSale.destroy', $amazingSale->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class="fas fa-trash-alt">
+                                                    حذف</i></button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>

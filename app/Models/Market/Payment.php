@@ -19,7 +19,7 @@ class Payment extends Model
         'status',
         'type',
         'paymentable_id',
-        'paymantable_type'
+        'paymentable_type'
     ];
 
     public function user()

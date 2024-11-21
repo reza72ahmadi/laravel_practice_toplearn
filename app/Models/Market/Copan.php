@@ -6,20 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Delivery extends Model
+class Copan extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     protected $fillable = [
-        'name',
+        'code',
         'amount',
-        'delivery_time',
-        'delivery_time_unit',
-        'status'
+        'amount_type',
+        'discount_ceiling',
+        'type',
+        'status',
+        'start_date',
+        'end_date',
+        'user_id'
     ];
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
 }

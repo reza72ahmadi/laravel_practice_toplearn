@@ -2,30 +2,27 @@
 
 namespace App\Models\Market;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class CategoryValue extends Model
+class AmazingSale extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'category_values';
-    
+    protected $table = 'amazing_sales';
 
     protected $fillable = [
         'product_id',
-        'category_attribute_id',
-        'value',
-        'type',
+        'percentage',
+        'status',
+        'start_date',
+        'end_date',
     ];
-
-    public function attribut()
-    {
-        return $this->belongsTo(CategoryAttribute::class);
-    }
 
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
+
+    
 }

@@ -33,7 +33,7 @@ use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
-
+use App\Http\Controllers\Admin\NotificationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -86,12 +86,24 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::prefix('discount')->group(function () {
             Route::get('/copan', [DiscountController::class, 'copan'])->name('admin.market.discount.copan');
             Route::get('/copan/create', [DiscountController::class, 'copanCreate'])->name('admin.market.discount.copan.create');
+            Route::post('/copan/store', [DiscountController::class, 'copanstore'])->name('admin.market.discount.copan.store');
+            Route::get('/copan/edit/{copan}', [DiscountController::class, 'copansedit'])->name('admin.market.discount.copan.edit');
+            Route::put('/copan/update/{copan}', [DiscountController::class, 'copansupdate'])->name('admin.market.discount.copan.update');
+            Route::delete('/copan/delete/{copan}', [DiscountController::class, 'copansdelete'])->name('admin.market.discount.copan.delete');
 
             Route::get('/comment-discount', [DiscountController::class, 'commonDiscount'])->name('admin.market.discount.commonDiscount');
             Route::get('/comment-discount/create', [DiscountController::class, 'commonDiscountCreate'])->name('admin.market.discount.commonDiscount.create');
+            Route::post('/comment-discount/store', [DiscountController::class, 'commonDiscountStore'])->name('admin.market.discount.commonDiscount.store');
+            Route::get('/comment-discount/edit/{commonDiscount}', [DiscountController::class, 'commonDiscountEdit'])->name('admin.market.discount.commonDiscount.edit');
+            Route::put('/comment-discount/update/{commonDiscount}', [DiscountController::class, 'commonDiscountUpdate'])->name('admin.market.discount.commonDiscount.update');
+            Route::delete('/comment-discount/destroy/{commonDiscount}', [DiscountController::class, 'commonDiscountDesroy'])->name('admin.market.discount.commonDiscount.destroy');
 
             Route::get('/amazing-sale', [DiscountController::class, 'amazingSale'])->name('admin.market.discount.amazingSale');
             Route::get('/amazing-sale/create', [DiscountController::class, 'amazingSaleCreate'])->name('admin.market.discount.amazingSale.create');
+            Route::post('/amazing-sale/store', [DiscountController::class, 'amazingSaleStore'])->name('admin.market.discount.amazingSale.store');
+            Route::get('/amazing-sale/edit/{amazingSale}', [DiscountController::class, 'amazingSaleEdit'])->name('admin.market.discount.amazingSale.edit');
+            Route::put('/amazing-sale/update/{amazingSale}', [DiscountController::class, 'amazingSaleUpdate'])->name('admin.market.discount.amazingSale.update');
+            Route::delete('/amazing-sale/destroy/{amazingSale}', [DiscountController::class, 'amazingSaleDesroy'])->name('admin.market.discount.amazingSale.destroy');
         });
         // order
         Route::prefix('order')->group(function () {
@@ -102,10 +114,11 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/unpaid', [OrderController::class, 'unpaid'])->name('admin.market.order.unpaid');
             Route::get('/canceled', [OrderController::class, 'canceled'])->name('admin.market.order.cancled');
             Route::get('/returned', [OrderController::class, 'returned'])->name('admin.market.order.returned');
-            Route::get('/show', [OrderController::class, 'show'])->name('admin.market.order.show');
-            Route::get('/change-send-status', [OrderController::class, 'changeOrderStatus'])->name('admin.market.order.changeSendStatus');
-            Route::get('/change-order-status', [OrderController::class, 'changeSendStatus'])->name('admin.market.order.changeOrderStatus');
-            Route::get('/cancel-order', [OrderController::class, 'cancelOrder'])->name('admin.market.order.cancelOrder');
+            Route::get('/show/{order}', [OrderController::class, 'show'])->name('admin.market.order.show');
+            Route::get('/change-send-status/{order}', [OrderController::class, 'changeSendStatus'])->name('admin.market.send.changeSendStatus');
+            Route::get('/change-order-status/{order}', [OrderController::class, 'changeOrderStatus'])->name('admin.market.order.changeOrderStatus');
+            Route::get('/cancel-order/{order}', [OrderController::class, 'cancelOrder'])->name('admin.market.order.cancelOrder');
+            Route::get('/detailes/{order}', [OrderController::class, 'detailes'])->name('admin.market.order.detailes');
         });
         // payment
         Route::prefix('payment')->group(function () {
@@ -116,6 +129,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/cash', [PaymentController::class, 'cash'])->name('admin.market.payment.cash');
             Route::get('/canceled/{payment}', [PaymentController::class, 'canceled'])->name('admin.market.payment.canceled');
             Route::get('/returned/{payment}', [PaymentController::class, 'returned'])->name('admin.market.payment.returned');
+            Route::get('/show/{payment}', [PaymentController::class, 'show'])->name('admin.market.payment.show');
         });
         // product
         Route::prefix('product')->group(function () {
@@ -350,6 +364,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{setting}', [SettingController::class, 'update'])->name('admin.setting.update');
         });
     });
+    Route::post('/notification/read-all', [NotificationController::class, 'readAll'])->name('admin.notificatio.readAll');
 });
 
 

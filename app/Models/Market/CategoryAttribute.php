@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CategoryAttribute extends Model
 {
+    protected $table = 'category_attributes';
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'name',

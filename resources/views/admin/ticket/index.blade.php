@@ -9,7 +9,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
             <li class="breadcrumb-item"><a href="#">تیکت</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> تکت جدید</li>
+            <li class="breadcrumb-item active" aria-current="page"> تکت های باز</li>
         </ol>
     </nav>
     <section class="row">
@@ -17,11 +17,11 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        تکت جدید
+                        تکت های باز
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm disabled" href="">ایجاد نظر</a>
+                    <a class="btn btn-info btn-sm disabled" href="">ایجاد تکت</a>
                     <div class="max-width-16-rem">
                         <input class="form-control form-control-sm" type="text" name="" id=""
                             placeholder="جستجو...">
@@ -43,16 +43,18 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             @foreach ($tickets as $ticket)
                                 <tr>
 
                                     <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $ticket->user->first_name . ' ' . $ticket->user->last_name }}</td>
+                                    <td>{{ $ticket->admin->user->first_name . ' ' . $ticket->admin->user->last_name }}</td>
                                     <td>{{ $ticket->subject }}</td>
                                     <td>{{ $ticket->category->name }}</td>
                                     <td>{{ $ticket->priority->name }}</td>
                                     <td>{{ $ticket->admin->user->first_name . ' ' . $ticket->admin->user->last_name }}</td>
-                                    <td>{{ $ticket->parent->subject ?? '-' }}</td>
+                                   <td></td>
+                                    {{-- <td>{{ $ticket->parent->subject ?? '-' }}</td> --}}
                                     <td class="max-width-16-rem text-left">
 
                                         <a class="btn btn-sm {{ $ticket->status === 1 ? 'btn-success' : 'btn-danger' }}"
@@ -67,6 +69,7 @@
                                     </td>
                                 </tr>
                             @endforeach
+
                         </tbody>
                     </table>
                 </section>
