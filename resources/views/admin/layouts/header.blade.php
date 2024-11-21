@@ -29,7 +29,13 @@
                 <!-- notification -->
                 <span class="ml-2 ml-md-4 position-relative">
                     <span id="header-notification-toggle" class="pointer">
-                        <i class="far fa-bell pointer"></i><sup class="badge badge-danger">4</sup>
+                        <i class="far fa-bell pointer"></i><sup class="badge badge-danger">
+                            @if ($notifications->count() !== 0)
+                                <sup class="badge badge-danger">
+                                    {{ $notifications->count() }}
+                                </sup>
+                            @endif
+                        </sup>
                     </span>
                     <section id="header-notification" class="header-notification rounded">
                         <section class="d-flex justify-content-between">
@@ -41,17 +47,15 @@
                             </span>
                         </section>
                         <ul class="list-group rounded px-0">
-                            <li class="list-group-item list-group-item-action">
-                                <section class="media">
-                                    <img class="notification-img" src="{{ asset('admin-assets/images/avatar-2.jpg') }}"
-                                        alt="avatar">
-                                    <section class="media-body pr-1">
-                                        <h5 class="notification-user">محمدهاشمی</h5>
-                                        <p class="notification-text">این یک متن تستی است</p>
-                                        <p class="notification-time">30 دقیقه قبل</p>
+                            @foreach ($notifications as $notification)
+                                <li class="list-group-item list-group-item-action">
+                                    <section class="media">
+                                        <section class="media-body pr-1">
+                                            <p>{{$notification['data']['message']}}</p>
+                                        </section>
                                     </section>
-                                </section>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </section>
                 </span>
@@ -83,12 +87,11 @@
                                                 src="{{ asset('admin-assets/images/avatar-3.jpg') }}" alt="avatar">
                                             <section class="media-body pr-1">
                                                 <section class="d-flex justify-content-between">
-                                                    <h5 class="comment-user">{{$unseenComment->user->full_name}}</h5>
+                                                    <h5 class="comment-user">{{ $unseenComment->user->full_name }}</h5>
                                                     <span>
-                                                        {{$unseenComment->body}}
-                                                        <i
-                                                            class="fas fa-circle text-success comment-user-status"></i>
-                                                        </span>
+                                                        {{ $unseenComment->body }}
+                                                        <i class="fas fa-circle text-success comment-user-status"></i>
+                                                    </span>
                                                 </section>
                                             </section>
                                         </section>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\Users\CustomerRequest;
+use App\Notifications\NewUserRegistered;
 
 class CustomerController extends Controller
 {
@@ -50,6 +51,11 @@ class CustomerController extends Controller
 
         // Create the user with the modified inputs array
         User::create($inputs);
+        $details = [
+            'message' => 'یک کاربر جدید در سایت ثبت نام کرد',
+        ];
+        $adminUser = User::find(1);
+        $adminUser->notify(new NewUserRegistered($details));
 
         return redirect()->route('admin.user.customer.index')
             ->with('swal-success', 'مشتری شما با موفقیت ثبت شد');
