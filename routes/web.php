@@ -34,9 +34,15 @@ use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('customer.home');
+});
+
+Route::namespace('Auth')->group(function () {
+    Route::get('login-register', [LoginRegisterController::class, 'LoginRegisterForm'])->name('auth.customer.login-register-form');
+    Route::post('login-register', [LoginRegisterController::class, 'LoginRegister'])->name('auth.customer.login-register');
 });
 
 Route::prefix('admin')->namespace('Admin')->group(function () {

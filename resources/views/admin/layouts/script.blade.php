@@ -7,7 +7,7 @@
 <script src="{{ asset('admin-assets/sweetalert/sweetalert2.min.js') }}"></script>
 
 
-{{-- <script>
+<script>
     let notificationDropdown = document.getElementById('header-notification-toggle');
     notificationDropdown.addEventListener('click', function() {
         $.ajax({
@@ -16,13 +16,10 @@
             data: {
                 _token: " {{ csrf_token() }}"
             },
-            success: function() {
-                console.log('yes')
-            }
         })
     });
-</script> --}}
-<script>
+</script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         let notificationDropdown = document.getElementById('header-notification-toggle');
         notificationDropdown.addEventListener('click', function() {
@@ -47,7 +44,7 @@
             }
         });
     });
-</script>
+</script> --}}
 
 
 {{-- @stack('scripts') --}}
