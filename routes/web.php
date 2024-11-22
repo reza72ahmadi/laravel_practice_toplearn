@@ -36,7 +36,7 @@ use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryCont
 use App\Http\Controllers\Admin\NotificationController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('customer.home');
 });
 
 Route::prefix('admin')->namespace('Admin')->group(function () {
