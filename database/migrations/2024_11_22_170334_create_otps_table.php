@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('otps', function (Blueprint $table) {
             $table->id();
             $table->string('tocken');
-            $table->foreignId('user_id')->constrained('user');
+            $table->foreignId('user_id')->constrained();
             $table->string('otp_cod');
             $table->string('login_id')->comment('email or mobile');
             $table->tinyInteger('type')->comment('1 => email , 0=>mobil');
