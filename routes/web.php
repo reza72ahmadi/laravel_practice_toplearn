@@ -42,6 +42,7 @@ Route::get('/', function () {
 
 Route::namespace('Auth')->group(function () {
     Route::get('login-register', [LoginRegisterController::class, 'LoginRegisterForm'])->name('auth.customer.login-register-form');
+    Route::post('login-register', [LoginRegisterController::class, 'LoginRegister'])->name('auth.customer.login-register');
 });
 
 Route::prefix('admin')->namespace('Admin')->group(function () {
