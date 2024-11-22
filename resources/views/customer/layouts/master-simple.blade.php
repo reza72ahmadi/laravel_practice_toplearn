@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    @include('customer.layouts.header')
+    @include('customer.layouts.head-tag')
 
     <main id="main-body-one-col" class="main-body">
 
