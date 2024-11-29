@@ -14,8 +14,8 @@
                 <section class="login-title">ورود / ثبت نام</section>
                 <section class="login-info">شماره موبایل یا پست الکترونیک خود را وارد کنید</section>
                 <section class="login-input-text">
-                    <input type="text" name="id" value="{{ old('id') }}">
-                    @error('id')
+                    <input type="text" name="email" value="{{ old('email') }}">
+                    @error('email')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </section>

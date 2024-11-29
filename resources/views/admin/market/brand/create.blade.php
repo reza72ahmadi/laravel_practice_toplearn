@@ -78,6 +78,7 @@
                                 @enderror
                             </div>
                         </section>
+                        
                         <section>
                             <button class="btn btn-primary btn-sm mt-3">ثبت</button>
                         </section>

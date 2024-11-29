@@ -87,6 +87,7 @@
         </section>
     </section>
 @endsection
+
 @section('script')
     <script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
     <script>
