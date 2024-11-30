@@ -12,13 +12,15 @@ class BannerController extends Controller
     public function index()
     {
         $banners = Banner::all();
-        return view('admin.content.banner.index', compact('banners'));
+        $positions = Banner::$positions;
+        return view('admin.content.banner.index', compact('banners', 'positions'));
     }
 
 
     public function create()
     {
-        return view('admin.content.banner.create');
+        $positions = Banner::$positions;
+        return view('admin.content.banner.create', compact('positions'));
     }
 
     public function store(BannerRequest $request)
@@ -37,7 +39,8 @@ class BannerController extends Controller
 
     public function edit(Banner $banner)
     {
-        return view('admin.content.banner.edit', compact('banner'));
+        $positions = Banner::$positions;
+        return view('admin.content.banner.edit', compact('banner', 'positions'));
     }
 
     public function update(BannerRequest $request, Banner $banner)
@@ -75,7 +78,7 @@ class BannerController extends Controller
         }
     }
 
-    
+
     public function destroy(Banner $banner)
     {
         $banner->delete();

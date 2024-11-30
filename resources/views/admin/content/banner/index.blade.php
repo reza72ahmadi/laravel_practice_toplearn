@@ -47,7 +47,7 @@
                                     <td>{{ $banner->url }}</td>
                                     <td>
                                         <img src="{{ asset('storage/' . $banner->image) }}" alt=""
-                                            style="width: 60px; height: auto; border-radius: 50%;">
+                                            style="width: 60px; height: auto;">
                                     </td>
                                     <td>
                                         <label for="">
@@ -56,7 +56,7 @@
                                                 type="checkbox" @if ($banner->status === 1) checked @endif>
                                         </label>
                                     </td>
-                                    <td>{{ $banner->position }}</td>
+                                    <td>{{ $positions[$banner->position] }}</td>
 
                                     <td class="max-width-16-rem text-left">
                                         <form class="d-inline"

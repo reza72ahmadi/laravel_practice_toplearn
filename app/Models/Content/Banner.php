@@ -19,7 +19,7 @@ class Banner extends Model
         'status',
     ];
 
-    public static $position = [
+    public static $positions = [
         0 => 'اسلاید شو(صفحه اصلی)',
         1 => 'کناراسلاید شو(صفحه اصلی)',
         2 => ' دوبنر تبلیغی بین دو اسلایدر(صفحه اصلی)',

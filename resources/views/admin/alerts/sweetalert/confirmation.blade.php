@@ -16,7 +16,7 @@
                 title: "مطمئن هستید?",
                 icon: "warning",
                 showCancelButton: true ,
-                confirmButtonText: " بله!",
+                confirmButtonText: " بله",
                 cancelButtonText: "نخیر",
             }).then((result) => {
                 if (result.value == true) {

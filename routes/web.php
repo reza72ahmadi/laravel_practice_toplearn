@@ -36,16 +36,14 @@ use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
-
-Route::get('/', function () {
-    return view('customer.home');
-})->name('customer.home');
+use App\Http\Controllers\Customer\HomeController;
 
 Route::namespace('Auth')->group(function () {
     Route::get('login-register', [LoginRegisterController::class, 'LoginRegisterForm'])->name('auth.customer.login-register-form');
     Route::post('login-register', [LoginRegisterController::class, 'LoginRegister'])->name('auth.customer.login-register');
 });
 
+// Admin
 Route::prefix('admin')->namespace('Admin')->group(function () {
 
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.home');
@@ -245,7 +243,6 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{banner}', [BannerController::class, 'update'])->name('admin.content.banner.update');
             Route::delete('/delete/{banner}', [BannerController::class, 'destroy'])->name('admin.content.banner.destroy');
             Route::get('/status/{banner}', [BannerController::class, 'status'])->name('admin.content.banner.status');
-          
         });
         // post
         Route::prefix('post')->group(function () {
@@ -385,7 +382,8 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::post('/notification/read-all', [NotificationController::class, 'readAll'])->name('admin.notificatio.readAll');
 });
 
-
+// Customer
+Route::get('/', [HomeController::class, 'home'])->name('customer.home');
 
 
 

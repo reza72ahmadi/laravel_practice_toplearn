@@ -62,7 +62,8 @@
 
                             <div class="col-md-6 col-12">
                                 <label for="url">آدرس URL</label>
-                                <input type="text" class="form-control form-control-sm" name="url" id="url">
+                                <input type="text" class="form-control form-control-sm" name="url"
+                                    value="{{ old('url') }}">
                                 @error('url')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -70,7 +71,12 @@
 
                             <div class=" col-12">
                                 <label for="position">موقعیت</label>
-                                <input type="text" class="form-control form-control-sm" name="position" id="position">
+                                <select name="position" class="form-control form-control-sm">
+                                    <option value="">---انتخاب کنید---</option>
+                                    @foreach ($positions as $key => $value)
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
+                                </select>
                                 @error('position')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

@@ -78,6 +78,21 @@
                                 @enderror
                             </div>
 
+                            <div class=" col-12">
+                                <label for="position">موقعیت</label>
+                                <select name="position" class="form-control form-control-sm">
+                                    <option value="">---انتخاب کنید---</option>
+                                    @foreach ($positions as $key => $value)
+                                        <option value="{{ $key }}"
+                                            @if (old('position', $key) == $value) selected @endif>
+                                            {{ $value }}</option>
+                                    @endforeach
+                                </select>
+                                @error('position')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                         </section>
                         <section>
                             <button type="submit" class="btn btn-primary btn-sm mt-3">ثبت</button>
