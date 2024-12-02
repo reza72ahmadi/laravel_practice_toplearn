@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth\Customer;
+namespace App\Http\Requests\Admin\Content;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRegisterRequest extends FormRequest
+class BannerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,16 +21,13 @@ class LoginRegisterRequest extends FormRequest
      */
     public function rules(): array
     {
-        
-        return [
-            'email' => 'required|min:10|max:64|regex:/^[a-zA-Z0-9_.@\+]*$/',
-        ];
-    }
 
-    public function attributes()
-    {
         return [
-            'id' => 'ایمیل   '
+            'title' => "required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u",
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif',
+            'url' => 'required|min:5|max:50|regex:/^[a-zA-Z0-9][a-zA-Z0-9]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/u',
+            'position' => "required|numeric",
+            'status' => 'required|numeric|in:0,1',
         ];
     }
 }

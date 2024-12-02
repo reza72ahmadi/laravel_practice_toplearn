@@ -7,7 +7,7 @@
             e.preventDefault();
             const swalWithBootstrapButton = Swal.mixin({
                 customClass: {
-                    confirmButton: 'btn btn-success',
+                    confirmButton: 'btn btn-success mx-1',
                     cancelButton: 'btn btn-danger',
                 },
                 buttonsStyling: false
@@ -15,8 +15,9 @@
             swalWithBootstrapButton.fire({
                 title: "مطمئن هستید?",
                 icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "بله!"
+                showCancelButton: true ,
+                confirmButtonText: " بله",
+                cancelButtonText: "نخیر",
             }).then((result) => {
                 if (result.value == true) {
                     $(this).parent().submit();
@@ -24,22 +25,4 @@
             });
         });
     });
-
-    // Swal.fire({
-    //     title: "Are you sure?",
-    //     text: "You won't be able to revert this!",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#3085d6",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Yes, delete it!"
-    // }).then((result) => {
-    //     if (result.isConfirmed) {
-    //         Swal.fire({
-    //             title: "Deleted!",
-    //             text: "Your file has been deleted.",
-    //             icon: "success"
-    //         });
-    //     }
-    // });
 </script>

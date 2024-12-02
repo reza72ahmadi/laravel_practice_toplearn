@@ -1,29 +1,25 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>دسته بندی</title>
+    <title>بنرها</title>
 @endsection
 
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">خانه</a></li>
-            <li class="breadcrumb-item"><a href="#"> بخش فروش</a></li>
-            <li class="breadcrumb-item active" aria-current="page">روش های ارسال</li>
+            <li class="breadcrumb-item"><a href="#"> بخش محتوا</a></li>
+            <li class="breadcrumb-item active" aria-current="page">بنرها</li>
         </ol>
     </nav>
-
     <section class="row">
         <section class="col-12">
             <section class="main-body-container">
                 <section class="main-body-container-header">
-                    <h5>
-                        روش های ارسال
-                    </h5>
+                    <h5>بنرها</h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center border-bottom mt-3 mb-3 pb-2">
-                    <a class="btn btn-info btn-sm" href="{{ route('admin.market.delivery.create') }}">ایجاد روش ارسال
-                        جدید</a>
+                    <a class="btn btn-info btn-sm" href="{{ route('admin.content.banner.create') }}">ایجادبنر </a>
                     <div class="max-width-16-rem">
                         <input class="form-control form-control-sm" type="text" name="" id=""
                             placeholder="جستجو...">
@@ -35,40 +31,49 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>نام روش ارسال</th>
-                                <th>هزینه ارسال</th>
-                                <th>زمان ارسال</th>
+                                <th>عنوان</th>
+                                <th>آدرس</th>
+                                <th>تصویر</th>
                                 <th>وضعیت</th>
+                                <th>مکان</th>
                                 <th class="width-16-rem text-center"><i class="fas fa-cogs"></i> تنظیمات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($deliveries as $delivery)
+                            @foreach ($banners as $No => $banner)
                                 <tr>
-                                    <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $delivery->name }}</td>
-                                    <td>{{ $delivery->amount }}</td>
-                                    <td>{{ $delivery->delivery_time . ' ' . $delivery->delivery_time_unit }}</td>
+                                    <th>{{ $No + 1 }}</th>
+                                    <td>{{ $banner->title }}</td>
+                                    <td>{{ $banner->url }}</td>
                                     <td>
-                                        <label>
-                                            <input type="checkbox" id="{{ $delivery->id }}"
-                                                onchange="changeStatus({{ $delivery->id }})"
-                                                data-url="{{ route('admin.market.delivery.status', $delivery->id) }}"
-                                                @if ($delivery->status === 1) @checked(true) @endif>
+                                        <img src="{{ asset('storage/' . $banner->image) }}" alt=""
+                                            style="width: 60px; height: auto;">
+                                    </td>
+                                    <td>
+                                        <label for="">
+                                            <input id="{{ $banner->id }}" onchange="changeStatus({{ $banner->id }})"
+                                                data-url='{{ route('admin.content.banner.status', $banner->id) }}'
+                                                type="checkbox" @if ($banner->status === 1) checked @endif>
                                         </label>
                                     </td>
+                                    <td>{{ $positions[$banner->position] }}</td>
+
                                     <td class="max-width-16-rem text-left">
-                                        <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.market.delivery.edit', $delivery->id) }}"><i
-                                                class="fas fa-edit">
-                                                ویرایش</i></a>
                                         <form class="d-inline"
-                                            action="{{ route('admin.market.delivery.destroy', $delivery->id) }}"
+                                            action="{{ route('admin.content.banner.destroy', $banner->id) }}"
                                             method="post">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm"><i
-                                                    class="fas fa-trash-alt"> حذف</i></button>
+                                            <a
+                                                class="btn btn-primary btn-sm"href="{{ route('admin.content.banner.edit', $banner->id) }}">
+                                                <iclass="fas fa-edit>ویرایش</i>
+                                        </a>
+                                            <button type="button"
+                                                class="btn btn-danger btn-sm btnDlt"
+                                                data-id="{{ $banner->id }}">
+                                                <i class="fas fa-trash-alt"></i> حذف
+                                                </button>
+
                                         </form>
                                     </td>
                                 </tr>
@@ -91,18 +96,15 @@
             $.ajax({
                 url: url,
                 type: "GET",
-
                 success: function(response) {
-                    if (response.reza) {
-                        // ---
+                    if (response.status) {
                         if (response.checked) {
                             element.prop('checked', true);
-                            successToast('پرسش با موفقیت فعال شد')
+                            successToast('دسته بندی با موفقیت فعال شد')
                         } else {
                             element.prop('checked', false);
-                            successToast(' پرسش با موفقیت غیرفعال شد')
+                            successToast('دسته بندی با موفقیت غیرفعال شد')
                         }
-                        // -----
                     } else {
                         element.prop('checked', elementValue);
                         errorToast('خطا هنگام ذخیره سازی')
@@ -116,14 +118,13 @@
             });
 
             function successToast(message) {
-                var ghghg =
+                var successToastTags =
                     '<div class="toast" data-autohide="true">\n' +
                     '   <button type="button" class="mr-2 close fa-pull-left" data-dismiss="toast">&times;</button>\n' +
                     '   <div class="toast-body bg-success rounded">\n' + message + '</div>\n' +
                     '</div>\n';
 
-                $('.toast-wrapper').append(ghghg);
-
+                $('.toast-wrapper').append(successToastTags);
                 $('.toast').last().toast('show').delay(50000).queue(function() {
                     $(this).remove();
                 });

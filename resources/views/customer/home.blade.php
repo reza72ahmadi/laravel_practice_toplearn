@@ -2,41 +2,34 @@
 
 @section('content')
     <!-- start main one col -->
+    {{-- <main id="main-body-one-col" class="main-body"> --}}
 
     <!-- start slideshow -->
     <section class="container-xxl my-4">
         <section class="row">
-            <section class="col-md-8 pe-1">
+            <section class="col-md-8 pe-md-1 ">
                 <section id="slideshow" class="owl-carousel owl-theme">
-                    <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img
-                                class="w-100 rounded-2 d-block h-auto" src="assets/images/slideshow/1.jpg" alt=""></a>
-                    </section>
-                    <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img
-                                class="w-100 rounded-2 d-block h-auto" src="assets/images/slideshow/2.jpg"
-                                alt=""></a></section>
-                    <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img
-                                class="w-100 rounded-2 d-block h-auto" src="assets/images/slideshow/2.jpg"
-                                alt=""></a></section>
-                    <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img
-                                class="w-100 rounded-2 d-block h-auto" src="assets/images/slideshow/2.jpg"
-                                alt=""></a></section>
-                    <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img
-                                class="w-100 rounded-2 d-block h-auto" src="assets/images/slideshow/2.jpg"
-                                alt=""></a></section>
-                    <section class="item"><a class="w-100 d-block h-auto text-decoration-none" href="#"><img
-                                class="w-100 rounded-2 d-block h-auto" src="assets/images/slideshow/2.jpg"
-                                alt=""></a></section>
+
+                    @foreach ($slideShowImages as $slideShowImage)
+                        <section class="item"><a class="w-100 d-block h-auto text-decoration-none"
+                                href="{{ urldecode($slideShowImage->url) }}"><img class="w-100 rounded-2 d-block h-auto"
+                                    src="{{ asset('storage/' . $slideShowImage->image) }}" alt=""></a>
+                        </section>
+                    @endforeach
+
                 </section>
             </section>
-            <section class="col-md-4 ps-1">
+            <section class="col-md-4 ps-md-1 mt-2 mt-md-0">
                 <section class="mb-2"><a href="#" class="d-block"><img class="w-100 rounded-2"
-                            src="{{ asset('') }}" alt=""></a></section>
+                            src="assets/images/slideshow/12.gif" alt=""></a></section>
                 <section class="mb-2"><a href="#" class="d-block"><img class="w-100 rounded-2"
-                            src="{{ asset('') }}" alt=""></a></section>
+                            src="assets/images/slideshow/11.jpg" alt=""></a></section>
             </section>
         </section>
     </section>
     <!-- end slideshow -->
+
+
 
     <!-- start product lazy load -->
     <section class="mb-3">
@@ -56,21 +49,18 @@
                             </section>
                         </section>
                         <!-- start vontent header -->
-
                         <section class="lazyload-wrapper">
-
                             <section class="lazyload light-owl-nav owl-carousel owl-theme">
+
                                 <section class="item">
                                     <section class="lazyload-item-wrapper">
                                         <section class="product">
                                             <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip"
                                                     data-bs-placement="left" title="افزودن به سبد خرید"><i
-                                                        class="fa fa-cart-plus"></i></a>
-                                            </section>
+                                                        class="fa fa-cart-plus"></i></a></section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/21.jpg" alt="">
@@ -78,7 +68,6 @@
                                                 <section class="product-colors"></section>
                                                 <section class="product-name">
                                                     <h3>گوشی موبایل شیائومی مدل POCO X3 Pro M2102J20SG دو ...</h3>
-
                                                 </section>
                                                 <section class="product-price-wrapper">
                                                     <section class="product-discount">
@@ -102,18 +91,16 @@
                                 <section class="item">
                                     <section class="lazyload-item-wrapper">
                                         <section class="product">
-                                            <section class="product-add-to-cart"><a href="#"
-                                                    data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a>
+                                            <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip"
+                                                    data-bs-placement="left" title="افزودن به سبد خرید"><i
+                                                        class="fa fa-cart-plus"></i></a>
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
-                                                    <img class="" src="assets/images/products/22.jpg"
-                                                        alt="">
+                                                    <img class="" src="assets/images/products/22.jpg" alt="">
                                                 </section>
                                                 <section class="product-colors"></section>
                                                 <section class="product-name">
@@ -135,8 +122,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/17.jpg"
@@ -177,8 +163,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/19.jpg"
@@ -204,8 +189,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/20.jpg"
@@ -231,8 +215,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/18.jpg"
@@ -262,8 +245,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/16.jpg"
@@ -289,8 +271,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/14.jpg"
@@ -316,8 +297,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/10.jpg"
@@ -343,8 +323,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/11.jpg"
@@ -370,8 +349,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/13.jpg"
@@ -398,15 +376,17 @@
     </section>
     <!-- end product lazy load -->
 
+
+
     <!-- start ads section -->
     <section class="mb-3">
         <section class="container-xxl">
             <!-- two column-->
             <section class="row py-4">
-                <section class="col"><img class="d-block rounded-2 w-100" src="assets/images/ads/two-col-1.jpg"
-                        alt=""></section>
-                <section class="col"><img class="d-block rounded-2 w-100" src="assets/images/ads/two-col-2.jpg"
-                        alt=""></section>
+                <section class="col-12 col-md-6 mt-2 mt-md-0"><img class="d-block rounded-2 w-100"
+                        src="assets/images/ads/two-col-1.jpg" alt=""></section>
+                <section class="col-12 col-md-6 mt-2 mt-md-0"><img class="d-block rounded-2 w-100"
+                        src="assets/images/ads/two-col-2.jpg" alt=""></section>
             </section>
 
         </section>
@@ -444,8 +424,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/2.jpg"
@@ -483,8 +462,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/1.jpg"
@@ -510,8 +488,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/3.jpg"
@@ -548,8 +525,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/4.jpg"
@@ -579,8 +555,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/5.jpg"
@@ -606,8 +581,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/6.jpg"
@@ -637,8 +611,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/7.jpg"
@@ -664,8 +637,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/8.jpg"
@@ -691,8 +663,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/9.jpg"
@@ -722,8 +693,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/10.jpg"
@@ -749,8 +719,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/11.jpg"
@@ -776,8 +745,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/12.jpg"
@@ -803,8 +771,7 @@
                                             </section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                            </section>
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                             <a class="product-link" href="#">
                                                 <section class="product-image">
                                                     <img class="" src="assets/images/products/13.jpg"
@@ -831,6 +798,7 @@
     </section>
     <!-- end product lazy load -->
 
+
     <!-- start ads section -->
     <section class="mb-3">
         <section class="container-xxl">
@@ -843,6 +811,8 @@
         </section>
     </section>
     <!-- end ads section -->
+
+
 
     <!-- start brand part-->
     <section class="brand-part mb-4 py-4">
@@ -862,74 +832,74 @@
                         <section class="brands dark-owl-nav owl-carousel owl-theme">
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/huawei.jpg') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/huawei.jpg"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/adata.png') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/adata.png"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/casio.jpg') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/casio.jpg"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/gplus.jpg') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/gplus.jpg"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/logitech.jpg') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/logitech.jpg"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/nokia.jpg') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/nokia.jpg"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/pakshoma.png') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/pakshoma.png"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/panasonic.png') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/panasonic.png"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/parskhazar.png') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/parskhazar.png"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/samsung.png') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/samsung.png"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/snowa.png') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/snowa.png"
+                                            alt=""></a>
                                 </section>
                             </section>
                             <section class="item">
                                 <section class="brand-item">
-                                    <a href="#"><img class="rounded-2"
-                                            src="{{ asset('assets/images/brand/xvision.png') }}" alt=""></a>
+                                    <a href="#"><img class="rounded-2" src="assets/images/brand/xvision.png"
+                                            alt=""></a>
                                 </section>
                             </section>
                         </section>
@@ -939,6 +909,8 @@
         </section>
     </section>
     <!-- end brand part-->
+
+    {{--  </main> --}}
 
 
     <!-- end main one col -->

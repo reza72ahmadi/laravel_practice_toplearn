@@ -62,7 +62,6 @@
                                                 <i class="fas fa-trash-alt"></i> حذف
                                             </button>
                                         </form>
-
                                     </td>
                                 </tr>
                             @endforeach

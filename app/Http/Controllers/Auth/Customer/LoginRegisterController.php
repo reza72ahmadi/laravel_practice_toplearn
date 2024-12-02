@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth\Customer;
 use App\Models\Otp;
 use App\Models\User;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Services\Message\MessageService;
+use App\Http\Services\Message\Email\EmailService;
 use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
+
 
 class LoginRegisterController extends Controller
 {
@@ -16,49 +18,65 @@ class LoginRegisterController extends Controller
         return view('customer.auth.login-register');
     }
 
-    public function LoginRegister(LoginRegisterRequest $request)
+
+
+    public function loginRegister(LoginRegisterRequest $request)
     {
+       
+        // Get all inputs from the requestS
         $inputs = $request->all();
-        if (filter_var($inputs['id'], FILTER_VALIDATE_EMAIL)) {
-            $type = 1; // 1 email
-            $user = User::where('email', $inputs['id'])->first();
-            if (empty($user)) {
-                $newUser['email'] = $inputs['id'];
-            } elseif (preg_match('/^(+93|0)7\d{8}$', $inputs['id'])) {
-                $type = 1; // 0 mobile  
-                $inputs['id'] = ltrim($inputs['id'], '0');
-                $inputs['id'] = substr($inputs['id'], 0, 2) === '93' ? substr($inputs['id'], 2) : $inputs['id'];
-                $inputs['id'] = str_replace('+93', '', $inputs['id']);
-                $user = User::where('mobile', $inputs['id'])->first();
-                if (empty($user)) {
-                    $newUser['mobile'] = $inputs['id'];
-                }
-            };
-        } else {
-            $errorText = 'شناسه شما نه مشاره مبایل است نه ایمیلی';
-            return redirect()->route('auth.customer.login-register-form')->withErrors(['id', $errorText]);
+        // Validate if the input is an email
+        if (!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)) {
+            $errorText = 'شناسه شما ایمیل نیست';
+            return redirect()
+                ->route('auth.customer.login-register-form')
+                ->withErrors(['email' => $errorText]);
         }
-        if (empty($inputs)) {
-            $newUser['password'] = '11223344';
-            $newUser['activation'] = 1;
+   
+        // Check if the user exists by email
+        $user = User::where('email', $inputs['email'])->first();
+        // If user does not exist, create a new one
+        if (empty($user)) {
+            $newUser = [
+                'email' => $inputs['email'],
+                'password' => bcrypt('11223344'), // Securely hash the default password
+                'activation' => 1, // Activate the user by default
+            ];
             $user = User::create($newUser);
         }
-        //create otp code
+    
+        // Generate an OTP code and a token
         $otpCode = rand(111111, 999999);
-        $tocken = Str::random(60);
-        $otpInputs = [
-            'tocken' => $tocken,
+        $token = Str::random(60);
+
+        // Store the OTP details
+        Otp::create ([
+            'token' => $token,
             'user_id' => $user->id,
             'otp_code' => $otpCode,
-            'login_id' => $inputs['id'],
-            'type' => $type,
+            'login_id' => $inputs['email'],
+            'type' => 1, // Type 1 indicates email
+        ]);
+
+
+        // Prepare and send an email for verification
+        $emailService = new EmailService();
+        $details = [
+            'subject' => 'ایمیل فعال سازی',
+            'body' => "کد فعال سازی شما: $otpCode",
         ];
-        Otp::create($otpInputs);
-
-        //send sms or email
-
-        if ($type === 1) {
-            
-        }
+        $emailService->setDetails($details);
+        $emailService->setFrom('noReply@example.com', 'Example');
+        $emailService->setSubject('Verification Code');
+        $emailService->setTo($inputs['email']);
+        $messageService = new MessageService($emailService);
+        
+        // Send the email
+        
+        $messageService->send();
+        // Redirect to the OTP verification form with a success message
+        return redirect()->route('auth.customer.otp-verification-form')
+            ->with('success', 'کد فعال‌سازی ارسال شد.');
     }
 }
+

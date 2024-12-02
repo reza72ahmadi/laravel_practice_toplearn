@@ -16,6 +16,7 @@ class ProductColor extends Model
         'price_increase',
         'sold_number',
         'frozen_number',
+        'color',
         'marketable_number'
     ];
 

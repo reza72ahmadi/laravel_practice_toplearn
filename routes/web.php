@@ -10,10 +10,12 @@ use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\Market\OrderController;
 use App\Http\Controllers\Admin\Market\StoreController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\Notify\EmailController;
 use App\Http\Controllers\Admin\Ticket\TicketController;
 use App\Http\Controllers\Admin\User\CustomerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Content\BannerController;
 use App\Http\Controllers\Admin\Market\CommentController;
 use App\Http\Controllers\Admin\Market\GalleryController;
 use App\Http\Controllers\Admin\Market\PaymentController;
@@ -31,20 +33,18 @@ use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
+use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
-use App\Http\Controllers\Admin\NotificationController;
-use App\Http\Controllers\Auth\Customer\LoginRegisterController;
-
-Route::get('/', function () {
-    return view('customer.home');
-});
+use App\Http\Controllers\Admin\Market\GuaranteeController;
+use App\Http\Controllers\Customer\HomeController;
 
 Route::namespace('Auth')->group(function () {
     Route::get('login-register', [LoginRegisterController::class, 'LoginRegisterForm'])->name('auth.customer.login-register-form');
     Route::post('login-register', [LoginRegisterController::class, 'LoginRegister'])->name('auth.customer.login-register');
 });
 
+// Admin
 Route::prefix('admin')->namespace('Admin')->group(function () {
 
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.home');
@@ -60,7 +60,6 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{category}', [CategoryController::class, 'update'])->name('admin.market.category.update');
             Route::delete('/delete/{category}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
         });
-
         // brand
         Route::prefix('brand')->group(function () {
             Route::get('/', [BrandController::class, 'index'])->name('admin.market.brand.index');
@@ -145,11 +144,18 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
             Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
             Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
-
+            // Color routes
             Route::get('/color/{product}', [ProductColorController::class, 'index'])->name('admin.market.color.index');
             Route::get('/color/{product}/create', [ProductColorController::class, 'create'])->name('admin.market.color.create');
             Route::post('/color/{product}/store', [ProductColorController::class, 'store'])->name('admin.market.color.store');
             Route::delete('/color/delete/{product}/{productColor}', [ProductColorController::class, 'destroy'])->name('admin.market.color.destroy');
+            // Guarantee routes
+            Route::get('/guarantee/{product}', [GuaranteeController::class, 'index'])->name('admin.market.guarantee.index');
+            Route::get('/guarantee/{product}/create', [GuaranteeController::class, 'create'])->name('admin.market.guarantee.create');
+            Route::post('/guarantee/{product}/store', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
+            Route::delete('/guarantee/destroy/{product}/guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
+            Route::delete('/admin/market/{product}/guarantee/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
+
 
             // Gallery routes
             Route::get('/gallery/{product}', [GalleryController::class, 'index'])->name('admin.market.gallery.index');
@@ -234,6 +240,16 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{page}', [PageController::class, 'update'])->name('admin.content.page.update');
             Route::delete('/delete/{page}', [PageController::class, 'destroy'])->name('admin.content.page.destroy');
             Route::get('/status/{page}', [PageController::class, 'status'])->name('admin.content.page.status');
+        });
+        // banner
+        Route::prefix('banner')->group(function () {
+            Route::get('/', [BannerController::class, 'index'])->name('admin.content.banner.index');
+            Route::get('/create', [BannerController::class, 'create'])->name('admin.content.banner.create');
+            Route::post('/store', [BannerController::class, 'store'])->name('admin.content.banner.store');
+            Route::get('/edit/{banner}', [BannerController::class, 'edit'])->name('admin.content.banner.edit');
+            Route::put('/update/{banner}', [BannerController::class, 'update'])->name('admin.content.banner.update');
+            Route::delete('/delete/{banner}', [BannerController::class, 'destroy'])->name('admin.content.banner.destroy');
+            Route::get('/status/{banner}', [BannerController::class, 'status'])->name('admin.content.banner.status');
         });
         // post
         Route::prefix('post')->group(function () {
@@ -373,7 +389,8 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::post('/notification/read-all', [NotificationController::class, 'readAll'])->name('admin.notificatio.readAll');
 });
 
-
+// Customer
+Route::get('/', [HomeController::class, 'home'])->name('customer.home');
 
 
 

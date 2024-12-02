@@ -72,6 +72,10 @@
                                                     href="{{ route('admin.market.color.index', $product->id) }}">
                                                     <i class="fas fa-list-ul"></i> رنگ کالا
                                                 </a>
+                                                <a class="dropdown-item text-right"
+                                                    href="{{ route('admin.market.guarantee.index', $product->id) }}">
+                                                    <i class="fas fa-shield-alt"></i> گرانتی کالا
+                                                </a>
                                                 <form action="{{ route('admin.market.product.destroy', $product->id) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
