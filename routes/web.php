@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
+use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Customer\HomeController;
 
 Route::namespace('Auth')->group(function () {
@@ -59,7 +60,6 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{category}', [CategoryController::class, 'update'])->name('admin.market.category.update');
             Route::delete('/delete/{category}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
         });
-
         // brand
         Route::prefix('brand')->group(function () {
             Route::get('/', [BrandController::class, 'index'])->name('admin.market.brand.index');
@@ -144,11 +144,18 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
             Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
             Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
-
+            // Color routes
             Route::get('/color/{product}', [ProductColorController::class, 'index'])->name('admin.market.color.index');
             Route::get('/color/{product}/create', [ProductColorController::class, 'create'])->name('admin.market.color.create');
             Route::post('/color/{product}/store', [ProductColorController::class, 'store'])->name('admin.market.color.store');
             Route::delete('/color/delete/{product}/{productColor}', [ProductColorController::class, 'destroy'])->name('admin.market.color.destroy');
+            // Guarantee routes
+            Route::get('/guarantee/{product}', [GuaranteeController::class, 'index'])->name('admin.market.guarantee.index');
+            Route::get('/guarantee/{product}/create', [GuaranteeController::class, 'create'])->name('admin.market.guarantee.create');
+            Route::post('/guarantee/{product}/store', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
+            Route::delete('/guarantee/destroy/{product}/guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
+            Route::delete('/admin/market/{product}/guarantee/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
+
 
             // Gallery routes
             Route::get('/gallery/{product}', [GalleryController::class, 'index'])->name('admin.market.gallery.index');

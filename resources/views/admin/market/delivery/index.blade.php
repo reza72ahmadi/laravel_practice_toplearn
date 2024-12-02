@@ -56,16 +56,11 @@
                                                 data-url="{{ route('admin.market.delivery.status', $delivery->id) }}"
                                                 @if ($delivery->status === 1) @checked(true) @endif>
                                         </label>
-                                        {{-- <label for="">
-                                            <input id="{{ $delivery->id }}" onchange="changeStatus({{ $delivery->id }})"
-                                                data-url='{{ route('admin.market.delivery.status', $delivery->id) }}'
-                                                type="checkbox"
-                                                @if ($delivery->status === 1) @checked(true) @endif>
-                                        </label> --}}
-
                                     </td>
                                     <td class="max-width-16-rem text-left">
-                                        <a class="btn btn-primary btn-sm" href="{{ route('admin.market.delivery.edit', $delivery->id) }}"><i class="fas fa-edit">
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.market.delivery.edit', $delivery->id) }}"><i
+                                                class="fas fa-edit">
                                                 ویرایش</i></a>
                                         <form class="d-inline"
                                             action="{{ route('admin.market.delivery.destroy', $delivery->id) }}"

@@ -34,7 +34,8 @@ class ProductColorController extends Controller
     {
         $validated = $request->validate([
             'color_name' => "required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u",
-            'price_increase' => 'required|numeric',
+            'price_increase' => 'required|numeric', 
+            'color' => 'required|max:120',
         ]);
         $inputs = $request->all();
         $inputs['product_id'] = $product->id;
