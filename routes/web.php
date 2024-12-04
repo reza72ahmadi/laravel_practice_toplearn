@@ -38,6 +38,7 @@ use App\Http\Controllers\Admin\Content\CommentController as ContentCommentContro
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Customer\HomeController;
+use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 
 Route::namespace('Auth')->group(function () {
     Route::get('login-register', [LoginRegisterController::class, 'LoginRegisterForm'])->name('auth.customer.login-register-form');
@@ -392,6 +393,10 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
 // Customer
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
 
+Route::namespace('Market')->group(function () {
+    Route::get('/product/{product:slug}', [MarketProductController::class, 'product'])->name('customer.market.product');
+    Route::post('add-comment/product/{product:slug}', [MarketProductController::class, 'addComment'])->name('customer.market.product.add-comment');
+});
 
 
 // Route::middleware([
