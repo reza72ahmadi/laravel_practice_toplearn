@@ -28,16 +28,18 @@
                 <section>
                     <form action="{{ route('admin.market.color.store', $product->id) }}" method="POST">
                         @csrf
+                        
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="color_name">نام رنگ</label>
-                                <input type="text" class="form-control form-control-sm" name="color_name"
-                                    id="color_name" value="{{ old('color_name') }}">
+                                <input type="text" class="form-control form-control-sm" name="color_name" id="color_name"
+                                    value="{{ old('color_name') }}">
                                 @error('color_name ')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </section>
+
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="price_increase">افزایش قیمت</label>
@@ -48,11 +50,12 @@
                                 @enderror
                             </div>
                         </section>
+
                         <section class="row">
                             <div class="col-md-6 col-12">
                                 <label for="price_increase">افزایش قیمت</label>
-                                <input type="color" class="form-control form-control-sm" name="color"
-                                    id="color" value="{{ old('color') }}">
+                                <input type="color" class="form-control form-control-sm" name="color" id="color"
+                                    value="{{ old('color') }}">
                                 @error('color')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
