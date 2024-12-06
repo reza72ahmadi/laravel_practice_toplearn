@@ -8,17 +8,14 @@
 
 <body>
     @include('customer.layouts.header')
-
     <section class="cointainer-xxl body-container">
-       @include('customer.layouts.sidebar')
+        @include('customer.layouts.sidebar')
     </section>
-
     <main id="main-body-one-col" class="main-body">
 
         @yield('content')
 
     </main>
-
     @include('customer.layouts.footer')
     @include('customer.layouts.script')
     @yield('script')

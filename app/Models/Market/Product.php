@@ -67,7 +67,7 @@ class Product extends Model
         return $this->hasMany(Guarantee::class);
     }
 
-    public function  gallaries()
+    public function gallaries()
     {
         return $this->hasMany(Gallary::class);
     }

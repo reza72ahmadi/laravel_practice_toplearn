@@ -23,7 +23,7 @@ class GalleryController extends Controller
      */
     public function create(Product $product)
     {
-        return view('admin.market.product.gallery.create', compact('product'));
+        return view('admin.market.product.gallary.create', compact('product'));
     }
 
     /**
@@ -48,36 +48,12 @@ class GalleryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+     * Delete the specified resource.
      */
     public function destroy(Product $product, Gallary $gallary)
     {
         $gallary->delete();
-        return redirect()->route('admin.market.color.index', $product->id)
+        return redirect()->route('admin.market.gallery.index', $product->id)
             ->with('swal-success', 'گالری شما با موفقیت حذف شد');
     }
 }

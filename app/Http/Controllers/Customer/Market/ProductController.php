@@ -13,5 +13,7 @@ class ProductController extends Controller
         return view('customer.market.product.product', compact('product', 'relatedProduct'));
     }
 
-    public function addComment() {}
+    public function addComment() {
+        
+    }
 }
