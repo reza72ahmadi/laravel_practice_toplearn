@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Market;
 use Illuminate\Http\Request;
 use App\Models\Content\Comment;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Admin\Content\CommentRequest;
 
 class CommentController extends Controller
@@ -14,6 +15,7 @@ class CommentController extends Controller
      */
     public function index()
     {
+        Auth::loginUsingId(1);
         $unSeenComments = Comment::where('commentable_type', 'App\Models\Market\Product')->where('seen', 0)->get();
         foreach ($unSeenComments as $unSeenComment) {
             $unSeenComment->seen = 1;
@@ -33,10 +35,11 @@ class CommentController extends Controller
 
     public function answer(CommentRequest $request, Comment $comment)
     {
-        if ($comment->parent == !null) {
+
+        if ($comment->parent_id  == !null) {
 
             $validatedData = $request->all();
-            $validatedData['author_id'] = 1;
+            $validatedData['author_id'] = Auth::user()->id;
             $validatedData['parent_id'] = $comment->id;
             $validatedData['commentable_id'] = $comment->commentable_id;
             $validatedData['commentable_type'] = $comment->commentable_type;

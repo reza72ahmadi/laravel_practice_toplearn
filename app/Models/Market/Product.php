@@ -73,7 +73,7 @@ class Product extends Model
         return $this->hasMany(Gallary::class);
     }
 
-    public function vlaues()
+    public function values()
     {
         return $this->hasMany(CategoryValue::class);
     }
@@ -90,5 +90,10 @@ class Product extends Model
     public function activeAmazingSales()
     {
         return $this->amazingSales()->where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->first();
+    }
+
+    public function activeComments()
+    {
+        return $this->comments()->where('approved', 1)->whereNull('parent_id')->get();
     }
 }

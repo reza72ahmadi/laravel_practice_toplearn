@@ -37,6 +37,7 @@ class CommentController extends Controller
      */
     public function answer(CommentRequest $request, Comment $comment)
     {
+     
         if ($comment->parent == null) {
 
             $validatedData = $request->all();
