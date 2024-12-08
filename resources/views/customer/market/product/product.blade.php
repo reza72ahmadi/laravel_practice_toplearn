@@ -69,14 +69,21 @@
                                     @php
                                         $colors = $product->colors()->get();
                                     @endphp
-                                    <p><span>رنگ :</span></p>
+                                    <p><span>رنگ انتخاب شده : <span
+                                                id="selected_color_name">{{ $colors->first()->color_name }}</span></span>
+                                    </p>
                                     <p>
                                     <div class="product-gallery-selected-image mb-3">
                                         @if ($colors->count() != 0)
                                             @foreach ($colors as $key => $color)
-                                                <span style="background-color:{{ $color->color }}"
+                                                <label style="background-color:{{ $color->color }}"
                                                     class="product-info-colors me-1" data-bs-toggle="tooltip"
-                                                    data-bs-placement="bottom" title="{{ $color->color_name }}"></span>
+                                                    data-bs-placement="bottom" title="{{ $color->color_name }}"
+                                                    for="{{ 'color_' . $color->id }}"></label>
+                                                <input style="display: none" type="radio" name="color"
+                                                    id="{{ 'color_' . $color->id }}" value="{{ $color->id }}"
+                                                    data-color-name="{{ $color->color_name }}"
+                                                    @if ($key == 0) checked @endif>
                                             @endforeach
                                         @else
                                             <span style="" class="product-info-colors me-1" data-bs-toggle="tooltip"
@@ -407,6 +414,7 @@
                                         </section>
                                     </section>
                                 @endauth
+                                {{-- {{dd($product->activeComments())}} --}}
                                 @foreach ($product->activeComments() as $activeComment)
                                     <section class="product-comment">
                                         <section class="product-comment-header d-flex justify-content-start">
@@ -459,4 +467,20 @@
         </section>
     </section>
     <!-- end description, features and comments -->
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            bill();
+            $('input[name="color"]').change(function() {
+                bill();
+            });
+        });
+
+        function bill() {
+            var selected_color = $('input[name="color"]:checked');
+            $('#selected_color_name').html(selected_color.attr('data-color-name'));
+        }
+    </script>
 @endsection
