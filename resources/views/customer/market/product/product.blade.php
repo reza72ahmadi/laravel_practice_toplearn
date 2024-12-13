@@ -74,6 +74,7 @@
                                     </p>
                                     <p>
                                     <div class="product-gallery-selected-image mb-3">
+
                                         @if ($colors->count() != 0)
                                             @foreach ($colors as $key => $color)
                                                 <label style="background-color:{{ $color->color }}"
@@ -81,30 +82,30 @@
                                                     data-bs-placement="bottom" title="{{ $color->color_name }}"
                                                     for="{{ 'color_' . $color->id }}"></label>
 
-
                                                 <input style="display: none" type="radio" name="color"
                                                     id="{{ 'color_' . $color->id }}" value="{{ $color->id }}"
                                                     data-color-name="{{ $color->color_name }}"
-                                                    data-color_price="{{ $color->price_increase }}"
+                                                    data-color-price="{{ $color->price_increase }}"
                                                     @if ($key == 0) checked @endif>
                                             @endforeach
                                         @else
                                             <span style="" class="product-info-colors me-1" data-bs-toggle="tooltip"
                                                 data-bs-placement="bottom" title="">ندارد</span>
                                         @endif
+
                                     </div>
                                     </p>
 
                                     @php
-                                        $guaranteis = $product->guarantees()->get();
+                                        $guarantees = $product->guarantees()->get();
                                     @endphp
 
-                                    @if ($guaranteis->count() != 0)
+                                    @if ($guarantees->count() != 0)
                                         <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i>
                                             <select name="guarantee" id="guarantee" class="form-control">
-                                                @foreach ($guaranteis as $key => $guarantee)
-                                                    <option value="{{ $guarantee->id }}"
-                                                        data-guarantee_price="{{ $guarantee->price_increase }}"
+                                                @foreach ($guarantees as $key => $guarantee)
+                                                    <option
+                                                        value="{{ $guarantee->id }}"data-guarantee_price="{{ $guarantee->price_increase }}"
                                                         @if ($key == 0) selected @endif>
                                                         {{ $guarantee->name }}
                                                     </option>
@@ -148,14 +149,15 @@
                         </section>
                         <!-- end product info ----------------------------------------------------------------->
 
+                        <!-- start product price ----------------------------------------------------------------->
                         <section class="col-md-3">
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">قیمت کالا</p>
-
                                     <p class="text-muted"><span id="product_price"
                                             data-product-original-price="{{ $product->price }}">{{ $product->price }}</span><span
-                                            class="small"> افغانی </span></p>
+                                            class="small"> افغانی </span>
+                                    </p>
                                 </section>
                                 @php
                                     $amazigSale = $product->activeAmazingSales();
@@ -165,25 +167,16 @@
                                         <p class="text-muted">تخفیف کالا</p>
                                         <p class="text-danger fw-bolder" id="product_discount_price"
                                             data-product_discount_price="{{ ($product->price * $amazigSale->percentage) / 100 }}">
-                                            {{ ($product->price * $amazigSale->percentage) / 100 }}<span
-                                                class="small">افغانی </span>
+                                            {{ ($product->price * $amazigSale->percentage) / 100 }}<span class="small">
+                                                افغانی </span>
                                         </p>
                                     </section>
-                                @else
-                                    <p class="text-danger fw-bolder">
-                                        <span class="small"> افغانی </span>
-                                    </p>
                                 @endif
 
-
                                 <section class="border-bottom mb-3"></section>
-
                                 <section class="d-flex justify-content-end align-items-center">
-                                    <p class="fw-bolder" id="final_price">
-                                        <span class="small">
-                                            <span id="final_price">افغانی:</span>
-                                        </span>
-                                    </p>
+                                    <p class="text-muted"> <span id="final_price"></span> <span class="small"> افغانی
+                                        </span> </p>
                                 </section>
 
                                 <section class="">
@@ -243,7 +236,7 @@
                                                 </section>
                                                 <a class="product-link" href="#">
                                                     <section class="product-image">
-                                                        <img class="product-gallery-thumb"
+                                                        <img class="product-gallery"
                                                             src="{{ asset('storage/' . $relatedProduct->image) }}"
                                                             alt="" data-input="">
                                                     </section>
@@ -255,20 +248,9 @@
                                                         </section>
                                                     </section>
                                                     <section class="product-colors">
-                                                        <section class="product-colors-item"
-                                                            style="background-color: yellow;"></section>
-                                                        <section class="product-colors-item"
-                                                            style="background-color: green;">
-                                                        </section>
-                                                        <section class="product-colors-item"
-                                                            style="background-color: white;">
-                                                        </section>
-                                                        <section class="product-colors-item"
-                                                            style="background-color: blue;">
-                                                        </section>
-                                                        <section class="product-colors-item"
-                                                            style="background-color: red;">
-                                                        </section>
+                                                        @foreach ($relatedProduct->colors as $color)
+                                                        <section class="product-colors-item" style="background-color: {{$color->color}}"></section>
+                                                        @endforeach
                                                     </section>
                                                 </a>
                                             </section>
@@ -489,6 +471,7 @@
     <script>
         $(document).ready(function() {
             bill();
+
             $('input[name="color"]').change(function() {
                 bill();
             });
@@ -509,6 +492,7 @@
 
         function bill() {
             if ($('input[name="color"]:checked').lenght != 0) {
+
                 var selected_color = $('input[name="color"]:checked');
                 $('#selected_color_name').html(selected_color.attr('data-color-name'));
 
@@ -519,8 +503,9 @@
                 var product_discount_price = 0;
                 var product_original_price = parseFloat($('#product_price').attr('data-product-original-price'));
 
+
                 if ($('input[name="color"]:checked').lenght != 0) {
-                    selected_color_price = parseFloat(selected_color.attr('data-color_price'));
+                    selected_color_price = parseFloat(selected_color.attr('data-color-price'));
                 }
                 if ($('#guarantee option:selected').lenght != 0) {
                     selected_guarantee_price = parseFloat($('#guarantee option:selected').attr('data-guarantee_price'));
@@ -534,10 +519,11 @@
 
                 var product_price = product_original_price + selected_color_price + selected_guarantee_price;
                 var final_price = number * (product_price - product_discount_price);
-                $('#product_price').html(product_price);
+                $('#product_price').html(product_original_price);
                 $('#final_price').html(final_price);
 
             }
+
         }
     </script>
 @endsection
