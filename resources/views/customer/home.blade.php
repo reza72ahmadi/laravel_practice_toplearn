@@ -212,11 +212,38 @@
                                                         data-bs-toggle="tooltip" data-bs-placement="left"
                                                         title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a>
                                                 </section>
-                                                {{-- <section class="product-add-to-favorite"><a
-                                                        href="{{ route('customer.market.add-to-favorite',$offerProduct->id) }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                                </section> --}}
+                                                @guest
+                                                    <section class="product-add-to-favorite">
+                                                        <button class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $offerProduct) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="افزودن به علاقه مندی">
+                                                            <i class="fa fa-heart"></i>
+                                                        </button>
+                                                    </section>
+                                                @endguest
+
+                                                @auth
+                                                    @if ($offerProduct->user->contains(auth()->user()->id))
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $offerProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="حذف از علاقه مندی">
+                                                                <i class="fa fa-heart text-danger"></i>
+                                                            </button>
+                                                        </section>
+                                                    @else
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $offerProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="اضافه به علاقه مندی">
+                                                                <i class="fa fa-heart text-dark"></i>
+                                                            </button>
+                                                        </section>
+                                                    @endif
+                                                @endauth
                                                 <a class="product-link"
                                                     href="{{ route('customer.market.product', $offerProduct) }}">
                                                     <section class="product-image">
@@ -311,18 +338,23 @@
 
     <section class="position-fixed p-4 flex-row-reverse"
         style="z-index: 20000000; left: 0; top: 3rem; width: 26rem; max-width: 80%;">
-        <section class="toast" data-delay="7000">
-            <section class="toast-body py-3 d-flex text-dark bg-info">
-                <strong class="ml-auto">
-                    برای افزودن کالا به لیست علاقه مندی ها باید ابتدا وارد حساب خود شوید
-                    <br>
-                    <a href="{{ route('auth.customer.login-register-form') }}" class="text-dark">ثبت نام/ ورود</a>
-                </strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-            </section>
-        </section>
+        <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <div>
+                        <p class="text-dark"> برای افزودن کالا به لیست علاقه مندی ها باید ابتدا وارد حساب خود شوید</p>
+                    </div>
+                    <div>
+                        <a href="{{ route('auth.customer.login-register-form') }}" class="text-dark">ثبت نام/ ورود</a>
+                    </div>
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
     </section>
 @endsection
+
 
 @section('script')
     <script>

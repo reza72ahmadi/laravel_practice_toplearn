@@ -126,8 +126,39 @@
                                         @endif
 
                                     </p>
-                                    <p><a class="btn btn-light  btn-sm text-decoration-none" href="#"><i
-                                                class="fa fa-heart text-danger"></i> افزودن به علاقه مندی</a></p>
+                                    <p>
+                                        @guest
+                                        <section class="product-add-to-favorite position-relative" style="top: 0">
+                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                data-url="{{ route('customer.market.add-to-favorite', $product) }}"
+                                                data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی">
+                                                <i class="fa fa-heart"></i>
+                                            </button>
+                                        </section>
+                                    @endguest
+
+                                    @auth
+                                        @if ($product->user->contains(auth()->user()->id))
+                                            <section class="product-add-to-favorite position-relative" style="top: 0">
+                                                <button class="btn btn-light btn-sm text-decoration-none"
+                                                    data-url="{{ route('customer.market.add-to-favorite', $product) }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="left" title="حذف از علاقه مندی">
+                                                    <i class="fa fa-heart text-danger"></i>
+                                                </button>
+                                            </section>
+                                        @else
+                                            <section class="product-add-to-favorite position-relative" style="top: 0">
+                                                <button class="btn btn-light btn-sm text-decoration-none"
+                                                    data-url="{{ route('customer.market.add-to-favorite', $product) }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="left"
+                                                    title="اضافه به علاقه مندی">
+                                                    <i class="fa fa-heart text-dark"></i>
+                                                </button>
+                                            </section>
+                                        @endif
+                                    @endauth
+
+                                    </p>
                                     <section>
                                         <section class="cart-product-number d-inline-block ">
                                             <button class="cart-number cart-number-down" type="button">-</button>
@@ -230,10 +261,38 @@
                                                         data-bs-toggle="tooltip" data-bs-placement="left"
                                                         title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a>
                                                 </section>
-                                                <section class="product-add-to-favorite"><a href="#"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a>
-                                                </section>
+                                                @guest
+                                                    <section class="product-add-to-favorite">
+                                                        <button class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="افزودن به علاقه مندی">
+                                                            <i class="fa fa-heart"></i>
+                                                        </button>
+                                                    </section>
+                                                @endguest
+
+                                                @auth
+                                                    @if ($relatedProduct->user->contains(auth()->user()->id))
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="حذف از علاقه مندی">
+                                                                <i class="fa fa-heart text-danger"></i>
+                                                            </button>
+                                                        </section>
+                                                    @else
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="اضافه به علاقه مندی">
+                                                                <i class="fa fa-heart text-dark"></i>
+                                                            </button>
+                                                        </section>
+                                                    @endif
+                                                @endauth
                                                 <a class="product-link" href="#">
                                                     <section class="product-image">
                                                         <img class="product-gallery"
@@ -249,7 +308,8 @@
                                                     </section>
                                                     <section class="product-colors">
                                                         @foreach ($relatedProduct->colors as $color)
-                                                        <section class="product-colors-item" style="background-color: {{$color->color}}"></section>
+                                                            <section class="product-colors-item"
+                                                                style="background-color: {{ $color->color }}"></section>
                                                         @endforeach
                                                     </section>
                                                 </a>
@@ -465,6 +525,23 @@
         </section>
     </section>
     <!-- end description, features and comments -->
+    <section class="position-fixed p-4 flex-row-reverse"
+        style="z-index: 20000000; left: 0; top: 3rem; width: 26rem; max-width: 80%;">
+        <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <div>
+                        <p class="text-dark"> برای افزودن کالا به لیست علاقه مندی ها باید ابتدا وارد حساب خود شوید</p>
+                    </div>
+                    <div>
+                        <a href="{{ route('auth.customer.login-register-form') }}" class="text-dark">ثبت نام/ ورود</a>
+                    </div>
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </section>
 @endsection
 
 @section('script')
@@ -525,5 +602,40 @@
             }
 
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.product-add-to-favorite button').click(function(e) {
+                e.preventDefault(); // Prevent default button behavior
+                var url = $(this).data('url');
+                var button = $(this);
+                console.log(url);
+                $.ajax({
+                    url: url,
+                    method: 'get', // Assuming a POST request
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content') // CSRF token for Laravel
+                    },
+
+                    success: function(result) {
+                        if (result.status === 1) {
+                            button.find('i').removeClass('text-dark').addClass('text-danger');
+                            button.attr('data-original-title', 'حذف از علاقه مندی').tooltip(
+                                'show');
+                        } else if (result.status === 2) {
+                            button.find('i').removeClass('text-danger').addClass('text-dark');
+                            button.attr('data-original-title', 'افزودن به علاقه مندی').tooltip(
+                                'show');
+                        } else if (result.status === 3) {
+                            $('.toast').toast('show');
+                        }
+                    },
+                    error: function() {
+                        console.error('An error occurred while processing the request.');
+                    }
+                });
+            });
+        });
     </script>
 @endsection
