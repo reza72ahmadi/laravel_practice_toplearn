@@ -61,17 +61,70 @@
                                                         data-bs-toggle="tooltip" data-bs-placement="left"
                                                         title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a>
                                                 </section>
-                                                <section class="product-add-to-favorite">
-                                                    <button class="add-to-favorite btn btn-light btn-sm text-decoration-none"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="افزودن به علاقه مندی">
-                                                        <i class="fa fa-heart text-dark"></i>
-                                                    </button>
+                                                {{-- @guest
+                                                    <section class="product-add-to-favorite">
+                                                        <button class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="افزودن به علاقه مندی">
+                                                            <i class="fa fa-heart text-dark"></i>
+                                                        </button>
+                                                    </section>
+                                                @endguest --}}
+                                                @guest
+                                                    <section class="product-add-to-favorite">
+                                                        <button class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="افزودن به علاقه مندی">
+                                                            <i class="fa fa-heart"></i>
+                                                        </button>
+                                                    </section>
+                                                @endguest
 
-                                                    {{-- <a href="{{ route('customer.market.add-to-favorite', $mostVisitedProduct->id) }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a> --}}
-                                                </section>
+                                                @auth
+                                                    @if ($mostVisitedProduct->user->contains(auth()->user()->id))
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="حذف از علاقه مندی">
+                                                                <i class="fa fa-heart text-danger"></i>
+                                                            </button>
+                                                        </section>
+                                                    @else
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="اضافه به علاقه مندی">
+                                                                <i class="fa fa-heart text-dark"></i>
+                                                            </button>
+                                                        </section>
+                                                    @endif
+                                                @endauth
+                                                {{-- @auth
+                                                    @if ($mostVisitedProduct->user->contains(auth()->user()->id))
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="حذف از علاقه مندی">
+                                                                <i class="fa fa-heart text-danger"></i>
+                                                            </button>
+                                                        </section>
+                                                    @else
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title=" اضافه به علاقه مندی">
+                                                                <i class="fa fa-heart text-dark"></i>
+                                                            </button>
+                                                        </section>
+                                                    @endif
+                                                @endauth --}}
+
                                                 <a class="product-link"
                                                     href="{{ route('customer.market.product', $mostVisitedProduct) }}">
                                                     <section class="product-image">
@@ -223,8 +276,6 @@
 
     <!-- end ads section -->
 
-
-
     <!-- start brand part-->
     <section class="brand-part mb-4 py-4">
         <section class="container-xxl">
@@ -257,12 +308,74 @@
         </section>
     </section>
     <!-- end brand part-->
+
+    <section class="position-fixed p-4 flex-row-reverse"
+        style="z-index: 20000000; left: 0; top: 3rem; width: 26rem; max-width: 80%;">
+        <section class="toast" data-delay="7000">
+            <section class="toast-body py-3 d-flex text-dark bg-info">
+                <strong class="ml-auto">
+                    برای افزودن کالا به لیست علاقه مندی ها باید ابتدا وارد حساب خود شوید
+                    <br>
+                    <a href="{{ route('auth.customer.login-register-form') }}" class="text-dark">ثبت نام/ ورود</a>
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </section>
+        </section>
+    </section>
 @endsection
 
 @section('script')
     <script>
-        $('.add-to-favorite').click(function() {
-            alert('hi');
-        })
+        // $('.product-add-to-favorite button').click(function() {
+        //     var url = $(this).attr(data-url);
+        //     var element = $(this);
+        //     a.ajax({
+        //         url = url;
+        //         success: function(result) {
+        //             if (result.status == 1) {
+        //                 $(element).addClass('text-danger');
+        //                 $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
+        //             } else if (result.status == 2) {
+        //                 $(element).addClass('text-dark');
+        //                 $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
+        //             } else if (result.status == 3) {
+        //                 $('.toast').toast('show');
+        //             }
+        //         }
+        //     });
+        // })
+        $(document).ready(function() {
+            $('.product-add-to-favorite button').click(function(e) {
+                e.preventDefault(); // Prevent default button behavior
+                var url = $(this).data('url');
+                var button = $(this);
+                console.log(url);
+                $.ajax({
+                    url: url,
+                    method: 'get', // Assuming a POST request
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content') // CSRF token for Laravel
+                    },
+
+                    success: function(result) {
+                        if (result.status === 1) {
+                            button.find('i').removeClass('text-dark').addClass('text-danger');
+                            button.attr('data-original-title', 'حذف از علاقه مندی').tooltip(
+                                'show');
+                        } else if (result.status === 2) {
+                            button.find('i').removeClass('text-danger').addClass('text-dark');
+                            button.attr('data-original-title', 'افزودن به علاقه مندی').tooltip(
+                                'show');
+                        } else if (result.status === 3) {
+                            $('.toast').toast('show');
+                        }
+                    },
+                    error: function() {
+                        console.error('An error occurred while processing the request.');
+                    }
+                });
+            });
+        });
     </script>
 @endsection

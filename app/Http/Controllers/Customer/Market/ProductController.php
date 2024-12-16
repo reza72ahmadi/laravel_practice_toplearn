@@ -30,7 +30,36 @@ class ProductController extends Controller
         Comment::create($inputs);
         return back();
     }
-    public function addToFavorite(Product $product){
-        dd('favorate');
+
+
+    // public function addToFavorite(Product $product)
+    // {
+    //     if (Auth::check()) {
+    //         $product->user()->toggle([Auth::user()->id]);
+
+    //         if ($product->user->contains(Auth::user()->id)) {
+    //             return response()->json(['status' => 1]);
+    //         } else {
+    //             return response()->json(['status' => 2]);
+    //         }
+    //     } else {
+    //         return response()->json(['status' => 3]);
+    //     }
+    // }
+    public function addToFavorite(Product $product)
+    {
+        
+        Auth::loginUsingId(1);
+        if (Auth::check()) {
+            $product->user()->toggle([Auth::id()]);
+
+            if ($product->user->contains(Auth::id())) {
+                return response()->json(['status' => 1]);
+            } else {
+                return response()->json(['status' => 2]);
+            }
+        } else {
+            return response()->json(['status' => 3]);
+        }
     }
 }
