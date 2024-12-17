@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\Notify\SMSController;
 use App\Http\Controllers\Admin\Content\FAQController;
@@ -27,18 +28,18 @@ use App\Http\Controllers\Admin\Market\DiscountController;
 use App\Http\Controllers\Admin\Market\PropertyController;
 use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\User\PermissionController;
+use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Admin\Notify\EmailFileController;
 use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
+use App\Http\Controllers\Customer\SalesProcess\CartController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
-use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
-use App\Http\Controllers\Admin\Market\GuaranteeController;
-use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
+use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 
 Route::namespace('Auth')->group(function () {
     Route::get('login-register', [LoginRegisterController::class, 'LoginRegisterForm'])->name('auth.customer.login-register-form');
@@ -393,6 +394,12 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
 // Customer
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
 
+Route::namespace('SalesProcess')->group(function () {
+    Route::get('/cart', [CartController::class, 'cart'])->name('customer.sales-process.cart');
+    Route::post('/cart', [CartController::class, 'updateCart'])->name('customer.sales-process.update-cart');
+    Route::post('/add-to-cart/{product:slug}', [CartController::class, 'addToCart'])->name('customer.sales-process.add-to-cart');
+    Route::delete('/remove-from-cart/{cartItem}', [CartController::class, 'removeFromCart'])->name('customer.sales-process.remove-from-cart');
+});
 Route::namespace('Market')->group(function () {
     Route::get('/product/{product:slug}', [MarketProductController::class, 'product'])->name('customer.market.product');
     Route::post('add-comment/product/{product:slug}', [MarketProductController::class, 'addComment'])->name('customer.market.product.add-comment');
