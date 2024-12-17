@@ -11,6 +11,7 @@
     <section class="cointainer-xxl body-container">
         @include('customer.layouts.sidebar')
     </section>
+    @include('admin.alerts.alert-section.success')
     <main id="main-body-one-col" class="main-body">
 
         @yield('content')
