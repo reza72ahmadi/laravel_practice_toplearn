@@ -66,7 +66,8 @@
                                     </section>
                                 </section>
                                 <section class="product-info">
-                                    <form id="add-to-cart" action="{{route('customer.sales-process.add-to-cart',$product)}}" method="post">
+                                    <form id="add-to-cart"
+                                        action="{{ route('customer.sales-process.add-to-cart', $product) }}" method="post">
                                         @csrf
 
                                         @php
@@ -184,7 +185,7 @@
                                             کرده اید کالا برای شما در مدت زمان مذکور ارسال می گردد.
                                         </p>
                                 </section>
-                                
+
                             </section>
 
                         </section>
@@ -222,7 +223,8 @@
 
                                 <section class="">
                                     @if ($product->marketable_number > 0)
-                                        <button id="next-level" onclick="document.getElementById('add-to-cart').submit();" class="btn btn-danger d-block w-100">افزودن به سبد
+                                        <button id="next-level" onclick="document.getElementById('add-to-cart').submit();"
+                                            class="btn btn-danger d-block w-100">افزودن به سبد
                                             خرید</button>
                                     @else
                                         <a id="next-level" href="#" class="btn btn-danger d-block disabled">محصول
@@ -231,7 +233,7 @@
                                     @endif
 
                                 </section>
-                            </form>
+                                </form>
                             </section>
                         </section>
                         <!-- end product price ----------------------------------------------------------------->
@@ -645,6 +647,21 @@
                         console.error('An error occurred while processing the request.');
                     }
                 });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var s = $("#introduction-features-comments");
+            var pos = s.position();
+            $(window).scroll(function() {
+                var windowpos = $(window).scrollTop();
+
+                if (windowpos >= pos.top) {
+                    s.addClass("stick");
+                } else {
+                    s.removeClass("stick");
+                }
             });
         });
     </script>
