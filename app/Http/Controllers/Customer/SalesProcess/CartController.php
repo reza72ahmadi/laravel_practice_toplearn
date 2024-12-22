@@ -14,53 +14,16 @@ class CartController extends Controller
     {
         Auth::loginUsingId(1);
         if (Auth::check()) {
-            $cartItem = CartItem::where('user_id', Auth::user()->id)->get();
+            $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
             $relatedProducts = Product::all();
-            return view('customer.sales-process.cart', compact('cartItem', 'relatedProducts'));
+            return view('customer.sales-process.cart', compact('cartItems', 'relatedProducts'));
         }else{
             return redirect()->route('auth.customer.login-register-form');
         }
     }
     public function updateCart() {}
 
-    // public function addToCart(Product $product, Request $request)
-    // {
-    //     Auth::loginUsingId(1);
-    //     if (Auth::check()) {
-    //         $request->validate([
-    //             'color' => 'nullable|exists:product_colors,id',
-    //             'guarantee' => 'nullable|exists:guarantees,id',
-    //             'number' => 'numeric|min:1|max:12',
-    //         ]);
-    //         dd($request);
-    //         $cartitems = CartItem::where('product_id', $product->id)->where('user_id', auth()->user()->id)->get();
-    //         if (!isset($request->color)) {
-    //             $request->color = null;
-    //         }
-    //         if (!isset($request->guarantee)) {
-    //             $request->guarantee = null;
-    //         }
-    //         foreach ($cartitems as $cartitem) {
-    //             if ($cartitem->color_id == $request->color && $cartitem->guarantee_id == $request->guarantee) {
-    //                 if ($cartitem->number != $request->number) {
-    //                     $cartitem->update(['number' => $request->number]);
-    //                 }
-    //                 return back();
-    //             }
-
-    //             $inputs = [];
-    //             $inputs['color_id'] = $request->color;
-    //             $inputs['guarantee_id '] = $request->guarantee;
-    //             $inputs['user_id'] = auth()->user()->id;
-    //             $inputs['product_id'] = $product->id;
-
-    //             CartItem::create($inputs);
-
-    //             return back();
-    //         }
-    //     } else {
-    //     }
-    // }
+  
     public function addToCart(Product $product, Request $request)
     {
         // Ensure a user is authenticated (you may remove this for production)
