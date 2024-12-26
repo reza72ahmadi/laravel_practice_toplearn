@@ -17,13 +17,13 @@ class CartController extends Controller
             $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
             $relatedProducts = Product::all();
             return view('customer.sales-process.cart', compact('cartItems', 'relatedProducts'));
-        }else{
+        } else {
             return redirect()->route('auth.customer.login-register-form');
         }
     }
     public function updateCart() {}
 
-  
+
     public function addToCart(Product $product, Request $request)
     {
         // Ensure a user is authenticated (you may remove this for production)
@@ -74,5 +74,12 @@ class CartController extends Controller
     }
 
 
-    public function removeFromCart() {}
+    public function removeFromCart(CartItem $cartItem)
+    {
+
+        if ($cartItem->user_id === Auth::user()->id) {
+            $cartItem->delete();
+        }
+        return back();
+    }
 }

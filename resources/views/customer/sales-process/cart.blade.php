@@ -74,7 +74,14 @@
                                                         value="{{ $cartItem->number }}" readonly="readonly">
                                                     <button class="cart-number cart-number-up" type="button">+</button>
                                                 </section>
-                                                <a class="text-decoration-none ms-4 cart-delete" href="#"><i
+                                                {{-- <form action="{{ route('customer.sales-process.remove-from-cart', $cartItem) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="text-decoration-none ms-4 cart-delete"><i
+                                                            class="fa fa-trash-alt"></i> حذف از سبد</button>
+                                                </form> --}}
+                                                <a class="text-decoration-none ms-4 cart-delete"
+                                                    href="{{ route('customer.sales-process.remove-from-cart', $cartItem) }}"><i
                                                         class="fa fa-trash-alt"></i> حذف از سبد</a>
                                             </section>
                                         </section>
@@ -162,37 +169,37 @@
                                                         title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a>
                                                 </section>
                                                 @guest
-                                                <section class="product-add-to-favorite">
-                                                    <button class="btn btn-light btn-sm text-decoration-none"
-                                                        data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="افزودن به علاقه مندی">
-                                                        <i class="fa fa-heart"></i>
-                                                    </button>
-                                                </section>
-                                            @endguest
+                                                    <section class="product-add-to-favorite">
+                                                        <button class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="افزودن به علاقه مندی">
+                                                            <i class="fa fa-heart"></i>
+                                                        </button>
+                                                    </section>
+                                                @endguest
 
-                                            @auth
-                                                @if ($relatedProduct->user->contains(auth()->user()->id))
-                                                    <section class="product-add-to-favorite">
-                                                        <button class="btn btn-light btn-sm text-decoration-none"
-                                                            data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
-                                                            data-bs-toggle="tooltip" data-bs-placement="left"
-                                                            title="حذف از علاقه مندی">
-                                                            <i class="fa fa-heart text-danger"></i>
-                                                        </button>
-                                                    </section>
-                                                @else
-                                                    <section class="product-add-to-favorite">
-                                                        <button class="btn btn-light btn-sm text-decoration-none"
-                                                            data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
-                                                            data-bs-toggle="tooltip" data-bs-placement="left"
-                                                            title="اضافه به علاقه مندی">
-                                                            <i class="fa fa-heart text-dark"></i>
-                                                        </button>
-                                                    </section>
-                                                @endif
-                                            @endauth
+                                                @auth
+                                                    @if ($relatedProduct->user->contains(auth()->user()->id))
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="حذف از علاقه مندی">
+                                                                <i class="fa fa-heart text-danger"></i>
+                                                            </button>
+                                                        </section>
+                                                    @else
+                                                        <section class="product-add-to-favorite">
+                                                            <button class="btn btn-light btn-sm text-decoration-none"
+                                                                data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                title="اضافه به علاقه مندی">
+                                                                <i class="fa fa-heart text-dark"></i>
+                                                            </button>
+                                                        </section>
+                                                    @endif
+                                                @endauth
                                                 <a class="product-link" href="#">
                                                     <section class="product-image">
                                                         <img class="product-gallery"
@@ -203,7 +210,8 @@
                                                         <h3>{{ $relatedProduct->name }}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
-                                                        <section class="product-price">{{ $relatedProduct->price }}</section>
+                                                        <section class="product-price">{{ $relatedProduct->price }}
+                                                        </section>
                                                     </section>
                                                     <section class="product-colors">
 
@@ -211,7 +219,7 @@
                                                             <section class="product-colors-item"
                                                                 style="background-color: {{ $color->color }}"></section>
                                                         @endforeach
-                                                        
+
                                                     </section>
                                                 </a>
                                             </section>
@@ -258,40 +266,40 @@
         }
     </script>
 
-<script>
-    $(document).ready(function() {
-        $('.product-add-to-favorite button').click(function(e) {
-         
-            e.preventDefault(); // Prevent default button behavior
-            var url = $(this).data('url');
-            var button = $(this);
-            console.log(url);
-            $.ajax({
-                url: url,
-                method: 'get', // Assuming a POST request
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                        'content') // CSRF token for Laravel
-                },
+    <script>
+        $(document).ready(function() {
+            $('.product-add-to-favorite button').click(function(e) {
 
-                success: function(result) {
-                    if (result.status === 1) {
-                        button.find('i').removeClass('text-dark').addClass('text-danger');
-                        button.attr('data-original-title', 'حذف از علاقه مندی').tooltip(
-                            'show');
-                    } else if (result.status === 2) {
-                        button.find('i').removeClass('text-danger').addClass('text-dark');
-                        button.attr('data-original-title', 'افزودن به علاقه مندی').tooltip(
-                            'show');
-                    } else if (result.status === 3) {
-                        $('.toast').toast('show');
+                e.preventDefault(); // Prevent default button behavior
+                var url = $(this).data('url');
+                var button = $(this);
+                console.log(url);
+                $.ajax({
+                    url: url,
+                    method: 'get', // Assuming a POST request
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content') // CSRF token for Laravel
+                    },
+
+                    success: function(result) {
+                        if (result.status === 1) {
+                            button.find('i').removeClass('text-dark').addClass('text-danger');
+                            button.attr('data-original-title', 'حذف از علاقه مندی').tooltip(
+                                'show');
+                        } else if (result.status === 2) {
+                            button.find('i').removeClass('text-danger').addClass('text-dark');
+                            button.attr('data-original-title', 'افزودن به علاقه مندی').tooltip(
+                                'show');
+                        } else if (result.status === 3) {
+                            $('.toast').toast('show');
+                        }
+                    },
+                    error: function() {
+                        console.error('An error occurred while processing the request.');
                     }
-                },
-                error: function() {
-                    console.error('An error occurred while processing the request.');
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
 @endsection
