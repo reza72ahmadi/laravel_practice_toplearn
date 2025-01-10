@@ -12,7 +12,7 @@ class CartController extends Controller
 {
     public function cart()
     {
-        Auth::loginUsingId(1);
+        // Auth::loginUsingId(1);
         if (Auth::check()) {
             $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
             $relatedProducts = Product::all();
@@ -27,7 +27,7 @@ class CartController extends Controller
     public function addToCart(Product $product, Request $request)
     {
         // Ensure a user is authenticated (you may remove this for production)
-        Auth::loginUsingId(1);
+        // Auth::loginUsingId(1);
 
         // Check if the user is authenticated
         if (Auth::check()) {

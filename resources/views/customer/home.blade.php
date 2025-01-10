@@ -71,16 +71,7 @@
                                                         </button>
                                                     </section>
                                                 @endguest --}}
-                                                @guest
-                                                    <section class="product-add-to-favorite">
-                                                        <button class="btn btn-light btn-sm text-decoration-none"
-                                                            data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
-                                                            data-bs-toggle="tooltip" data-bs-placement="left"
-                                                            title="افزودن به علاقه مندی">
-                                                            <i class="fa fa-heart"></i>
-                                                        </button>
-                                                    </section>
-                                                @endguest
+
 
                                                 @auth
                                                     @if ($mostVisitedProduct->user->contains(auth()->user()->id))
@@ -103,6 +94,16 @@
                                                         </section>
                                                     @endif
                                                 @endauth
+                                                @guest
+                                                    <section class="product-add-to-favorite">
+                                                        <button class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="افزودن به علاقه مندی">
+                                                            <i class="fa fa-heart"></i>
+                                                        </button>
+                                                    </section>
+                                                @endguest
                                                 {{-- @auth
                                                     @if ($mostVisitedProduct->user->contains(auth()->user()->id))
                                                         <section class="product-add-to-favorite">
@@ -293,7 +294,7 @@
                 <!-- one column -->
                 <section class="row py-4">
                     <section class="col">
-                        <img class="" src="{{ asset('storage/' . $bottomBanner->image) }}"
+                        <img style="width: 100%" class="" src="{{ asset('storage/' . $bottomBanner->image) }}"
                             alt="{{ $bottomBanner->name }}">
                     </section>
                 </section>
@@ -358,24 +359,6 @@
 
 @section('script')
     <script>
-        // $('.product-add-to-favorite button').click(function() {
-        //     var url = $(this).attr(data-url);
-        //     var element = $(this);
-        //     a.ajax({
-        //         url = url;
-        //         success: function(result) {
-        //             if (result.status == 1) {
-        //                 $(element).addClass('text-danger');
-        //                 $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
-        //             } else if (result.status == 2) {
-        //                 $(element).addClass('text-dark');
-        //                 $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
-        //             } else if (result.status == 3) {
-        //                 $('.toast').toast('show');
-        //             }
-        //         }
-        //     });
-        // })
         $(document).ready(function() {
             $('.product-add-to-favorite button').click(function(e) {
                 e.preventDefault(); // Prevent default button behavior

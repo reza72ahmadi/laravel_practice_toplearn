@@ -45,26 +45,31 @@
 
                 <section class="mt-3 mt-md-auto text-end">
                     <section class="d-inline px-md-3">
-                        <button class="btn btn-link text-decoration-none text-dark dropdown-toggle profile-button"
-                            type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                        </button>
-                        <section class="dropdown-menu dropdown-menu-end custom-drop-down"
-                            aria-labelledby="dropdownMenuButton1">
-                            <section><a class="dropdown-item" href="my-profile.html"><i
-                                        class="fa fa-user-circle"></i>پروفایل کاربری</a></section>
-                            <section><a class="dropdown-item" href="my-orders.html"><i
-                                        class="fa fa-newspaper"></i>سفارشات</a></section>
-                            <section><a class="dropdown-item" href="my-favorites.html"><i class="fa fa-heart"></i>لیست
-                                    علاقه مندی</a></section>
-                            <section>
-                                <hr class="dropdown-divider">
+                        @auth
+                            <button class="btn btn-link text-decoration-none text-dark dropdown-toggle profile-button"
+                                type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-user"></i>
+                            </button>
+                            <section class="dropdown-menu dropdown-menu-end custom-drop-down"
+                                aria-labelledby="dropdownMenuButton1">
+                                <section><a class="dropdown-item" href="my-profile.html"><i
+                                            class="fa fa-user-circle"></i>پروفایل کاربری</a></section>
+                                <section><a class="dropdown-item" href="my-orders.html"><i
+                                            class="fa fa-newspaper"></i>سفارشات</a></section>
+                                <section><a class="dropdown-item" href="my-favorites.html"><i class="fa fa-heart"></i>لیست
+                                        علاقه مندی</a></section>
+                                <section>
+                                    <hr class="dropdown-divider">
+                                </section>
+                                <section><a class="dropdown-item" href="#"><i class="fa fa-sign-out-alt"></i>خروج</a>
+                                </section>
                             </section>
-                            <section><a class="dropdown-item" href="#"><i class="fa fa-sign-out-alt"></i>خروج</a>
-                            </section>
-
-                        </section>
+                        @endauth
                     </section>
+                    @guest
+                        <a href="{{ route('auth.customer.login-register-form') }}"
+                            class="btn btn-link text-decoration-none"></a>
+                    @endguest
                     <section class="header-cart d-inline ps-3 border-start position-relative">
                         <a class="btn btn-link position-relative text-dark header-cart-link"
                             href="{{ route('customer.sales-process.cart') }}">
